@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xeroxzone/lcars.git"
+    "url": "git+https://github.com/xeroxzone/meinauto-js.git"
   },
   "dependencies": {
     "jquery": "~3.2.1"
@@ -25,9 +25,9 @@
   "author": "Ralph Zickert",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xeroxzone/lcars/issues"
+    "url": "https://github.com/xeroxzone/meinauto-js/issues"
   },
-  "homepage": "https://github.com/xeroxzone/lcars#readme",
+  "homepage": "https://github.com/xeroxzone/meinauto-js#readme",
   "jshintConfig": {
     "maxerr": 50,
     "bitwise": true,
@@ -99,7 +99,7 @@
     "wsh": false,
     "yui": false,
     "globals": {
-      "LCARS": true
+      "MeinAutoJs": true
     }
   }
 }
