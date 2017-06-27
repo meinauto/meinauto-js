@@ -98,6 +98,9 @@ MeinAutoJs.app.MockApp = new function () {
      */
     var doSomething = function() {
         var $mockAppViewport = $('[data-application="MockApp"]');
+        
+        $mockAppViewport.removeClass('hidden');
+        
         // do something
     };
 };
