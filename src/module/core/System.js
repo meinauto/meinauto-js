@@ -289,6 +289,7 @@ MeinAutoJs.core.System = new function () {
      * @param {string} type as module class name
      * @returns {string}
      * @example MeinAutoJs.core.System.getNamespace('MeinAutoJs.namespace.part.ClassName');
+     *  // returns: namespace/part/ClassName
      */
     _.getNamespace = function (type) {
         return String(type)
