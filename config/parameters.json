@@ -1,0 +1,8 @@
+{
+  "appPath": "/meinauto-js/src/app",
+  "modulePath": "/meinauto-js/src/module",
+  "moduleLayout": "/meinauto-js/src/lib/ui",
+  "docFramework": "/meinauto-js/doc/api",
+  "testFrameworkUnit": "/meinauto-js/node_modules/qunitjs/qunit/qunit.js",
+  "testFrameworkTheme": "/meinauto-js/src/lib/ui/debug.css"
+}

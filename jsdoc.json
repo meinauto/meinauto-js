@@ -1,0 +1,42 @@
+{
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": [
+      "jsdoc",
+      "closure"
+    ]
+  },
+  "source": {
+    "include": [
+      "src"
+    ],
+    "exclude": [
+      "src/test"
+    ],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "plugins": [
+    "plugins/markdown",
+    "plugins/shout"
+  ],
+  "templates": {
+    "systemName"            : "MeinAuto JS",
+    "copyright"             : "MIT",
+    "navType"               : "vertical",
+    "inverseNav"            : true,
+    "theme"                 : "simplex",
+    "linenums"              : true,
+    "collapseSymbols"       : false,
+    "outputSourceFiles"     : true
+  },
+  "opts": {
+    "encoding": "utf8",
+    "template": "./node_modules/ink-docstrap/template",
+    "tutorials": "./doc/tutorials",
+    "destination": "./doc/api",
+    "readme": "./README.md",
+    "private": true,
+    "recurse": true
+  }
+}

@@ -1,0 +1,68 @@
+@import "variables";
+
+$main-size: 1rem;
+$main-highlight: $brand-warning;
+
+.debug {
+  background-color: white;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+
+  #qunit {
+    h2 {
+      margin: $main-size 0;
+    }
+
+    a {
+      color: $main-highlight;
+      cursor: pointer;
+    }
+
+    pre {
+      white-space: pre-line;
+    }
+
+    ol {
+      margin-top: $main-size;
+
+      li {
+        margin-bottom: $main-size;
+        padding: $main-size * .65;
+
+        &.pass {
+          background-color: green;
+        }
+        &.fail {
+          background-color: darkred;
+        }
+      }
+    }
+  }
+
+  #qunit-testrunner-toolbar {
+    margin: $main-size 0;
+
+    form {
+      margin: $main-size * .5 0;
+    }
+
+    label,
+    input, textarea, select, button {
+      display: inline;
+      width: auto;
+    }
+
+    label {
+      margin-left: 0;
+
+      & + label {
+        margin-left: $main-size * .5;
+      }
+    }
+  }
+}
