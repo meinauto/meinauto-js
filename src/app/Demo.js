@@ -12,7 +12,7 @@ if (typeof MeinAutoJs.app === 'undefined') {MeinAutoJs.app = {};}
 
 /**
  * @class
- * @classdesc a application demo
+ * @classdesc an application demo
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.app.Demo
  * @constructs
