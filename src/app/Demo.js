@@ -35,10 +35,17 @@ MeinAutoJs.app.Demo = new function () {
 
     /**
      * @description initialize application demo
-     * @memberOf MeinAutoJs.display.Renderer
+     * @memberOf MeinAutoJs.app.Demo
      */
     _.construct = function () {
-        renderDemo();
+        MeinAutoJs.core.Manager
+            .add('MeinAutoJs.app.Demo.wrap.Markup')
+            .done(function () {
+                renderDemo();
+            })
+            .fail(function () {
+                console.warn('Could not load dependency "MeinAutoJs.app.Demo.wrap.Markup"');
+            });
     };
 
     /**
@@ -48,12 +55,6 @@ MeinAutoJs.app.Demo = new function () {
      */
     var renderDemo = function () {
         var $demo = $('[data-application="Demo"]');
-
-        var title = $demo.text();
-
-        $demo.html('<h1>' + title + '</h1>');
-
-        $demo.removeClass('hidden');
 
         var color = 1,
             interval = 0,

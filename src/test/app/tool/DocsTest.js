@@ -8,7 +8,7 @@ if (typeof MeinAutoJs.test.app.tool === 'undefined') {MeinAutoJs.test.app.tool =
  */
 MeinAutoJs.test.app.tool.DocsTest = new function () {
     /**
-     * test MeinAutoJs.test.app.tool.Docs has a control
+     * test MeinAutoJs.app.tool.Docs has a control
      * @param {MeinAutoJs.test.Unit.assert} assert
      * @param {MeinAutoJs.app.tool.Docs} moduleClass
      */
