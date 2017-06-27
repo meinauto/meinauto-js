@@ -49,7 +49,7 @@ For automated testing use the integrated test runner:
 
 ```html
 <body>
-    <div class="frame hidden" data-application="MockApp"></div>
+    <div class="hidden" data-application="MockApp"></div>
 </body>
 ```
 
@@ -189,23 +189,14 @@ _.construct = function () {
  * do something with class event
  */
 var doSomething = function() {
-  $(MeinAutoJs.app.MockApp.controller.Doing).on('ready', function(event, module) {
-    /** @type {MeinAutoJs.app.MockApp.controller.Doing} */
-    var controller = module;
-    // do something after module registration
-  });
+  /** @type {MeinAutoJs.app.MockApp.controller.Doing} */
+  var controller = MeinAutoJs.app.MockApp.controller.Doing;
   
-  $(MeinAutoJs.app.MockApp.model.Data).on('ready', function(event, module) {
-    /** @type {MeinAutoJs.app.MockApp.model.Data} */
-    var model = module;
-    // do something after module registration
-  });
+  /** @type {MeinAutoJs.app.MockApp.model.Data} */
+  var model = MeinAutoJs.app.MockApp.model.Data;
   
-  $(MeinAutoJs.app.MockApp.view.Page).on('ready', function(event, module) {
-    /** @type {MeinAutoJs.app.MockApp.view.Page} */
-    var view = module;
-    // do something after module registration
-  });
+  /** @type {MeinAutoJs.app.MockApp.view.Page} */
+  var view = MeinAutoJs.app.MockApp.view.Page;
 };
 ```
 
