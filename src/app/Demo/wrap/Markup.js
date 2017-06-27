@@ -29,7 +29,7 @@ MeinAutoJs.app.Demo.wrap.Markup = new function () {
     var _ = this;
 
     /**
-     * @description initialize application demo
+     * @description initialize application demo dependency
      * @memberOf MeinAutoJs.app.Demo.wrap.Markup
      */
     _.construct = function () {
