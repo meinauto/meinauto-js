@@ -14,7 +14,7 @@ if (typeof MeinAutoJs.app.Demo.wrap === 'undefined') {MeinAutoJs.app.Demo.wrap =
 
 /**
  * @class
- * @classdesc a application demo
+ * @classdesc an application demo dependency
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.app.Demo.wrap.Markup
  * @constructs
