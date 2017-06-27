@@ -1,7 +1,7 @@
 {
-  "name": "lcars",
+  "name": "meinauto-js",
   "version": "0.0.1",
-  "description": "Library Control Access and Retrieval System (LCARS)",
+  "description": "Class autoload and dependency manager",
   "main": "./src/lib/init/Run.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
