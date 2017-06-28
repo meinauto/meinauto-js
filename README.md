@@ -25,7 +25,7 @@ Generate documentation with [JSDoc][jsdoc]
 
 Generate stylesheets with [Sass][sass]
 
-    npm run generate-style
+    npm run generate-styles
 
 ## Run demo application in browser
 

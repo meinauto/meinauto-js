@@ -5,8 +5,8 @@
   "main": "./src/lib/init/Run.js",
   "scripts": {
     "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json",
-    "generate-style": "node_modules/.bin/node-sass --recursive --output web/css --source-map true src/lib/ui",
-    "watch-style": "node_modules/.bin/node-sass --watch --recursive --output web/css --source-map true src/lib/ui"
+    "generate-styles": "node_modules/.bin/node-sass --recursive --output web/css --source-map true src/lib/ui",
+    "watch-styles": "node_modules/.bin/node-sass --watch --recursive --output web/css --source-map true src/lib/ui"
   },
   "repository": {
     "type": "git",
