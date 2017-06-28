@@ -11,7 +11,8 @@ var MeinAutoJs = {core: {}};
 /**
  * @class
  * @classdesc Initial loaded class as running system
- *  to register the module manager and the test runner
+ *  to register the module {@link MeinAutoJs.core.Manager}
+ *  and the test runner
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.core.System
  * @constructs

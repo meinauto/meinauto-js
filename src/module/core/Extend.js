@@ -12,7 +12,7 @@ if (typeof MeinAutoJs.core === 'undefined') {MeinAutoJs.core = {};}
 
 /**
  * @class
- * @classdesc Extend a module by module manager register a module
+ * @classdesc Extend a module by module {@link MeinAutoJs.core.Manager~register} a module
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.core.Extend
  * @constructs

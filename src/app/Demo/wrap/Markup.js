@@ -12,6 +12,9 @@ if (typeof MeinAutoJs.app === 'undefined') {MeinAutoJs.app = {};}
 if (typeof MeinAutoJs.app.Demo === 'undefined') {MeinAutoJs.app.Demo = {};}
 if (typeof MeinAutoJs.app.Demo.wrap === 'undefined') {MeinAutoJs.app.Demo.wrap = {};}
 
+/** @module app/Demo */
+/** @module app/Demo/wrap/Markup */
+
 /**
  * @class
  * @classdesc an application demo dependency

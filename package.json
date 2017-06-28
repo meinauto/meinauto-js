@@ -4,8 +4,9 @@
   "description": "Class autoload and dependency manager",
   "main": "./src/lib/init/Run.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json"
+    "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json",
+    "generate-style": "node_modules/.bin/node-sass --recursive --output web/css --source-map true src/lib/ui",
+    "watch-style": "node_modules/.bin/node-sass --watch --recursive --output web/css --source-map true src/lib/ui"
   },
   "repository": {
     "type": "git",
@@ -15,6 +16,7 @@
     "jquery": "~3.2.1"
   },
   "devDependencies": {
+    "node-sass": "~4.5.3",
     "qunitjs": "~2.3.3",
     "jsdoc": "~3.4.3",
     "ink-docstrap": "~1.3.0"

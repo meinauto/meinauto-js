@@ -12,7 +12,7 @@ if (typeof MeinAutoJs.core === 'undefined') {MeinAutoJs.core = {};}
 
 /**
  * @class
- * @classdesc The core controller to handle the viewport renderer
+ * @classdesc The core controller to handle the viewport {@link MeinAutoJs.display.Renderer}
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.core.Controller
  * @constructs

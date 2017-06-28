@@ -21,8 +21,19 @@ Generate documentation with [JSDoc][jsdoc]
 
     npm run generate-docs
 
+## Application demo stylesheets
+
+Generate stylesheets with [Sass][sass]
+
+    npm run generate-style
+
+## Run demo application in browser
+
+    http://hostname.tld/meinauto-js/web/index.html
+
 ## Appendix
 
 
 [npmjs]: https://www.npmjs.com/
 [jsdoc]: http://usejsdoc.org/
+[sass]: http://sass-lang.com/

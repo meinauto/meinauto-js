@@ -12,7 +12,8 @@ if (typeof MeinAutoJs.core === 'undefined') {MeinAutoJs.core = {};}
 
 /**
  * @class
- * @classdesc The core app loader to load apps into DIC by the module manager
+ * @classdesc The core app loader to load apps into DIC by
+ *  the module {@link MeinAutoJs.core.Manager}
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.core.App
  * @constructs

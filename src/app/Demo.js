@@ -10,6 +10,8 @@ var MeinAutoJs = window.MeinAutoJs || {};
 if ({} === MeinAutoJs) {throw new Error('Could not initialize framework!');}
 if (typeof MeinAutoJs.app === 'undefined') {MeinAutoJs.app = {};}
 
+/** @module app/Demo */
+
 /**
  * @class
  * @classdesc an application demo
@@ -36,6 +38,7 @@ MeinAutoJs.app.Demo = new function () {
     /**
      * @description initialize application demo
      * @memberOf MeinAutoJs.app.Demo
+     * @requires module:app/Demo/wrap/Markup
      */
     _.construct = function () {
         MeinAutoJs.core.Manager

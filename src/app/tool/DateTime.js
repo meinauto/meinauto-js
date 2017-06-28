@@ -11,6 +11,8 @@ if ({} === MeinAutoJs) {throw new Error('Could not initialize framework!');}
 if (typeof MeinAutoJs.app === 'undefined') {MeinAutoJs.app = {};}
 if (typeof MeinAutoJs.app.tool === 'undefined') {MeinAutoJs.app.tool = {};}
 
+/** @module app/tool */
+
 /**
  * @class
  * @classdesc date time renderer

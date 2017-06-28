@@ -12,7 +12,7 @@ if (typeof MeinAutoJs.display === 'undefined') {MeinAutoJs.display = {};}
 
 /**
  * @class
- * @classdesc The renderer handles the display viewport and main screen for app views
+ * @classdesc The renderer handles the display viewport for app views
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.display.Renderer
  * @constructs
@@ -36,7 +36,7 @@ MeinAutoJs.display.Renderer = new function () {
     var displayViewport = 'body';
 
     /**
-     * @description autoload stylesheet for display and main screen
+     * @description autoload stylesheet for display
      * @memberOf MeinAutoJs.display.Renderer
      * @type {boolean}
      */

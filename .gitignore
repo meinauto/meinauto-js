@@ -28,8 +28,9 @@ crashlytics-build.properties
 fabric.properties
 
 # project
+/npm-debug.log
 /src/lib/ui/**/*.css
 /src/lib/ui/**/*.css.map
 /node_modules/
 /doc/api/
-/npm-debug.log
+/web/css/
