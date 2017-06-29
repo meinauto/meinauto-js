@@ -210,11 +210,9 @@ MeinAutoJs.core.Manager = new function () {
 
         var clone = function(moduleClass) {
             if (null !== moduleClass) {
-                var inheritClass = new function () {};
+                var inheritClass = new moduleClass.constructor();
 
-                $.each(moduleClass, function (property, mixed) {
-                    inheritClass[property] = mixed;
-                });
+                inheritClass.type = type;
 
                 return inheritClass;
             } else {
