@@ -208,26 +208,26 @@ MeinAutoJs.core.Manager = new function () {
             return; // test runner applies to apps
         }
 
+        var clone = function(moduleClass) {
+            if (null !== moduleClass) {
+                var inheritClass = new function () {};
+
+                $.each(moduleClass, function (property, mixed) {
+                    inheritClass[property] = mixed;
+                });
+
+                return inheritClass;
+            } else {
+                throw new Error('Can not clone module class as test reference!');
+            }
+        };
+
         $.get(testUrl)
             .done(function () {
                 var moduleClass = getModuleDOM(type),
                     moduleClassTest = getModuleDOM(testCase);
 
                 console.info('Test for module "' + namespace + '" loaded.');
-
-                var clone = function(moduleClass) {
-                    if (null !== moduleClass) {
-                        var inheritClass = new function () {};
-
-                        $.each(moduleClass, function (property, mixed) {
-                            inheritClass[property] = mixed;
-                        });
-
-                        return inheritClass;
-                    } else {
-                        throw new Error('Can not clone module class as test reference!');
-                    }
-                };
 
                 if (0 < Object.keys(moduleClassTest).length) {
                     $.each(moduleClassTest, function (i) {

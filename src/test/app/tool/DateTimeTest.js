@@ -8,7 +8,7 @@ if (typeof MeinAutoJs.test.app.tool === 'undefined') {MeinAutoJs.test.app.tool =
  */
 MeinAutoJs.test.app.tool.DateTimeTest = new function () {
     /**
-     * test MeinAutoJs.app.tool.DateTime.layout is setted
+     * @description test {@link MeinAutoJs.app.tool.DateTime.layout} is setted
      * @param {MeinAutoJs.test.Unit.assert} assert
      * @param {MeinAutoJs.app.tool.DateTime} moduleClass
      */
