@@ -93,7 +93,10 @@ MeinAutoJs.core.System = new function () {
      * @param {function} registerCallback the callback to register module manager, test and doc framework
      */
     var configure = function (registerCallback) {
-        var configPath = '/meinauto-js/config/parameters.json';
+        /**
+         * @typedef {string} MeinAutoJsConfigurationPath
+         */
+        var configPath = MeinAutoJsConfigurationPath || '/meinauto-js/config/parameters.json';
         $.get(configPath)
             .done(function (data) {
                 /**
