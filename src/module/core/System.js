@@ -96,7 +96,12 @@ MeinAutoJs.core.System = new function () {
         /**
          * @typedef {string} MeinAutoJsConfigurationPath
          */
-        var configPath = MeinAutoJsConfigurationPath || '/meinauto-js/config/parameters.json';
+        var configPath = '/meinauto-js/config/parameters.json';
+
+        if (typeof MeinAutoJsConfigurationPath !== 'undefined') {
+            configPath = MeinAutoJsConfigurationPath;
+        }
+
         $.get(configPath)
             .done(function (data) {
                 /**
