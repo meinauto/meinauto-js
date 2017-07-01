@@ -7,7 +7,7 @@ if (typeof MeinAutoJs.test.template === 'undefined') {MeinAutoJs.test.template =
  */
 MeinAutoJs.test.template.ModuleTest = new function () {
     /**
-     * test MeinAutoJs.template.ModuleTest.layout is setted
+     * test {@link MeinAutoJs.template.ModuleTest.layout} is setted
      * @param {MeinAutoJs.test.Unit.assert} assert
      * @param {MeinAutoJs.template.ModuleTest} moduleClass
      */

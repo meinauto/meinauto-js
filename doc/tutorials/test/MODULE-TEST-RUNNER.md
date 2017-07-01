@@ -50,7 +50,7 @@ MeinAutoJs.test.app.MockApp = new function () {
 Get the app module class as isolated process to make changes without apply to running module class in DIC
 
 ```javascript
-this.testHasLayout = function (assert, moduleClass) {
+this.testModuleClassIsolated = function (assert, moduleClass) {
     var mockApp = moduleClass;
     
     assert.ok(mockApp.type === 'MeinAutoJs.app.MockApp', "access module class as isolated process");
@@ -62,7 +62,7 @@ this.testHasLayout = function (assert, moduleClass) {
 Get the app module class from DIC
 
 ```javascript
-this.testHasLayout = function (assert, moduleClass) {
+this.testModuleClassDIC = function (assert, moduleClass) {
     var mockApp = MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp');
     
     assert.ok(mockApp.type === 'MeinAutoJs.app.MockApp', "access module class from DIC");
@@ -74,11 +74,12 @@ this.testHasLayout = function (assert, moduleClass) {
 Get the app module representation from DOM
 
 ```javascript
-this.testHasLayout = function (assert, moduleClass) {
+this.testModuleApplicationDOM = function (assert, moduleClass) {
     var $mockApp = $('[data-application="MockApp"]');
     
     assert.ok($mockApp.length === 1, "access module class from DOM");
 };
 ```
+
 
 [qunit]: https://qunitjs.com
