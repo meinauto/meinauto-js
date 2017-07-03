@@ -92,6 +92,14 @@ function buildConfigs(cfg) {
  * @param {Object} cfg
  * @returns {Gulp}
  */
+function buildApps(cfg) {
+    return build(cfg, uglify(), './src');
+}
+
+/**
+ * @param {Object} cfg
+ * @returns {Gulp}
+ */
 function buildScripts(cfg) {
     return build(cfg, uglify(), './src');
 }
@@ -107,27 +115,48 @@ function buildStyles(cfg) {
 
 /* dev */
 gulp.task('dev:scripts', function() {
+    del(['web/js/lib/*.js']);
+    del(['web/js/config/*.json']);
+    del(['web/js/module/*.js', 'web/js/module/**/*.js']);
+
     buildVendors(config.vendors);
     buildTestUnit(config.testunit);
     buildConfigs(config.configs);
     buildScripts(config.scripts);
+});
+
+gulp.task('dev:apps', function() {
+    del(['web/js/app/*.js', 'web/js/app/**/*.js']);
+
+    buildApps(config.apps);
+});
+
+gulp.task('dev:tests', function() {
+    del(['web/js/test/*.js', 'web/js/app/test/*.js']);
+
     buildTests(config.tests);
 });
 
 gulp.task('dev:styles', function() {
+    del(['web/css/*.css', 'web/css/**/*.css']);
+
     buildStyles(config.styles);
 });
 
 gulp.task('dev:docs', function () {
+    del(['web/doc/**']);
+
     buildDocs(config.docs);
 });
 
 
 /* init commands "dev" and "dev:watch" */
-gulp.task('dev', ['dev:scripts', 'dev:styles', 'dev:docs']);
+gulp.task('dev', ['dev:scripts', 'dev:apps', 'dev:tests', 'dev:styles', 'dev:docs']);
 
 gulp.task('dev:watch', function () {
     gulp.watch(config.scripts.src, ['dev:scripts']);
+    gulp.watch(config.apps.src, ['dev:apps']);
+    gulp.watch(config.tests.src, ['dev:tests']);
     gulp.watch(config.styles.src, ['dev:styles']);
     gulp.watch(config.docs.src, ['dev:docs']);
 });

@@ -30,11 +30,16 @@
     ],
     "dest" : "web/js/config"
   },
+  "apps" : {
+    "src" : [
+      "src/app/**/*.js"
+    ],
+    "dest" : "web/js"
+  },
   "scripts" : {
     "src" : [
       "src/lib/**/*.js",
       "src/module/**/*.js",
-      "src/app/**/*.js",
       "!src/lib/ui"
     ],
     "dest" : "web/js"
