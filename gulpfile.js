@@ -123,7 +123,7 @@ gulp.task('dev:docs', function () {
 });
 
 
-/* init commands "dev", "dev:watch" and "dev:doc */
+/* init commands "dev" and "dev:watch" */
 gulp.task('dev', ['dev:scripts', 'dev:styles', 'dev:docs']);
 
 gulp.task('dev:watch', function () {
