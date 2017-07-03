@@ -320,24 +320,6 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
     };
 
     /**
-     * @description prepare module class namespace before class autoload
-     * @memberOf MeinAutoJs.core.Manager
-     * @private
-     * @param {string} type as module class name
-     */
-    var createModuleDOM = function (type) {
-        var classScope = window,
-            classPath = type.split('.');
-
-        $(classPath).each(function (i) {
-            if (typeof classScope[classPath[i]] === 'undefined') {
-                classScope[classPath[i]] = {};
-            }
-            classScope = classScope[classPath[i]];
-        });
-    };
-
-    /**
      * @description get module from DOM reference
      * @memberOf MeinAutoJs.core.Manager
      * @private
