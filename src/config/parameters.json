@@ -1,8 +1,8 @@
 {
-  "appPath": "/js/app",
-  "modulePath": "/js/module",
-  "moduleLayout": "/css",
-  "docFramework": "/doc/api",
-  "testFrameworkUnit": "/js/lib/qunit.js",
-  "testFrameworkTheme": "/css/debug.css"
+  "appPath": "js/app",
+  "modulePath": "js/module",
+  "moduleLayout": "css",
+  "docFramework": "doc/api",
+  "testFrameworkUnit": "js/lib/qunit.js",
+  "testFrameworkTheme": "css/debug.css"
 }
