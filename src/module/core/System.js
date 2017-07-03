@@ -94,11 +94,14 @@ MeinAutoJs.core.System = new function () {
      */
     var configure = function (registerCallback) {
         /**
-         * @typedef {string} MeinAutoJsConfigurationPath
+         * @type {string}
          */
-        var configPath = '/meinauto-js/config/parameters.json';
+        var configPath = 'js/config/parameters.json';
 
         if (typeof MeinAutoJsConfigurationPath !== 'undefined') {
+            /**
+             * @typedef {string} MeinAutoJsConfigurationPath
+             */
             configPath = MeinAutoJsConfigurationPath;
         }
 
@@ -119,6 +122,14 @@ MeinAutoJs.core.System = new function () {
                 testFrameworkThemeUri = configuration.testFrameworkTheme;
 
                 if (typeof registerCallback === 'function') {
+                    /**
+                     * @description define new module class
+                     *  {@link MeinAutoJs.core.System~define}
+                     * @memberOf MeinAutoJs
+                     * @typedef {function} MeinAutoJs.define
+                     */
+                    MeinAutoJs.define = define;
+
                     registerCallback();
                 }
             })
@@ -289,6 +300,50 @@ MeinAutoJs.core.System = new function () {
             });
 
             sessionStorage.setItem('runTests', true);
+        }
+    };
+
+    /**
+     * @description prepare module class namespace before class autoload
+     * @memberOf MeinAutoJs.core.System
+     * @private
+     * @param {string} type as module class name
+     * @param {function} moduleClass as module class function
+     */
+    var createModuleDOM = function (type, moduleClass) {
+        var classScope = window,
+            classPath = type.split('.');
+
+        $(classPath).each(function (i) {
+            if (typeof classScope[classPath[i]] === 'undefined') {
+                classScope[classPath[i]] = {};
+                if (classPath.length -1 === i) {
+                    classScope[classPath[i]] = moduleClass;
+                }
+            }
+            classScope = classScope[classPath[i]];
+        });
+    };
+
+    /**
+     * @description define a new module by type and module class
+     * @memberOf MeinAutoJs.core.System
+     * @private
+     * @param {string} type as module class name
+     * @param {function} moduleClass as module class function
+     * @throws {Error} module class definition wrong
+     */
+    var define = function (type, moduleClass) {
+        if (typeof type !== 'string') {
+            throw new Error('The module class type must be of type <string>.');
+        }
+
+        if (typeof moduleClass !== 'undefined' &&
+            (typeof moduleClass === 'function' || typeof moduleClass === 'object')
+        ) {
+            createModuleDOM(type, moduleClass);
+        } else {
+            throw new Error('The module class must be of type <function> or <object>.');
         }
     };
 

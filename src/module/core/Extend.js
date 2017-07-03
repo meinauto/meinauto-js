@@ -1,15 +1,5 @@
 "use strict";
 
-/** @var {(jQuery|function)} $ */
-
-/**
- * @namespace
- * @typedef {Object} MeinAutoJs
- */
-var MeinAutoJs = window.MeinAutoJs || {};
-if ({} === MeinAutoJs) {throw new Error('Could not initialize framework!');}
-if (typeof MeinAutoJs.core === 'undefined') {MeinAutoJs.core = {};}
-
 /**
  * @class
  * @classdesc Extend a module by module {@link MeinAutoJs.core.Manager~register} a module
@@ -17,7 +7,7 @@ if (typeof MeinAutoJs.core === 'undefined') {MeinAutoJs.core = {};}
  * @typedef {function} MeinAutoJs.core.Extend
  * @constructs
  */
-MeinAutoJs.core.Extend = new function () {
+MeinAutoJs.define('MeinAutoJs.core.Extend', new function () {
     /**
      * @description bind public properties or methods
      * @memberOf MeinAutoJs.core.Extend
@@ -62,4 +52,4 @@ MeinAutoJs.core.Extend = new function () {
 
         return inheritClass;
     };
-};
+});

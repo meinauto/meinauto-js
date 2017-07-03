@@ -1,15 +1,5 @@
 "use strict";
 
-/** @var {(jQuery|function)} $ */
-
-/**
- * @namespace
- * @typedef {Object} MeinAutoJs
- */
-var MeinAutoJs = window.MeinAutoJs || {};
-if ({} === MeinAutoJs) {throw new Error('Could not initialize framework!');}
-if (typeof MeinAutoJs.core === 'undefined') {MeinAutoJs.core = {};}
-
 /**
  * @class
  * @classdesc The module manager for dependencies and class autoloads
@@ -17,7 +7,7 @@ if (typeof MeinAutoJs.core === 'undefined') {MeinAutoJs.core = {};}
  * @typedef {function} MeinAutoJs.core.Manager
  * @constructs
  */
-MeinAutoJs.core.Manager = new function () {
+MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
     /**
      * @description bind public properties or methods
      * @memberOf MeinAutoJs.core.Manager
@@ -117,7 +107,7 @@ MeinAutoJs.core.Manager = new function () {
             namespace + '.js?' +
             String((new Date()).getTime());
 
-        createModuleDOM(type);
+        // createModuleDOM(type);
 
         return $.get(moduleUrl)
             .done(function () {
@@ -320,6 +310,7 @@ MeinAutoJs.core.Manager = new function () {
 
         /**
          * @typedef {Object} MeinAutoJs.core.Manager.Module
+         * @type {{type: string, class: MeinAutoJs.core.Manager.Module.class}}
          * @see MeinAutoJs.core.Manager.Module.class
          */
         return {
@@ -547,4 +538,4 @@ MeinAutoJs.core.Manager = new function () {
     _.get = function (type) {
         return getModule(type);
     };
-};
+});

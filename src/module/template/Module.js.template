@@ -1,15 +1,5 @@
 "use strict";
 
-/** @var {(jQuery|function)} $ */
-
-/**
- * @namespace
- * @typedef {Object} MeinAutoJs
- */
-var MeinAutoJs = window.MeinAutoJs || {};
-if ({} === MeinAutoJs) {throw new Error('Could not initialize framework!');}
-if (typeof MeinAutoJs.template === 'undefined') {MeinAutoJs.template = {};}
-
 /**
  * @class
  * @classdesc module description
@@ -17,7 +7,7 @@ if (typeof MeinAutoJs.template === 'undefined') {MeinAutoJs.template = {};}
  * @typedef {function} MeinAutoJs.template.Module
  * @constructs
  */
-MeinAutoJs.template.Module = new function () {
+MeinAutoJs.define('MeinAutoJs.template.Module', new function () {
     /**
      * @description bind public properties or methods
      * @memberOf MeinAutoJs.template.Module
@@ -46,4 +36,4 @@ MeinAutoJs.template.Module = new function () {
     _.construct = function (data) {
         // do something
     };
-};
+});

@@ -1,12 +1,9 @@
 "use strict";
 
-if (typeof MeinAutoJs.test.app === 'undefined') {MeinAutoJs.test.app = {};}
-if (typeof MeinAutoJs.test.app.tool === 'undefined') {MeinAutoJs.test.app.tool = {};}
-
 /**
  * @class
  */
-MeinAutoJs.test.app.tool.DocsTest = new function () {
+MeinAutoJs.define('MeinAutoJs.test.app.tool.DocsTest', new function () {
     /**
      * @description test {@link MeinAutoJs.app.tool.Docs} has a control
      * @param {MeinAutoJs.test.Unit.assert} assert
@@ -17,4 +14,4 @@ MeinAutoJs.test.app.tool.DocsTest = new function () {
 
         assert.ok($control.length > 0, "has control");
     };
-};
+});

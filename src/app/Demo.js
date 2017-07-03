@@ -1,15 +1,5 @@
 "use strict";
 
-/** @var {(jQuery|function)} $ */
-
-/**
- * @namespace
- * @typedef {Object} MeinAutoJs
- */
-var MeinAutoJs = window.MeinAutoJs || {};
-if ({} === MeinAutoJs) {throw new Error('Could not initialize framework!');}
-if (typeof MeinAutoJs.app === 'undefined') {MeinAutoJs.app = {};}
-
 /** @module app/Demo */
 
 /**
@@ -19,7 +9,7 @@ if (typeof MeinAutoJs.app === 'undefined') {MeinAutoJs.app = {};}
  * @typedef {function} MeinAutoJs.app.Demo
  * @constructs
  */
-MeinAutoJs.app.Demo = new function () {
+MeinAutoJs.define('MeinAutoJs.app.Demo', new function () {
     /**
      * @description bind public properties or methods
      * @memberOf MeinAutoJs.app.Demo
@@ -87,4 +77,4 @@ MeinAutoJs.app.Demo = new function () {
 
         render();
     };
-};
+});

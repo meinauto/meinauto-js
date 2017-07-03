@@ -34,7 +34,7 @@
     "encoding": "utf8",
     "template": "./node_modules/ink-docstrap/template",
     "tutorials": "./doc/tutorials",
-    "destination": "./doc/api",
+    "destination": "./web/doc/api",
     "readme": "./README.md",
     "private": true,
     "recurse": true

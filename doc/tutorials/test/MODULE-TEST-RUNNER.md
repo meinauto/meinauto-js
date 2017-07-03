@@ -28,12 +28,10 @@ to disable the test suit send
 ```javascript
 "use strict";
 
-if (typeof MeinAutoJs.test.app === 'undefined') {MeinAutoJs.test.app = {};}
-
 /**
  * @class
  */
-MeinAutoJs.test.app.MockApp = new function () {
+MeinAutoJs.define('MeinAutoJs.test.app.MockApp', new function () {
     /**
      * test MeinAutoJs.app.MockApp.layout is setted
      * @param {MeinAutoJs.test.Unit.assert} assert the assertion interface
@@ -42,7 +40,7 @@ MeinAutoJs.test.app.MockApp = new function () {
     this.testHasLayout = function (assert, moduleClass) {
         assert.ok(moduleClass.layout, "has layout");
     };
-};
+});
 ```
 
 ###### Access application module class as isolated process

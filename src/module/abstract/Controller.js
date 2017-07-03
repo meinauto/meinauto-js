@@ -1,15 +1,5 @@
 "use strict";
 
-/** @var {(jQuery|function)} $ */
-
-/**
- * @namespace
- * @typedef {Object} MeinAutoJs
- */
-var MeinAutoJs = window.MeinAutoJs || {};
-if ({} === MeinAutoJs) {throw new Error('Could not initialize framework!');}
-if (typeof MeinAutoJs.abstract === 'undefined') {MeinAutoJs.abstract = {};}
-
 /**
  * @class
  * @classdesc An abstract controller class
@@ -18,7 +8,7 @@ if (typeof MeinAutoJs.abstract === 'undefined') {MeinAutoJs.abstract = {};}
  * @constructs
  * @abstract
  */
-MeinAutoJs.abstract.Controller = new function () {
+MeinAutoJs.define('MeinAutoJs.abstract.Controller', new function () {
     /**
      * @description bind public properties or methods
      * @memberOf MeinAutoJs.abstract.Controller
@@ -26,4 +16,4 @@ MeinAutoJs.abstract.Controller = new function () {
      * @alias {MeinAutoJs.abstract.Controller}
      */
     var _ = this;
-};
+});

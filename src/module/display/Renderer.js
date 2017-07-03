@@ -1,15 +1,5 @@
 "use strict";
 
-/** @var {(jQuery|function)} $ */
-
-/**
- * @namespace
- * @typedef {Object} MeinAutoJs
- */
-var MeinAutoJs = window.MeinAutoJs || {};
-if ({} === MeinAutoJs) {throw new Error('Could not initialize framework!');}
-if (typeof MeinAutoJs.display === 'undefined') {MeinAutoJs.display = {};}
-
 /**
  * @class
  * @classdesc The renderer handles the display viewport for app views
@@ -17,7 +7,7 @@ if (typeof MeinAutoJs.display === 'undefined') {MeinAutoJs.display = {};}
  * @typedef {function} MeinAutoJs.display.Renderer
  * @constructs
  */
-MeinAutoJs.display.Renderer = new function () {
+MeinAutoJs.define('MeinAutoJs.display.Renderer', new function () {
     /**
      * @description bind public properties or methods
      * @memberOf MeinAutoJs.display.Renderer
@@ -74,4 +64,4 @@ MeinAutoJs.display.Renderer = new function () {
             .addClass('display')
             .show();
     };
-};
+});
