@@ -1,16 +1,5 @@
 "use strict";
 
-/** @var {(jQuery|function)} $ */
-
-/**
- * @namespace
- * @typedef {Object} MeinAutoJs
- */
-var MeinAutoJs = window.MeinAutoJs || {};
-if ({} === MeinAutoJs) {throw new Error('Could not initialize framework!');}
-if (typeof MeinAutoJs.app === 'undefined') {MeinAutoJs.app = {};}
-if (typeof MeinAutoJs.app.tool === 'undefined') {MeinAutoJs.app.tool = {};}
-
 /** @module app/tool */
 
 /**
@@ -20,7 +9,7 @@ if (typeof MeinAutoJs.app.tool === 'undefined') {MeinAutoJs.app.tool = {};}
  * @typedef {function} MeinAutoJs.app.tool.Docs
  * @constructs
  */
-MeinAutoJs.app.tool.Docs = new function () {
+MeinAutoJs.define('MeinAutoJs.app.tool.Docs', new function () {
     /**
      * @description bind public properties or methods
      * @memberOf MeinAutoJs.app.tool.Docs
@@ -43,10 +32,12 @@ MeinAutoJs.app.tool.Docs = new function () {
      * @private
      */
     var renderDocs = function () {
-        var $docsRunner = $('[data-application="tool.Docs"]');
+        var $docRunner = $('[data-application="tool.Docs"]');
 
-        $docsRunner.on('click', function () {
+        $docRunner.removeClass('hidden');
+
+        $docRunner.on('click', function () {
             location.search = 'docs';
         });
     };
-};
+});

@@ -1,15 +1,5 @@
 "use strict";
 
-/** @var {(jQuery|function)} $ */
-
-/**
- * @namespace
- * @typedef {Object} MeinAutoJs
- */
-var MeinAutoJs = window.MeinAutoJs || {};
-if ({} === MeinAutoJs) {throw new Error('Could not initialize framework!');}
-if (typeof MeinAutoJs.core === 'undefined') {MeinAutoJs.core = {};}
-
 /**
  * @class
  * @classdesc The core app loader to load apps into DIC by
@@ -18,7 +8,7 @@ if (typeof MeinAutoJs.core === 'undefined') {MeinAutoJs.core = {};}
  * @typedef {function} MeinAutoJs.core.App
  * @constructs
  */
-MeinAutoJs.core.App = new function () {
+MeinAutoJs.define('MeinAutoJs.core.App', new function () {
     /**
      * @description bind public properties or methods
      * @memberOf MeinAutoJs.core.App
@@ -61,4 +51,4 @@ MeinAutoJs.core.App = new function () {
             MeinAutoJs.core.Manager.add(appModule);
         });
     };
-};
+});

@@ -17,15 +17,13 @@ Install dependencies with [npmjs][npmjs] at project root folder
 
 ## Documentation
 
-Generate documentation with [JSDoc][jsdoc]
+Generate documentation ([JSDoc][jsdoc]), scripts and stylesheets ([Sass][sass])
 
-    npm run generate-docs
+    npm run dev-run
+    
+or
 
-## Application demo stylesheets
-
-Generate stylesheets with [Sass][sass]
-
-    npm run generate-styles
+    npm run dev-watch
 
 ## Run demo application in browser
 

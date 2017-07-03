@@ -1,16 +1,5 @@
 "use strict";
 
-/** @var {(jQuery|function)} $ */
-
-/**
- * @namespace
- * @typedef {Object} MeinAutoJs
- */
-var MeinAutoJs = window.MeinAutoJs || {};
-if ({} === MeinAutoJs) {throw new Error('Could not initialize framework!');}
-if (typeof MeinAutoJs.app === 'undefined') {MeinAutoJs.app = {};}
-if (typeof MeinAutoJs.app.tool === 'undefined') {MeinAutoJs.app.tool = {};}
-
 /** @module app/tool */
 
 /**
@@ -20,7 +9,7 @@ if (typeof MeinAutoJs.app.tool === 'undefined') {MeinAutoJs.app.tool = {};}
  * @typedef {function} MeinAutoJs.app.tool.DateTime
  * @constructs
  */
-MeinAutoJs.app.tool.DateTime = new function () {
+MeinAutoJs.define('MeinAutoJs.app.tool.DateTime', new function () {
     /**
      * @description bind public properties or methods
      * @memberOf MeinAutoJs.app.tool.DateTime
@@ -73,4 +62,4 @@ MeinAutoJs.app.tool.DateTime = new function () {
 
         render();
     };
-};
+});

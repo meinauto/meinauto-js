@@ -1,17 +1,5 @@
 "use strict";
 
-/** @var {(jQuery|function)} $ */
-
-/**
- * @namespace
- * @typedef {Object} MeinAutoJs
- */
-var MeinAutoJs = window.MeinAutoJs || {};
-if ({} === MeinAutoJs) {throw new Error('Could not initialize framework!');}
-if (typeof MeinAutoJs.app === 'undefined') {MeinAutoJs.app = {};}
-if (typeof MeinAutoJs.app.Demo === 'undefined') {MeinAutoJs.app.Demo = {};}
-if (typeof MeinAutoJs.app.Demo.wrap === 'undefined') {MeinAutoJs.app.Demo.wrap = {};}
-
 /** @module app/Demo */
 /** @module app/Demo/wrap/Markup */
 
@@ -22,7 +10,7 @@ if (typeof MeinAutoJs.app.Demo.wrap === 'undefined') {MeinAutoJs.app.Demo.wrap =
  * @typedef {function} MeinAutoJs.app.Demo.wrap.Markup
  * @constructs
  */
-MeinAutoJs.app.Demo.wrap.Markup = new function () {
+MeinAutoJs.define('MeinAutoJs.app.Demo.wrap.Markup', new function () {
     /**
      * @description bind public properties or methods
      * @memberOf MeinAutoJs.app.Demo.wrap.Markup
@@ -53,4 +41,4 @@ MeinAutoJs.app.Demo.wrap.Markup = new function () {
 
         $demo.removeClass('hidden');
     };
-};
+});

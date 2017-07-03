@@ -5,4 +5,4 @@ if (typeof jQuery === 'undefined') {
     throw new Error('Missing loader library "jQuery"!');
 }
 
-$.getScript('/meinauto-js/src/module/core/System.js');
+$.getScript('js/module/core/System.js');

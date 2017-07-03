@@ -61,16 +61,6 @@ For automated testing use the integrated test runner:
 ```javascript
 "use strict";
 
-/** @var {(jQuery|function)} $ */
-
-/**
- * @namespace
- * @typedef {Object} MeinAutoJs
- */
-var MeinAutoJs = window.MeinAutoJs || {};
-if ({} === MeinAutoJs) {throw new Error('Could not initialize framework!');}
-if (typeof MeinAutoJs.app === 'undefined') {MeinAutoJs.app = {};}
-
 /**
  * @class
  * @classdesc my class description here
@@ -78,7 +68,7 @@ if (typeof MeinAutoJs.app === 'undefined') {MeinAutoJs.app = {};}
  * @typedef {function} MeinAutoJs.app.MockApp
  * @constructs
  */
-MeinAutoJs.app.MockApp = new function () {
+MeinAutoJs.define('MeinAutoJs.app.MockApp', new function () {
     /**
      * @alias {MeinAutoJs.app.MockApp}
      */
@@ -103,7 +93,7 @@ MeinAutoJs.app.MockApp = new function () {
         
         // do something
     };
-};
+});
 ```
 
 #### Function as first class citizen
@@ -213,23 +203,13 @@ var doSomething = function() {
 ```javascript
 "use strict";
 
-/** @var {(jQuery|function)} $ */
-
-/**
- * @namespace
- * @typedef {Object} MeinAutoJs
- */
-var MeinAutoJs = window.MeinAutoJs || {};
-if ({} === MeinAutoJs) {throw new Error('Could not initialize framework!');}
-if (typeof MeinAutoJs.abstract === 'undefined') {MeinAutoJs.abstract = {};}
-
 /**
  * @class
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.abstract.Controller
  * @constructs
  */
-MeinAutoJs.abstract.Controller = new function () {
+MeinAutoJs.define('MeinAutoJs.abstract.Controller', new function () {
     /**
      * @alias {MeinAutoJs.abstract.Controller}
      */
@@ -258,7 +238,7 @@ MeinAutoJs.abstract.Controller = new function () {
     _.construct = function () {
         // do something parent
     };
-};
+});
 ```
 
 #### define an inherited class
@@ -269,25 +249,13 @@ MeinAutoJs.abstract.Controller = new function () {
 ```javascript
 "use strict";
 
-/** @var {(jQuery|function)} $ */
-
-/**
- * @namespace
- * @typedef {Object} MeinAutoJs
- */
-var MeinAutoJs = window.MeinAutoJs || {};
-if ({} === MeinAutoJs) {throw new Error('Could not initialize framework!');}
-if (typeof MeinAutoJs.app === 'undefined') {MeinAutoJs.app = {};}
-if (typeof MeinAutoJs.app.MockApp === 'undefined') {MeinAutoJs.app.MockApp = {};}
-if (typeof MeinAutoJs.app.MockApp.controller === 'undefined') {MeinAutoJs.app.MockApp.controller = {};}
-
 /**
  * @class
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.app.MockApp.controller.Doing
  * @constructs
  */
-MeinAutoJs.app.MockApp.controller.Doing = new function () {
+MeinAutoJs.define('MeinAutoJs.app.MockApp.controller.Doing', new function () {
     /**
      * @alias {MeinAutoJs.app.MockApp.controller.Doing}
      */
@@ -309,7 +277,7 @@ MeinAutoJs.app.MockApp.controller.Doing = new function () {
     _.construct = function () {
         // do something inherit
     };
-};
+});
 ```
 
 Results as a class that inherits all public properties and methods from the abstract class.

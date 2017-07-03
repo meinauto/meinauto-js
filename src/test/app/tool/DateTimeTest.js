@@ -1,12 +1,9 @@
 "use strict";
 
-if (typeof MeinAutoJs.test.app === 'undefined') {MeinAutoJs.test.app = {};}
-if (typeof MeinAutoJs.test.app.tool === 'undefined') {MeinAutoJs.test.app.tool = {};}
-
 /**
  * @class
  */
-MeinAutoJs.test.app.tool.DateTimeTest = new function () {
+MeinAutoJs.define('MeinAutoJs.test.app.tool.DateTimeTest', new function () {
     /**
      * @description test {@link MeinAutoJs.app.tool.DateTime.layout} is setted
      * @param {MeinAutoJs.test.Unit.assert} assert
@@ -15,4 +12,4 @@ MeinAutoJs.test.app.tool.DateTimeTest = new function () {
     this.testHasLayout = function (assert, moduleClass) {
         assert.ok(moduleClass.layout, "has layout");
     };
-};
+});

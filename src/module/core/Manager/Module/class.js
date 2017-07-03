@@ -1,17 +1,5 @@
 "use strict";
 
-/** @var {(jQuery|function)} $ */
-
-/**
- * @namespace
- * @typedef {Object} MeinAutoJs
- */
-var MeinAutoJs = window.MeinAutoJs || {};
-if ({} === MeinAutoJs) {throw new Error('Could not initialize framework!');}
-if (typeof MeinAutoJs.core === 'undefined') {MeinAutoJs.core = {};}
-if (typeof MeinAutoJs.core.Manager === 'undefined') {MeinAutoJs.core.Manager = {};}
-if (typeof MeinAutoJs.core.Manager.Module === 'undefined') {MeinAutoJs.core.Manager.Module = {};}
-
 /**
  * @interface
  * @classdesc Module class interface representation
@@ -19,7 +7,7 @@ if (typeof MeinAutoJs.core.Manager.Module === 'undefined') {MeinAutoJs.core.Mana
  * @constructs
  * @tutorial MODULE-ORCHESTRATION-SYSTEM
  */
-MeinAutoJs.core.Manager.Module.class = new function () {
+MeinAutoJs.define('MeinAutoJs.core.Manager.Module.class', new function () {
     /**
      * @description bind public properties or methods from inner scope
      * @memberOf MeinAutoJs.core.Manager.Module.class
@@ -55,4 +43,4 @@ MeinAutoJs.core.Manager.Module.class = new function () {
      * @typedef {function} MeinAutoJs.core.Manager.Module.class.construct
      */
     _.construct = function () {};
-};
+});
