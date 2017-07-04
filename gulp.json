@@ -7,10 +7,9 @@
   },
   "docs" : {
     "src" : [
-      "src/**/*.js",
-      "!src/test"
+      "src/module/**/*.js"
     ],
-    "dest" : "web/doc/api"
+    "dest" : "web/doc"
   },
   "testunit" : {
     "src" : [

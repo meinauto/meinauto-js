@@ -8,7 +8,8 @@
   },
   "source": {
     "include": [
-      "src"
+      "src/app",
+      "src/module"
     ],
     "exclude": [
       "src/test"
@@ -34,7 +35,7 @@
     "encoding": "utf8",
     "template": "./node_modules/ink-docstrap/template",
     "tutorials": "./doc/tutorials",
-    "destination": "./web/doc/api",
+    "destination": "./web/doc",
     "readme": "./README.md",
     "private": true,
     "recurse": true

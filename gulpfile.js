@@ -16,14 +16,6 @@ var docConfig = require('./jsdoc.json');
 
 /**
  * @param {Object} cfg
- * @returns {*}
- */
-function cleanup(cfg) {
-    return del(cfg.dest);
-}
-
-/**
- * @param {Object} cfg
  * @param {(null|Object|function)=} builder
  * @param {string=} base
  * @returns {Gulp}
@@ -57,11 +49,12 @@ function buildVendors(cfg) {
 
 /**
  * @param {Object} cfg
+ * @param {function} callback
  * @returns {Gulp}
  */
-function buildDocs(cfg) {
+function buildDocs(cfg, callback) {
     return gulp.src(cfg.src, {read: false})
-        .pipe(jsdoc(docConfig));
+        .pipe(jsdoc(docConfig, callback));
 }
 
 /**
@@ -143,10 +136,10 @@ gulp.task('dev:styles', function() {
     buildStyles(config.styles);
 });
 
-gulp.task('dev:docs', function () {
+gulp.task('dev:docs', function (callback) {
     del(['web/doc/**']);
 
-    buildDocs(config.docs);
+    buildDocs(config.docs, callback);
 });
 
 

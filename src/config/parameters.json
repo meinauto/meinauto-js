@@ -2,7 +2,7 @@
   "appPath": "js/app",
   "modulePath": "js/module",
   "moduleLayout": "css",
-  "docFramework": "doc/api",
+  "docFramework": "doc",
   "testFrameworkUnit": "js/lib/qunit.js",
   "testFrameworkTheme": "css/debug.css"
 }
