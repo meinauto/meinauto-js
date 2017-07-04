@@ -146,7 +146,7 @@ gulp.task('dev:docs', function (callback) {
 /* init commands "dev" and "dev:watch" */
 gulp.task('dev', ['dev:scripts', 'dev:apps', 'dev:tests', 'dev:styles', 'dev:docs']);
 
-gulp.task('dev:watch', function () {
+gulp.task('dev:watch', ['dev'], function () {
     gulp.watch(config.scripts.src, ['dev:scripts']);
     gulp.watch(config.apps.src, ['dev:apps']);
     gulp.watch(config.tests.src, ['dev:tests']);
