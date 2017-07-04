@@ -151,5 +151,5 @@ gulp.task('dev:watch', ['dev'], function () {
     gulp.watch(config.apps.src, ['dev:apps']);
     gulp.watch(config.tests.src, ['dev:tests']);
     gulp.watch(config.styles.src, ['dev:styles']);
-    gulp.watch(config.docs.src, ['dev:docs']);
+    gulp.watch(config.apps.src, ['dev:docs']);
 });
