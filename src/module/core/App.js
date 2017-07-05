@@ -36,7 +36,7 @@ MeinAutoJs.define('MeinAutoJs.core.App', new function () {
     };
 
     /**
-     * @description initialize app modules
+     * @description initialize app modules and reference module class to DOM application
      * @memberOf MeinAutoJs.core.App
      * @private
      */
@@ -44,11 +44,19 @@ MeinAutoJs.define('MeinAutoJs.core.App', new function () {
         var $apps = $('[data-application]');
 
         $apps.each(function () {
-            var appModule = 'MeinAutoJs.app.' + $(this).data('application');
+            var $app = $(this),
+                appModule = 'MeinAutoJs.app.' + $app.data('application');
 
             _.collection.push(this);
 
-            MeinAutoJs.core.Manager.add(appModule);
+            MeinAutoJs.core.Manager.add(appModule, {app: this}).done(function () {
+                /**
+                 * @description each [data-application] attribute selector got appended
+                 *  a property <HTMLElement>.__class__ to access
+                 *  the module class {@link MeinAutoJs.core.Manager.Module.class} from DOM
+                 */
+                $app.prop('__class__', MeinAutoJs.core.Manager.get(appModule).class);
+            });
         });
     };
 });

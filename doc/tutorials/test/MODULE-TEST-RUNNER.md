@@ -45,7 +45,7 @@ MeinAutoJs.define('MeinAutoJs.test.app.MockApp', new function () {
 
 ###### Access application module class as isolated process
 
-Get the app module class as isolated process to make changes without apply to running module class in DIC
+Get the app module class as an isolated process to make changes without apply to running module class in DIC
 
 ```javascript
 this.testModuleClassIsolated = function (assert, moduleClass) {

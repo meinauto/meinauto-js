@@ -107,8 +107,6 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             namespace + '.js?' +
             String((new Date()).getTime());
 
-        // createModuleDOM(type);
-
         return $.get(moduleUrl)
             .done(function () {
                 var importedClass = getModuleDOM(type),
@@ -152,11 +150,20 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
                     delete importedClass.construct;
 
+                    if (typeof module.parameters !== 'undefined' &&
+                        typeof module.parameters.app !== 'undefined' &&
+                        true === isAppLoad
+                    ) {
+                        importedClass.__markup__ = module.parameters.app;
+                    }
+
                     if (null !== (layoutUri = getLayout(importedClass, true))) {
                         var $link = $('<link/>').attr({
                             'rel': 'stylesheet',
                             'href': layoutUri
                         });
+
+                        importedClass.__layout__ = layoutUri;
 
                         $('head').append($link);
                     }
@@ -459,7 +466,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @memberOf MeinAutoJs.core.Manager
      * @param {(string|Array)} type as module class name
      * @param {Object=} parameters an object of construction parameters
-     * @returns {function}
+     * @returns {(Deferred|function)}
      * @example MeinAutoJs.core.Manager.add('MeinAutoJs.namespace.part.ClassName', {})
      *  .done(function () {})
      *  .fail(function () {});

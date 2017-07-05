@@ -28,9 +28,18 @@ or
 ## Run demo application in browser
 
     http://hostname.tld/meinauto-js/web/index.html
+    
+or
+
+    http://hostname.tld/meinauto-js/web/index.html?tests
+
+or
+
+    http://hostname.tld/meinauto-js/web/index.html?docs
 
 ## Appendix
 
+...live long and prosper
 
 [npmjs]: https://www.npmjs.com/
 [jsdoc]: http://usejsdoc.org/

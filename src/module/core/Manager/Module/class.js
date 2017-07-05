@@ -6,6 +6,9 @@
  * @typedef {function} MeinAutoJs.core.Manager.Module.class
  * @constructs
  * @tutorial MODULE-ORCHESTRATION-SYSTEM
+ * @see if the module class is initialized by DOM application
+ *  the reference is appended to
+ *  class property MeinAutoJs.core.Manager.Module.class.__markup__
  */
 MeinAutoJs.define('MeinAutoJs.core.Manager.Module.class', new function () {
     /**
@@ -18,12 +21,19 @@ MeinAutoJs.define('MeinAutoJs.core.Manager.Module.class', new function () {
     var _ = this;
 
     /**
-     * @description the manager assign this property
+     * @description the manager assigns this property
      * @memberOf MeinAutoJs.core.Manager.Module.class
      * @type {string}
      * @tutorial MODULE-ORCHESTRATION-SYSTEM
      */
     _.type = 'MeinAutoJs.core.Manager.Module.class';
+
+    /**
+     * @description extend from another module class
+     * @memberOf MeinAutoJs.core.Manager.Module.class
+     * @type {string}
+     */
+    _.extend = 'MeinAutoJs.core.Manager.Module.class';
 
     /**
      * @description bind a stylesheet on module;
@@ -32,6 +42,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager.Module.class', new function () {
      * @memberOf MeinAutoJs.core.Manager.Module.class
      * @type {boolean}
      * @see '/src/lib/ui/template/module.scss.template'
+     * @see MeinAutoJs.core.Manager.Module.class.__layout__ the css reference path
      */
     _.layout = false;
 

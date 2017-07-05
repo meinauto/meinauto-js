@@ -7,7 +7,12 @@ All modules stored in a Dependency Injection Container – in following called D
 - register a module into DIC and receive a promise resolver
 
 ```javascript
-MeinAutoJs.core.Manager.add('MeinAutoJs.app.MockApp')
+/**
+ * @param {string} type as module class name
+ * @param {Object=} parameters optional object of construction parameters
+ * @returns {Deferred}
+ */
+MeinAutoJs.core.Manager.add('MeinAutoJs.app.MockApp', {})
     .done(function () {/* on module done */})
     .fail(function() {/* on module fail */});
 ```
@@ -26,10 +31,10 @@ MeinAutoJs.core.Manager.remove('MeinAutoJs.app.MockApp');
 
 ### The Module Autoload Declaration (MAD)
 
-For an example there is a [module template](../../../src/module/template/Module.js.template).
+For example there is a [module template](../../../src/module/template/Module.js.template).
 
-First initializing point for the autoloader could be an application 
-markup or a direct object call from another javascripts.
+First initializing point for the autoloaded module class could be an application 
+markup or a direct object call from another javascripts to access the module by DIC.
 
 #### Append autoloader run script to document head
 
@@ -70,12 +75,17 @@ For automated testing use the integrated test runner:
  */
 MeinAutoJs.define('MeinAutoJs.app.MockApp', new function () {
     /**
+     * @description bind public properties or methods
+     * @memberOf MeinAutoJs.app.MockApp
+     * @private
      * @alias {MeinAutoJs.app.MockApp}
      */
     var _ = this;
 
     /**
-     * init
+     * @description initialize application mock
+     * @memberOf MeinAutoJs.app.MockApp
+     * @public
      */
     _.construct = function () {
         $(_).on('custom.event', function() {
@@ -84,7 +94,9 @@ MeinAutoJs.define('MeinAutoJs.app.MockApp', new function () {
     };
     
     /**
-     * do something with class event
+     * @description do something with class event
+     * @memberOf MeinAutoJs.app.MockApp
+     * @private
      */
     var doSomething = function() {
         var $mockAppViewport = $('[data-application="MockApp"]');
@@ -117,7 +129,7 @@ Describe the class autoload construction:
 
 ```javascript
 /**
- * init
+ * @public
  */
 _.construct = function () {
     // do something
@@ -130,16 +142,18 @@ Bind custom events to class scope
 
 ```javascript
 /**
- * init
+ * @event MeinAutoJs.app.MockApp#custom:event
+ * @public
  */
 _.construct = function () {
-    $(_).on('custom.event', function() {
+    $(_).on('custom:event', function() {
         doSomething();
     });
 };
 
 /**
- * do something with class event
+ * @event MeinAutoJs.app.MockApp#custom:event
+ * @private
  */
 var doSomething = function() {
     var $mockAppViewport = $('[data-application="MockApp"]');
@@ -150,7 +164,10 @@ var doSomething = function() {
 Trigger custom events in class scope
 
 ```javascript
-$(MeinAutoJs.app.MockApp).trigger('custom.event', {});
+/**
+ * @fires MeinAutoJs.app.MockApp#custom:event
+ */
+$(MeinAutoJs.app.MockApp).trigger('custom:event', {});
 ```
 
 #### define autoload dependency classes
@@ -170,16 +187,16 @@ _.construct = function () {
         'MeinAutoJs.app.MockApp.model.Data',
         'MeinAutoJs.app.MockApp.view.Page'
     ]).done(function () {
-        $(_).trigger('custom.event');
+        $(_).trigger('custom:event');
     });
     
-    $(_).on('custom.event', function() {
+    $(_).on('custom:event', function() {
         doSomething();
     });
 };
 
 /**
- * do something with class event
+ * do something by class event
  */
 var doSomething = function() {
   /** @type {MeinAutoJs.app.MockApp.controller.Doing} */
@@ -288,7 +305,7 @@ If the parent class has a construct method it will call first the parent constru
 
 At least the inherit constructor is called.
 
-If a inherited public property / method is set, it doesn't set the parent public property / method.
+If an inherited public property / method is set, it doesn't set the parent public property / method.
 
 ```javascript
 MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp.controller.Doing');
