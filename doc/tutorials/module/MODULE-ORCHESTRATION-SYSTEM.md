@@ -142,7 +142,6 @@ Bind custom events to class scope
 
 ```javascript
 /**
- * @event MeinAutoJs.app.MockApp#custom:event
  * @public
  */
 _.construct = function () {
