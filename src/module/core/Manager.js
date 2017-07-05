@@ -107,70 +107,83 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             namespace + '.js?' +
             String((new Date()).getTime());
 
+        var layoutUri = null;
+
         return $.get(moduleUrl)
             .done(function () {
-                var importedClass = getModuleDOM(type),
-                    layoutUri = null;
+                var importedClass = getModuleDOM(type);
 
                 importedClass.type = type;
 
                 _.modules.push(createModule(importedClass));
 
-                if (importedClass.type === type) {
-                    if (typeof importedClass.extend !== 'undefined' &&
-                        typeof importedClass.extend === 'string'
-                    ) {
-                        _.add(importedClass.extend);
-                        return; // only pre register module for inheritance
-                    } else {
-                        var inheritModule = getModuleByExtend(type);
-                        if (null !== inheritModule) {
-                            var inheritClass = extend(
-                                inheritModule.class,
-                                importedClass
-                            );
+                /**
+                 * @description listen to event when module is ready
+                 * @event MeinAutoJs.core.Manager#ready
+                 */
+                $(_).on('ready', function (event, importedModuleClass) {
+                    if (importedClass.type === importedModuleClass.type) {
+                        if (typeof importedClass.extend !== 'undefined' &&
+                            typeof importedClass.extend === 'string'
+                        ) {
+                            _.add(importedClass.extend);
+                            return; // only pre register module for inheritance
+                        } else {
+                            var inheritModule = getModuleByExtend(type);
+                            if (null !== inheritModule) {
+                                var inheritClass = extend(
+                                    inheritModule.class,
+                                    importedClass
+                                );
 
-                            removeModule(importedClass.type, true);
+                                removeModule(importedClass.type, true);
 
-                            importedClass = inheritClass;
+                                importedClass = inheritClass;
+                            }
+                        }
+
+                        if (typeof importedClass.construct === 'undefined') {
+                            importedClass.construct = function () {};
+                        }
+
+                        if (typeof importedClass.construct.parentClass !== 'undefined' &&
+                            typeof importedClass.construct.parentClass === 'function'
+                        ) {
+                            importedClass.construct.parentClass(module);
+                        }
+
+                        importedClass.construct(module);
+
+                        delete importedClass.construct;
+
+                        if (typeof module.parameters !== 'undefined' &&
+                            typeof module.parameters.app !== 'undefined' &&
+                            true === isAppLoad
+                        ) {
+                            importedClass.__markup__ = module.parameters.app;
+                        }
+
+                        if (null !== (layoutUri = getLayout(importedClass, true))) {
+                            var $link = $('<link/>').attr({
+                                'rel': 'stylesheet',
+                                'href': layoutUri
+                            });
+
+                            importedClass.__layout__ = layoutUri;
+
+                            $('head').append($link);
                         }
                     }
+                });
 
-                    if (typeof importedClass.construct === 'undefined') {
-                        importedClass.construct = function () {};
-                    }
+                /**
+                 * @description fires to event if module is ready
+                 * @fires MeinAutoJs.core.Manager#ready
+                 */
+                $(_).trigger('ready', importedClass).off('ready');
 
-                    if (typeof importedClass.construct.parentClass !== 'undefined' &&
-                        typeof importedClass.construct.parentClass === 'function'
-                    ) {
-                        importedClass.construct.parentClass(module);
-                    }
-
-                    importedClass.construct(module);
-
-                    delete importedClass.construct;
-
-                    if (typeof module.parameters !== 'undefined' &&
-                        typeof module.parameters.app !== 'undefined' &&
-                        true === isAppLoad
-                    ) {
-                        importedClass.__markup__ = module.parameters.app;
-                    }
-
-                    if (null !== (layoutUri = getLayout(importedClass, true))) {
-                        var $link = $('<link/>').attr({
-                            'rel': 'stylesheet',
-                            'href': layoutUri
-                        });
-
-                        importedClass.__layout__ = layoutUri;
-
-                        $('head').append($link);
-                    }
-
-                    if (true === (MeinAutoJs.core.System.testing || false)) {
-                        test(type, isAppLoad);
-                    }
+                if (true === (MeinAutoJs.core.System.testing || false)) {
+                    test(type, isAppLoad);
                 }
             })
             .fail(function (error) {
@@ -462,6 +475,31 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
     };
 
     /**
+     * @description remove module
+     * @memberOf MeinAutoJs.core.Manager
+     * @param {string} type as module class name
+     * @returns {boolean}
+     * @example MeinAutoJs.core.Manager.remove('MeinAutoJs.namespace.part.ClassName');
+     * @tutorial MODULE-ORCHESTRATION-SYSTEM
+     */
+    _.remove = function (type) {
+        if (Array.isArray(type)) {
+            var done = false;
+            $(type).each(function () {
+                done = removeModule(type);
+                if (false === done) {
+                    console.error('Could not remove module "' + type + '".');
+                }
+            });
+            return done;
+        } else if (typeof type === 'string') {
+            return removeModule(type);
+        } else {
+            console.error('Could not remove module "' + type + '; Parameter "type" must be a string or array!');
+        }
+    };
+
+    /**
      * @description add module
      * @memberOf MeinAutoJs.core.Manager
      * @param {(string|Array)} type as module class name
@@ -492,31 +530,6 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
     };
 
     /**
-     * @description remove module
-     * @memberOf MeinAutoJs.core.Manager
-     * @param {string} type as module class name
-     * @returns {boolean}
-     * @example MeinAutoJs.core.Manager.remove('MeinAutoJs.namespace.part.ClassName');
-     * @tutorial MODULE-ORCHESTRATION-SYSTEM
-     */
-    _.remove = function (type) {
-        if (Array.isArray(type)) {
-            var done = false;
-            $(type).each(function () {
-                done = removeModule(type);
-                if (false === done) {
-                    console.error('Could not remove module "' + type + '".');
-                }
-            });
-            return done;
-        } else if (typeof type === 'string') {
-            return removeModule(type);
-        } else {
-            console.error('Could not remove module "' + type + '; Parameter "type" must be a string or array!');
-        }
-    };
-
-    /**
      * @description get module
      * @memberOf MeinAutoJs.core.Manager
      * @param {string} type as module class name
@@ -526,5 +539,17 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      */
     _.get = function (type) {
         return getModule(type);
+    };
+
+    /**
+     * @description has module
+     * @memberOf MeinAutoJs.core.Manager
+     * @param {string} type as module class name
+     * @returns {boolean}
+     * @example MeinAutoJs.core.Manager.has('MeinAutoJs.namespace.part.ClassName');
+     * @tutorial MODULE-ORCHESTRATION-SYSTEM
+     */
+    _.has = function (type) {
+        return null !== getModule(type);
     };
 });

@@ -8,8 +8,7 @@
   },
   "source": {
     "include": [
-      "src/app",
-      "src/module"
+      "src/app"
     ],
     "exclude": [
       "src/test"

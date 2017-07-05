@@ -159,7 +159,7 @@ MeinAutoJs.core.System = new function () {
             .done(function () {
                 $(MeinAutoJs.core.Manager).on('ready', function () {
                     MeinAutoJs.core.Manager.construct(moduleUri);
-                }).trigger('ready', module);
+                }).trigger('ready', module).off('ready');
             })
             .fail(function (error) {
                 console.error(
@@ -372,5 +372,3 @@ MeinAutoJs.core.System = new function () {
 };
 
 MeinAutoJs.core.System.construct();
-
-console.info('MeinAutoJs', MeinAutoJs);

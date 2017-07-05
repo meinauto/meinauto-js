@@ -4,6 +4,17 @@
 
 All modules stored in a Dependency Injection Container – in following called DIC
 
+- listen to event when module is ready registered into DIC;
+the event will be fired on manager everytime if a module get registered.
+
+```javascript
+$(MeinAutoJs.core.Manager).on('ready', function (event, module) {
+    if ('MeinAutoJs.app.MockApp' === module.type) {
+        var MockApp = module;
+    }
+});
+```
+
 - register a module into DIC and receive a promise resolver
 
 ```javascript
@@ -17,6 +28,12 @@ MeinAutoJs.core.Manager.add('MeinAutoJs.app.MockApp', {})
     .fail(function() {/* on module fail */});
 ```
 
+- has a module in DIC
+
+```javascript
+if (true === MeinAutoJs.core.Manager.has('MeinAutoJs.app.MockApp')) {}
+```
+
 - get a module from DIC
 
 ```javascript
@@ -26,14 +43,14 @@ var MockApp = MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp');
 - remove a module from DIC
 
 ```javascript
-MeinAutoJs.core.Manager.remove('MeinAutoJs.app.MockApp');
+if (true === MeinAutoJs.core.Manager.remove('MeinAutoJs.app.MockApp')) {}
 ```
 
 ### The Module Autoload Declaration (MAD)
 
 For example there is a [module template](../../../src/module/template/Module.js.template).
 
-First initializing point for the autoloaded module class could be an application 
+First initializing point of the autoloaded module class could be an application 
 markup or a direct object call from another javascripts to access the module by DIC.
 
 #### Append autoloader run script to document head
@@ -121,7 +138,7 @@ var _ = this;
 
 Define the autoload class method for module construction:
 
-This method get destroyed after module is loaded.
+This construct method get destroyed after module is loaded.
 
 #### define class autoload constructor
 
