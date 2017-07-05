@@ -1,14 +1,14 @@
-## The Module Test Runner (MTR)
+# The Module Test Runner (MTR)
 
 *Test Runner Description*
 
 The Test Runner will try to run tests for all modules stored in DIC
 
-### The Module Test Autoload Declaration (MTAD)
+## The Module Test Autoload Declaration (MTAD)
 
 For an example there is a [test template](../../../src/test/module/template/ModuleTest.js.template)
 
-#### Automated unit testing for modules with [QUnit][qunit]
+### Automated unit testing for modules with [QUnit][qunit]
 
     load system with get parameter "tests" like
     
@@ -20,7 +20,7 @@ to disable the test suit send
     e.g.
     https://hostname/?tests-stop
 
-##### Add unit test per module
+#### Add unit test per module
 
     example:
     ./src/test/app/MockAppTest.js
@@ -43,7 +43,7 @@ MeinAutoJs.define('MeinAutoJs.test.app.MockApp', new function () {
 });
 ```
 
-###### Access application module class as isolated process
+##### Access application module class as isolated process
 
 Get the app module class as an isolated process to make changes without apply to running module class in DIC
 
@@ -55,7 +55,7 @@ this.testModuleClassIsolated = function (assert, moduleClass) {
 };
 ```
 
-###### Access application module class from DIC
+##### Access application module class from DIC
 
 Get the app module class from DIC
 
@@ -67,7 +67,7 @@ this.testModuleClassDIC = function (assert, moduleClass) {
 };
 ```
 
-###### Access application in DOM
+##### Access application in DOM
 
 Get the app module representation from DOM
 

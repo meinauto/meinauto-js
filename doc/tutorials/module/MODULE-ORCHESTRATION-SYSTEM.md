@@ -1,4 +1,4 @@
-## The Module Orchestration System (MOS)
+# The Module Orchestration System (MOS)
 
 *Module Description*
 
@@ -46,14 +46,14 @@ var MockApp = MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp');
 if (true === MeinAutoJs.core.Manager.remove('MeinAutoJs.app.MockApp')) {}
 ```
 
-### The Module Autoload Declaration (MAD)
+## The Module Autoload Declaration (MAD)
 
 For example there is a [module template](../../../src/module/template/Module.js.template).
 
 First initializing point of the autoloaded module class could be an application 
 markup or a direct object call from another javascripts to access the module by DIC.
 
-#### Append autoloader run script to document head
+### Append autoloader run script to document head
 
 ```html
 <head>
@@ -61,13 +61,13 @@ markup or a direct object call from another javascripts to access the module by 
 </head>
 ```
 
-#### Automated unit testing for modules with [QUnit][qunit]
+### Automated unit testing for modules with [QUnit][qunit]
 
 For automated testing use the integrated test runner:
 
 * [Module Test Runner](../test/MODULE-TEST-RUNNER.md)
 
-#### Define an initializing point for an autoloaded class.
+### Define an initializing point for an autoloaded class.
 
 ```html
 <body>
@@ -75,7 +75,7 @@ For automated testing use the integrated test runner:
 </body>
 ```
 
-#### Create class file
+### Create class file
 
     example:
     ./src/app/MockApp.js
@@ -125,7 +125,7 @@ MeinAutoJs.define('MeinAutoJs.app.MockApp', new function () {
 });
 ```
 
-#### Function as first class citizen
+### Function as first class citizen
 
 Bind class scope to private variable to set on this public interfaces:
 
@@ -140,7 +140,7 @@ Define the autoload class method for module construction:
 
 This construct method get destroyed after module is loaded.
 
-#### define class autoload constructor
+### Define class autoload constructor
 
 Describe the class autoload construction:
 
@@ -153,7 +153,7 @@ _.construct = function () {
 };
 ```
 
-#### define class events
+### Define class events
 
 Bind custom events to class scope
 
@@ -186,7 +186,7 @@ Trigger custom events in class scope
 $(MeinAutoJs.app.MockApp).trigger('custom:event', {});
 ```
 
-#### define autoload dependency classes
+### Define autoload dependency classes
 
     example:
     ./src/app/MockApp/controller/Doing.js
@@ -226,9 +226,9 @@ var doSomething = function() {
 };
 ```
 
-### extend classes as object inheritance
+## Extend classes as object inheritance
 
-#### define an abstract class
+### Define an abstract class
 
     example:
     ./src/module/abstract/Controller.js
@@ -274,7 +274,7 @@ MeinAutoJs.define('MeinAutoJs.abstract.Controller', new function () {
 });
 ```
 
-#### define an inherited class
+### Define an inherited class
 
     example:
     ./src/app/MockApp/controller/Doing.js
