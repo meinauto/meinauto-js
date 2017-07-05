@@ -504,7 +504,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
     /**
      * @description add module
      * @memberOf MeinAutoJs.core.Manager
-     * @param {(string|Array)} type as module class name
+     * @param {(string|Array.<string>)} type as module class name
      * @param {Object=} parameters an object of construction parameters
      * @returns {(Deferred|function)}
      * @example MeinAutoJs.core.Manager.add('MeinAutoJs.namespace.part.ClassName', {})
