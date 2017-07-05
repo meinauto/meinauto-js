@@ -51,11 +51,18 @@ MeinAutoJs.define('MeinAutoJs.core.App', new function () {
 
             MeinAutoJs.core.Manager.add(appModule, {app: this}).done(function () {
                 /**
+                 * @description the DOM representation of the app module
+                 * @type {MeinAutoJs.core.Manager.Module.class.__markup__}
+                 * @property appDOM.__class__
+                 */
+                var appDOM = $app.get(0);
+
+                /**
                  * @description each [data-application] attribute selector got appended
                  *  a property <HTMLElement>.__class__ to access
                  *  the module class {@link MeinAutoJs.core.Manager.Module.class} from DOM
                  */
-                $app.prop('__class__', MeinAutoJs.core.Manager.get(appModule).class);
+                appDOM.constructor.prototype.__class__ = MeinAutoJs.core.Manager.get(appModule).class;
             });
         });
     };

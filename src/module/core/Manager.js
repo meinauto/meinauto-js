@@ -160,7 +160,8 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                             typeof module.parameters.app !== 'undefined' &&
                             true === isAppLoad
                         ) {
-                            importedClass.__markup__ = module.parameters.app;
+                            importedClass.constructor
+                                .prototype.__markup__ = module.parameters.app;
                         }
 
                         if (null !== (layoutUri = getLayout(importedClass, true))) {
@@ -169,10 +170,15 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                                 'href': layoutUri
                             });
 
-                            importedClass.__layout__ = layoutUri;
+                            importedClass.constructor
+                                .prototype.__layout__ = $link.get(0);
 
                             $('head').append($link);
                         }
+                    }
+
+                    if (true === (MeinAutoJs.core.System.testing || false)) {
+                        test(type, isAppLoad);
                     }
                 });
 
@@ -181,10 +187,6 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                  * @fires MeinAutoJs.core.Manager#ready
                  */
                 $(_).trigger('ready', importedClass).off('ready');
-
-                if (true === (MeinAutoJs.core.System.testing || false)) {
-                    test(type, isAppLoad);
-                }
             })
             .fail(function (error) {
                 console.error(
@@ -277,11 +279,11 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @param {function} module the module class
      * @param {boolean} module.layout if module has layout
      * @param {string} module.type as module class name
-     * @param {boolean} cache bust the cache to get module stylesheet fresh
+     * @param {boolean} cacheBust bust the cache to get module stylesheet fresh
      * @returns {(null|string)}
      */
-    var getLayout = function (module, cache) {
-        cache = cache || false;
+    var getLayout = function (module, cacheBust) {
+        cacheBust = cacheBust || false;
 
         var layoutUri = null;
 
@@ -300,7 +302,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
             layoutUri = configuration.moduleLayout + '/' +
                 namespace.toLowerCase() + '.css' +
-                ((true === cache) ? '?' + String((new Date()).getTime()) : '');
+                ((true === cacheBust) ? '?' + String((new Date()).getTime()) : '');
 
             $.ajax(layoutUri, {method: 'head'})
                 .fail(function (error) {

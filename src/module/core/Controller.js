@@ -4,6 +4,7 @@
  * @class
  * @classdesc The core controller to handle the viewport {@link MeinAutoJs.display.Renderer}
  * @implements {MeinAutoJs.core.Manager.Module.class}
+ * @augments {MeinAutoJs.abstract.Controller}
  * @typedef {function} MeinAutoJs.core.Controller
  * @constructs
  */

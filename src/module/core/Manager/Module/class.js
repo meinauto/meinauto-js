@@ -42,7 +42,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager.Module.class', new function () {
      * @memberOf MeinAutoJs.core.Manager.Module.class
      * @type {boolean}
      * @see '/src/lib/ui/template/module.scss.template'
-     * @see MeinAutoJs.core.Manager.Module.class.__layout__ the css reference path
+     * @see MeinAutoJs.core.Manager.Module.class.__layout__ the css reference
      */
     _.layout = false;
 
