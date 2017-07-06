@@ -143,14 +143,70 @@ gulp.task('dev:docs', function (callback) {
 });
 
 
-/* init commands "dev" and "dev:watch" */
-gulp.task('dev', ['dev:scripts', 'dev:apps', 'dev:tests', 'dev:styles', 'dev:docs']);
+/* dev watch */
+gulp.task('dev:watch:scripts', function() {
+    return watch(config.scripts.src, function () {
+        del(['web/doc/**']);
 
-gulp.task('dev:watch', ['dev'], function () {
-    gulp.watch(config.scripts.src, ['dev:scripts']);
-    gulp.watch(config.apps.src, ['dev:apps']);
-    gulp.watch(config.tests.src, ['dev:tests']);
-    gulp.watch(config.styles.src, ['dev:styles']);
-    gulp.watch(config.scripts.src, ['dev:docs']);
-    gulp.watch(config.apps.src, ['dev:docs']);
+        buildScripts(config.scripts);
+    });
 });
+
+gulp.task('dev:watch:apps', function() {
+    return watch(config.apps.src, function () {
+        del(['web/js/app/*.js', 'web/js/app/**/*.js']);
+
+        buildApps(config.apps);
+    });
+});
+
+gulp.task('dev:watch:tests', function() {
+    return watch(config.tests.src, function () {
+        del(['web/js/test/*.js', 'web/js/app/test/*.js']);
+
+        buildTests(config.tests);
+    });
+});
+
+gulp.task('dev:watch:styles', function() {
+    return watch(config.styles.src, function () {
+        del(['web/css/*.css', 'web/css/**/*.css']);
+
+        buildStyles(config.styles);
+    });
+});
+
+gulp.task('dev:watch:docs:scripts', function() {
+    return watch(config.scripts.src, function (callback) {
+        del(['web/doc/**']);
+
+        buildDocs(config.docs, callback);
+    });
+});
+
+gulp.task('dev:watch:docs:apps', function() {
+    return watch(config.apps.src, function (callback) {
+        del(['web/doc/**']);
+
+        buildDocs(config.docs, callback);
+    });
+});
+
+/* init commands "dev" and "dev:watch" */
+gulp.task('dev', [
+    'dev:scripts',
+    'dev:apps',
+    'dev:tests',
+    'dev:styles',
+    'dev:docs'
+]);
+
+gulp.task('dev:watch', [
+    'dev',
+    'dev:watch:scripts',
+    'dev:watch:apps',
+    'dev:watch:tests',
+    'dev:watch:styles',
+    'dev:watch:docs:scripts',
+    'dev:watch:docs:apps'
+]);
