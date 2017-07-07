@@ -5,19 +5,19 @@
     color: black;
     @include transition(color .5s ease-in-out);
 
-    &.color-1 {
+    &.color-promise-1 {
       color: $brand-primary;
     }
-    &.color-2 {
+    &.color-promise-2 {
       color: $brand-success;
     }
-    &.color-3 {
+    &.color-promise-3 {
       color: $brand-warning;
     }
-    &.color-4 {
+    &.color-promise-4 {
       color: $brand-danger;
     }
-    &.color-5 {
+    &.color-promise-5 {
       color: $brand-info;
     }
   }

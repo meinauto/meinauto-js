@@ -52,7 +52,7 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependPromise', new function () {
         var color = 1,
             interval = 0,
             render = function () {
-                $demo.find('h1').prop('class', 'color-' + color);
+                $demo.find('h1').prop('class', 'color-promise-' + color);
 
                 if (interval > 0) {return;}
                 interval = setTimeout(function () {

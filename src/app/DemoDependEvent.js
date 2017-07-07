@@ -55,7 +55,7 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependEvent', new function () {
         var color = 1,
             interval = 0,
             render = function () {
-                $demo.find('h1').prop('class', 'color-' + color);
+                $demo.find('h1').prop('class', 'color-event-' + color);
 
                 if (interval > 0) {return;}
                 interval = setTimeout(function () {
@@ -73,7 +73,7 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependEvent', new function () {
             clearTimeout(interval);
             interval = 0;
 
-            if (null !== MeinAutoJs.core.Manager.get(_.type)) {
+            if (null !== MeinAutoJs.core.Manager.get('MeinAutoJs.app.DemoDependEvent.wrap.Markup')) {
                 render();
             }
         });
