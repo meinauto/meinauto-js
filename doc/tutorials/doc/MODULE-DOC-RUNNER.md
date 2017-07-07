@@ -4,7 +4,7 @@
 
 The Doc Runner will try to run documentation generation for all declared modules
 
-### Automated doc generated view in browser
+## Automated doc generated view in browser
 
     load system with get parameter "docs" like
     
@@ -16,7 +16,7 @@ to disable the doc runner send
     e.g.
     https://hostname.tld/?docs-stop
 
-#### Start live documentation coding
+### Start live documentation coding
 
 run watcher like described in README.md
 
