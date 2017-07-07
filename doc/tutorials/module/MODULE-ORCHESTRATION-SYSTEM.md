@@ -177,13 +177,17 @@ var doSomething = function() {
 };
 ```
 
-Trigger custom events in class scope
+Trigger custom events at outside the class scope;
+
+e.g.
 
 ```javascript
 /**
  * @fires MeinAutoJs.app.MockApp#custom:event
  */
-$(MeinAutoJs.app.MockApp).trigger('custom:event', {});
+console.log(
+    $(MeinAutoJs.app.MockApp).trigger('custom:event', {})
+);
 ```
 
 ### Define autoload dependency classes

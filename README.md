@@ -8,6 +8,7 @@ Content
 
 * [Module Orchestration System](doc/tutorials/module/MODULE-ORCHESTRATION-SYSTEM.md)
 * [Module Test Runner](doc/tutorials/test/MODULE-TEST-RUNNER.md)
+* [Module Doc Runner](doc/tutorials/doc/MODULE-DOC-RUNNER.md)
 
 ## Requirements
 
@@ -17,7 +18,8 @@ Install dependencies with [npmjs][npmjs] at project root folder
 
 ## Documentation, scripts and stylesheets
 
-Generate documentation ([JSDoc][jsdoc]), scripts and stylesheets ([Sass][sass])
+Generate scripts and stylesheets ([Sass][sass]) 
+and documentation ([JSDoc][jsdoc] & [JSDoc Type][jsdoc-type])
 
     npm run dev-run 
     
@@ -27,15 +29,15 @@ or
 
 ## Run demo application in browser
 
-    http://hostname.tld/meinauto-js/web/index.html
+    https://hostname.tld/meinauto-js/web/index.html
     
 or
 
-    http://hostname.tld/meinauto-js/web/index.html?tests
+    https://hostname.tld/meinauto-js/web/index.html?tests
 
 or
 
-    http://hostname.tld/meinauto-js/web/index.html?docs
+    https://hostname.tld/meinauto-js/web/index.html?docs
 
 ## Appendix
 
@@ -43,4 +45,5 @@ or
 
 [npmjs]: https://www.npmjs.com/
 [jsdoc]: http://usejsdoc.org/
+[jsdoc-type]: http://usejsdoc.org/tags-type.html
 [sass]: http://sass-lang.com/

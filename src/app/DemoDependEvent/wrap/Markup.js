@@ -1,27 +1,27 @@
 "use strict";
 
-/** @module app/Demo */
-/** @module app/Demo/wrap/Markup */
+/** @module app/DemoDependEvent */
+/** @module app/DemoDependEvent/wrap/Markup */
 
 /**
  * @class
- * @classdesc an application demo dependency
+ * @classdesc an application demo event dependency
  * @implements {MeinAutoJs.core.Manager.Module.class}
- * @typedef {function} MeinAutoJs.app.Demo.wrap.Markup
+ * @typedef {function} MeinAutoJs.app.DemoDependEvent.wrap.Markup
  * @constructs
  */
-MeinAutoJs.define('MeinAutoJs.app.Demo.wrap.Markup', new function () {
+MeinAutoJs.define('MeinAutoJs.app.DemoDependEvent.wrap.Markup', new function () {
     /**
      * @description bind public properties or methods
-     * @memberOf MeinAutoJs.app.Demo.wrap.Markup
+     * @memberOf MeinAutoJs.app.DemoDependEvent.wrap.Markup
      * @private
-     * @alias {MeinAutoJs.app.Demo}
+     * @alias {MeinAutoJs.app.DemoDependEvent.wrap.Markup}
      */
     var _ = this;
 
     /**
      * @description initialize application demo dependency
-     * @memberOf MeinAutoJs.app.Demo.wrap.Markup
+     * @memberOf MeinAutoJs.app.DemoDependEvent.wrap.Markup
      */
     _.construct = function () {
         wrapMarkup();
@@ -29,11 +29,11 @@ MeinAutoJs.define('MeinAutoJs.app.Demo.wrap.Markup', new function () {
 
     /**
      * @description wrap the demo markup with headline tag
-     * @memberOf MeinAutoJs.app.Demo.wrap.Markup
+     * @memberOf MeinAutoJs.app.DemoDependEvent.wrap.Markup
      * @private
      */
     var wrapMarkup = function () {
-        var $demo = $('[data-application="Demo"]');
+        var $demo = $('[data-application="DemoDependEvent.wrap.Markup"]');
 
         var title = $demo.text();
 

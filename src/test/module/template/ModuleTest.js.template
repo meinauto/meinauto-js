@@ -5,7 +5,7 @@
  */
 MeinAutoJs.define('MeinAutoJs.test.template.ModuleTest', new function () {
     /**
-     * test {@link MeinAutoJs.template.Module.layout} is setted
+     * @description test {@link MeinAutoJs.template.Module.layout} is setted
      * @param {MeinAutoJs.test.Unit.assert} assert
      * @param {MeinAutoJs.template.Module} moduleClass
      */

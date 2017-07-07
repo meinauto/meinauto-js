@@ -13,12 +13,12 @@ For an example there is a [test template](../../../src/test/module/template/Modu
     load system with get parameter "tests" like
     
     e.g.
-    https://hostname/?tests
+    https://hostname.tld/?tests
     
 to disable the test suit send
 
     e.g.
-    https://hostname/?tests-stop
+    https://hostname.tld/?tests-stop
 
 #### Add unit test per module
 
@@ -60,7 +60,7 @@ this.testModuleClassIsolated = function (assert, moduleClass) {
 Get the app module class from DIC
 
 ```javascript
-this.testModuleClassDIC = function (assert, moduleClass) {
+this.testModuleClassDIC = function (assert) {
     var mockApp = MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp');
     
     assert.ok(mockApp.type === 'MeinAutoJs.app.MockApp', "access module class from DIC");
@@ -72,7 +72,7 @@ this.testModuleClassDIC = function (assert, moduleClass) {
 Get the app module representation from DOM
 
 ```javascript
-this.testModuleApplicationDOM = function (assert, moduleClass) {
+this.testModuleApplicationDOM = function (assert) {
     var $mockApp = $('[data-application="MockApp"]');
     
     assert.ok($mockApp.length === 1, "access module class from DOM");

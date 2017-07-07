@@ -18,14 +18,19 @@ MeinAutoJs.define('MeinAutoJs.core.App', new function () {
     var _ = this;
 
     /**
-     * @description stored app views
+     * @description stored app views; the DOM representations
+     *  of the app module classes
      * @memberOf MeinAutoJs.core.App
      * @type {Array.<HTMLElement>}
      */
     _.collection = [];
 
     /**
-     * @description initialize all described apps on view
+     * @description initialize all described apps on view;
+     *  this event is the point where core modules and
+     *  their dependencies are done and from now on only
+     *  app modules will add dependencies to DIC
+     *  {@link MeinAutoJs.core.Manager.modules}
      * @memberOf MeinAutoJs.core.App
      * @event MeinAutoJs.core.App#initialize
      */
@@ -36,7 +41,8 @@ MeinAutoJs.define('MeinAutoJs.core.App', new function () {
     };
 
     /**
-     * @description initialize app modules and reference module class to DOM application
+     * @description initialize app modules and reference module
+     *  class to DOM application
      * @memberOf MeinAutoJs.core.App
      * @private
      */

@@ -1,53 +1,53 @@
 "use strict";
 
-/** @module app/Demo */
+/** @module app/DemoDependPromise */
 
 /**
  * @class
- * @classdesc an application demo
+ * @classdesc an application demo with a promise dependency
  * @implements {MeinAutoJs.core.Manager.Module.class}
- * @typedef {function} MeinAutoJs.app.Demo
+ * @typedef {function} MeinAutoJs.app.DemoDependPromise
  * @constructs
  */
-MeinAutoJs.define('MeinAutoJs.app.Demo', new function () {
+MeinAutoJs.define('MeinAutoJs.app.DemoDependPromise', new function () {
     /**
      * @description bind public properties or methods
-     * @memberOf MeinAutoJs.app.Demo
+     * @memberOf MeinAutoJs.app.DemoDependPromise
      * @private
-     * @alias {MeinAutoJs.app.Demo}
+     * @alias {MeinAutoJs.app.DemoDependPromise}
      */
     var _ = this;
 
     /**
      * @description autoload stylesheet for display
-     * @memberOf MeinAutoJs.app.Demo
+     * @memberOf MeinAutoJs.app.DemoDependPromise
      * @type {boolean}
      */
     _.layout = true;
 
     /**
      * @description initialize application demo
-     * @memberOf MeinAutoJs.app.Demo
-     * @requires module:app/Demo/wrap/Markup
+     * @memberOf MeinAutoJs.app.DemoDependPromise
+     * @requires module:app/DemoDependPromise/wrap/Markup
      */
     _.construct = function () {
         MeinAutoJs.core.Manager
-            .add('MeinAutoJs.app.Demo.wrap.Markup')
+            .add('MeinAutoJs.app.DemoDependPromise.wrap.Markup')
             .done(function () {
                 renderDemo();
             })
             .fail(function () {
-                console.error('Could not load dependency "MeinAutoJs.app.Demo.wrap.Markup"');
+                console.error('Could not load dependency "MeinAutoJs.app.DemoDependPromise.wrap.Markup"');
             });
     };
 
     /**
      * @description render demo
-     * @memberOf MeinAutoJs.app.Demo
+     * @memberOf MeinAutoJs.app.DemoDependPromise
      * @private
      */
     var renderDemo = function () {
-        var $demo = $('[data-application="Demo"]');
+        var $demo = $('[data-application="DemoDependPromise"]');
 
         var color = 1,
             interval = 0,

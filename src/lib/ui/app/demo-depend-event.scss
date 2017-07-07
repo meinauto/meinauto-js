@@ -1,6 +1,6 @@
 @import "../bootstrap";
 
-[data-application="Demo"] {
+[data-application="DemoDependEvent"] {
   h1 {
     color: black;
     @include transition(color .5s ease-in-out);

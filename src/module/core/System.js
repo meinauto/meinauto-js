@@ -4,7 +4,7 @@
 
 /**
  * @namespace
- * @typedef {{core: {}}} MeinAutoJs
+ * @typedef {{core: Object}} MeinAutoJs
  */
 var MeinAutoJs = {core: {}};
 
@@ -237,7 +237,7 @@ MeinAutoJs.core.System = new function () {
                         clearInterval(refreshInterval);
                         refreshInterval = 0;
                         $runnerControl.text('stopped');
-                    }).on('mouseleave', function () {
+                    }).on('mouseout mouseleave', function () {
                         clearInterval(refreshInterval);
                         refreshInterval = setInterval(refreshFrame, refreshTimeout);
                         $runnerControl.text('running');
@@ -295,7 +295,6 @@ MeinAutoJs.core.System = new function () {
             }).text('✖').appendTo('.debug');
 
             $(document).on('click', '#test-runner-control', function () {
-                console.log('click');
                 location.search = 'tests-stop';
             });
 
@@ -353,7 +352,7 @@ MeinAutoJs.core.System = new function () {
      * @param {string} type as module class name
      * @returns {string}
      * @example MeinAutoJs.core.System.getNamespace('MeinAutoJs.namespace.part.ClassName');
-     *  // returns: namespace/part/ClassName
+     *  // returns: nameSpace/part/ClassName
      */
     _.getNamespace = function (type) {
         return String(type)

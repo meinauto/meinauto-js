@@ -61,6 +61,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @private
      * @param {Object} module the module object with module class
      * @returns {(void|function)}
+     * @todo refactor too long method {@link MeinAutoJs.core.Manager~register}
      */
     var register = function (module) {
         var type = '';
@@ -117,76 +118,80 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
                 _.modules.push(createModule(importedClass));
 
+                if (typeof importedClass.extend !== 'undefined' &&
+                    typeof importedClass.extend === 'string'
+                ) {
+                    _.add(importedClass.extend);
+                    return; // only pre register module for inheritance
+                } else {
+                    var inheritModule = getModuleByExtend(type);
+                    if (null !== inheritModule) {
+                        var inheritClass = extend(
+                            inheritModule.class,
+                            importedClass
+                        );
+
+                        removeModule(importedClass.type, true);
+
+                        importedClass = inheritClass;
+                    }
+                }
+
+                if (typeof importedClass.construct === 'undefined') {
+                    importedClass.construct = function () {};
+                }
+
+                if (typeof importedClass.construct.parentClass !== 'undefined' &&
+                    typeof importedClass.construct.parentClass === 'function'
+                ) {
+                    importedClass.construct.parentClass(module);
+                }
+
+                importedClass.construct(module);
+
+                delete importedClass.construct;
+
+                if (typeof module.parameters !== 'undefined' &&
+                    typeof module.parameters.app !== 'undefined' &&
+                    true === isAppLoad
+                ) {
+                    importedClass.constructor
+                        .prototype.__markup__ = module.parameters.app;
+                }
+
+                if (null !== (layoutUri = getLayout(importedClass, true))) {
+                    var $link = $('<link/>').attr({
+                        'rel': 'stylesheet',
+                        'href': layoutUri
+                    });
+
+                    importedClass.constructor
+                        .prototype.__layout__ = $link.get(0);
+
+                    $('head').append($link);
+                }
+
+                if (true === (MeinAutoJs.core.System.testing || false)) {
+                    test(type, isAppLoad);
+                }
+
                 /**
-                 * @description listen to event when module is ready
+                 * @description listen to event when module is ready;
+                 *  this listen event declaration has only the purpose
+                 *  of documentation
                  * @event MeinAutoJs.core.Manager#ready
                  */
-                $(_).on('ready', function (event, importedModuleClass) {
-                    if (importedClass.type === importedModuleClass.type) {
-                        if (typeof importedClass.extend !== 'undefined' &&
-                            typeof importedClass.extend === 'string'
-                        ) {
-                            _.add(importedClass.extend);
-                            return; // only pre register module for inheritance
-                        } else {
-                            var inheritModule = getModuleByExtend(type);
-                            if (null !== inheritModule) {
-                                var inheritClass = extend(
-                                    inheritModule.class,
-                                    importedClass
-                                );
-
-                                removeModule(importedClass.type, true);
-
-                                importedClass = inheritClass;
-                            }
-                        }
-
-                        if (typeof importedClass.construct === 'undefined') {
-                            importedClass.construct = function () {};
-                        }
-
-                        if (typeof importedClass.construct.parentClass !== 'undefined' &&
-                            typeof importedClass.construct.parentClass === 'function'
-                        ) {
-                            importedClass.construct.parentClass(module);
-                        }
-
-                        importedClass.construct(module);
-
-                        delete importedClass.construct;
-
-                        if (typeof module.parameters !== 'undefined' &&
-                            typeof module.parameters.app !== 'undefined' &&
-                            true === isAppLoad
-                        ) {
-                            importedClass.constructor
-                                .prototype.__markup__ = module.parameters.app;
-                        }
-
-                        if (null !== (layoutUri = getLayout(importedClass, true))) {
-                            var $link = $('<link/>').attr({
-                                'rel': 'stylesheet',
-                                'href': layoutUri
-                            });
-
-                            importedClass.constructor
-                                .prototype.__layout__ = $link.get(0);
-
-                            $('head').append($link);
-                        }
-                    }
-
-                    if (true === (MeinAutoJs.core.System.testing || false)) {
-                        test(type, isAppLoad);
-                    }
-                });
+                // $(_).on('ready', function (event, importedModuleClass) {
+                //     if (importedClass.type === importedModuleClass.type) {
+                //          // do something
+                //     }
+                // });
 
                 /**
                  * @description fires to event if module is ready
                  * @fires MeinAutoJs.core.Manager#ready
                  */
-                $(_).trigger('ready', importedClass).off('ready');
+                $(_).trigger('ready', importedClass);
             })
             .fail(function (error) {
                 console.error(
@@ -205,6 +210,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @param {boolean} isAppLoad indicate module class as an app
      * @throws {Error} if module class could not be cloned
      * @tutorial MODULE-TEST-RUNNER
+     * @todo refactor too long method test {@link MeinAutoJs.core.Manager~test}
      */
     var test = function (type, isAppLoad) {
         var namespace = MeinAutoJs.core.System.getNamespace(type),
@@ -299,6 +305,19 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
              * @type {string}
              */
             var namespace = MeinAutoJs.core.System.getNamespace(module.type);
+
+            /**
+             * @type {string}
+             */
+            var layoutClassName = (function (toDashesLowerCase) {
+                return toDashesLowerCase
+                    .replace(/\W+/g, '-')
+                    .replace(/([a-z\d])([A-Z])/g, '$1-$2')
+                    .toLowerCase();
+            })(namespace.substr(namespace.lastIndexOf('/') + 1));
+
+            namespace = (namespace.substr(0, namespace.lastIndexOf('/') + 1)) +
+                layoutClassName;
 
             layoutUri = configuration.moduleLayout + '/' +
                 namespace.toLowerCase() + '.css' +
@@ -404,7 +423,8 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
     };
 
     /**
-     * @description remove module from DOM reference
+     * @description remove module from DOM reference;
+     *  also if the parent namespace is empty it will be also deleted
      * @memberOf MeinAutoJs.core.Manager
      * @private
      * @param {string} type as module class name
