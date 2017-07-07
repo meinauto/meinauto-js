@@ -102,7 +102,13 @@ function buildScripts(cfg) {
  * @returns {Gulp}
  */
 function buildStyles(cfg) {
-    return build(cfg, sass({outputStyle: 'compressed'}), './src/lib/ui');
+    return gulp.src(cfg.src, {base: './src/lib/ui'})
+        .pipe(plumber())
+        .pipe(sourcemaps.init())
+        .pipe(sass({outputStyle: 'compressed'}))
+        .pipe(sourcemaps.write())
+        .pipe(plumber.stop())
+        .pipe(gulp.dest(cfg.dest));
 }
 
 

@@ -111,7 +111,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         var layoutUri = null;
 
         return $.get(moduleUrl)
-            .done(function () {
+            .then(function () {
                 var importedClass = getModuleDOM(type);
 
                 importedClass.type = type;
@@ -155,8 +155,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                     typeof module.parameters.app !== 'undefined' &&
                     true === isAppLoad
                 ) {
-                    importedClass.constructor
-                        .prototype.__markup__ = module.parameters.app;
+                    importedClass.__markup__ = module.parameters.app;
                 }
 
                 if (null !== (layoutUri = getLayout(importedClass, true))) {
@@ -165,8 +164,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                         'href': layoutUri
                     });
 
-                    importedClass.constructor
-                        .prototype.__layout__ = $link.get(0);
+                    importedClass.__layout__ = $link.get(0);
 
                     $('head').append($link);
                 }
@@ -186,6 +184,9 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 //          // do something
                 //     }
                 // });
+            })
+            .then(function () {
+                var importedClass = getModuleDOM(type);
 
                 /**
                  * @description fires to event if module is ready
@@ -376,6 +377,10 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 classScope = classScope[className];
             }
         });
+
+        if (typeof classScope !== 'object') {
+            throw new Error('Could not find ' + type + ' typeof object: ' + typeof classScope);
+        }
 
         return classScope;
     };
