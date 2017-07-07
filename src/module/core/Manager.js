@@ -367,7 +367,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @private
      * @param {string} type as module class name
      * @returns {(Window|MeinAutoJs.core.Manager.Module.class)}
-     * @throws {Error} if module class is not of type <Object>
+     * @throws {Error} if module class is not of type {Object}
      */
     var getModuleDOM = function(type) {
         var classScope = window,
