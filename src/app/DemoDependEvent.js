@@ -31,11 +31,15 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependEvent', new function () {
      * @requires module:app/DemoDependEvent/wrap/Markup
      */
     _.construct = function () {
-        $(MeinAutoJs.core.Manager).on('ready', function (event, module) {
-            if ('MeinAutoJs.app.DemoDependEvent.wrap.Markup' === module.type) {
-                renderDemo();
-            }
-        });
+        if (true === MeinAutoJs.core.Manager.has('MeinAutoJs.app.DemoDependEvent.wrap.Markup')) {
+            renderDemo();
+        } else {
+            $(MeinAutoJs.core.Manager).on('ready', function (event, module) {
+                if ('MeinAutoJs.app.DemoDependEvent.wrap.Markup' === module.type) {
+                    renderDemo();
+                }
+            });
+        }
     };
 
     /**

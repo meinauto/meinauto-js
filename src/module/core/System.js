@@ -377,5 +377,3 @@ MeinAutoJs.core.System = new function () {
 };
 
 MeinAutoJs.core.System.construct();
-
-console.info('MeinAutoJs', MeinAutoJs);
