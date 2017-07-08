@@ -24,9 +24,7 @@ $(MeinAutoJs.core.Manager).on('ready', function (event, module) {
  * @returns {Deferred}
  */
 MeinAutoJs.core.Manager.add('MeinAutoJs.app.MockApp', {})
-    .done(function () {
-        var MockApp = module;
-    })
+    .done(function () {/* on module done... */})
     .fail(function() {/* on module fail... */});
 ```
 
