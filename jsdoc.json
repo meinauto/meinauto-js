@@ -21,7 +21,7 @@
     "plugins/shout"
   ],
   "templates": {
-    "systemName"            : "MeinAuto JS",
+    "systemName"            : "MeinAutoJs",
     "copyright"             : "MIT",
     "navType"               : "vertical",
     "inverseNav"            : true,
