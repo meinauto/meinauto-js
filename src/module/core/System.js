@@ -11,8 +11,8 @@ var MeinAutoJs = {core: {}};
 /**
  * @class
  * @classdesc Initial loaded class as running system
- *  to register the module {@link MeinAutoJs.core.Manager}
- *  and the test runner
+ *  to register the module {@link MeinAutoJs.core.Manager};
+ *  the test runner and the doc runner
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.core.System
  * @constructs
@@ -28,6 +28,7 @@ MeinAutoJs.core.System = new function () {
 
     /**
      * @description the system configuration
+     *  {@link MeinAutoJs.core.System~configuration}
      * @memberOf MeinAutoJs.core.System
      * @private
      * @type {Object}
@@ -90,7 +91,8 @@ MeinAutoJs.core.System = new function () {
      * @description configure system pathes
      * @memberOf MeinAutoJs.core.System
      * @private
-     * @param {function} registerCallback the callback to register module manager, test and doc framework
+     * @param {function} registerCallback the callback to register
+     *  module manager, test and doc framework
      */
     var configure = function (registerCallback) {
         /**
@@ -146,6 +148,7 @@ MeinAutoJs.core.System = new function () {
      * @memberOf MeinAutoJs.core.System
      * @private
      * @param {Object} module the module object with module class
+     * @param {string} module.type as module class name
      */
     var register = function (module) {
         var type = module.type;

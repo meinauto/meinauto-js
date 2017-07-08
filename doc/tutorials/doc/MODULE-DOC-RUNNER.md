@@ -9,12 +9,12 @@ The Doc Runner will try to run documentation generation for all declared modules
     load system with get parameter "docs" like
     
     e.g.
-    https://hostname.tld/?docs
+    http://localhost/meinauto-js/web/?docs
     
 to disable the doc runner send
 
     e.g.
-    https://hostname.tld/?docs-stop
+    http://localhost/meinauto-js/web/?docs-stop
 
 ### Start live documentation coding
 

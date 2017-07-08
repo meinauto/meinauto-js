@@ -24,23 +24,28 @@ $(MeinAutoJs.core.Manager).on('ready', function (event, module) {
  * @returns {Deferred}
  */
 MeinAutoJs.core.Manager.add('MeinAutoJs.app.MockApp', {})
-    .done(function () {/* on module done */})
-    .fail(function() {/* on module fail */});
+    .done(function () {
+        var MockApp = module;
+    })
+    .fail(function() {/* on module fail... */});
 ```
 
-- has a module in DIC
+- has a module class in DIC
 
 ```javascript
 if (true === MeinAutoJs.core.Manager.has('MeinAutoJs.app.MockApp')) {}
 ```
 
-- get a module from DIC
+- get a module class from DIC
 
 ```javascript
-var MockApp = MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp');
+/**
+ * @type {MeinAutoJs.app.MockApp} MockApp
+ */
+var MockApp = MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp').class;
 ```
 
-- remove a module from DIC
+- remove a module class from DIC
 
 ```javascript
 if (true === MeinAutoJs.core.Manager.remove('MeinAutoJs.app.MockApp')) {}
@@ -48,7 +53,7 @@ if (true === MeinAutoJs.core.Manager.remove('MeinAutoJs.app.MockApp')) {}
 
 ## The Module Autoload Declaration (MAD)
 
-For example there is a [module template](../../../src/module/template/Module.js.template).
+For example there is a [module template][module-template](../../../src/module/template/Module.js.template).
 
 First initializing point of the autoloaded module class could be an application 
 markup or a direct object call from another javascripts to access the module by DIC.
@@ -65,7 +70,7 @@ markup or a direct object call from another javascripts to access the module by 
 
 For automated testing use the integrated test runner:
 
-* [Module Test Runner](../test/MODULE-TEST-RUNNER.md)
+* [Module Test Runner][MTR](../test/MODULE-TEST-RUNNER.md)
 
 ### Define an initializing point for an autoloaded class.
 
@@ -341,5 +346,6 @@ MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp.controller.Doing');
 }
 ```
 
-
+[MTR]: https://github.com/xeroxzone/meinauto-js/blob/master/doc/tutorials/test/MODULE-TEST-RUNNER.md
+[module-template]: https://github.com/xeroxzone/meinauto-js/blob/master/src/module/template/Module.js.template
 [qunit]: https://qunitjs.com

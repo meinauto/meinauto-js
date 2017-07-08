@@ -59,7 +59,8 @@ MeinAutoJs.define('MeinAutoJs.core.App', new function () {
                 /**
                  * @description each [data-application] attribute selector got appended
                  *  a property <HTMLElement>.__class__ to access
-                 *  the module class {@link MeinAutoJs.core.Manager.Module.class} from DOM
+                 *  the module class {@link MeinAutoJs.core.Manager.Module.class}
+                 *  by reference from DOM
                  */
                 $app.prop('__class__', MeinAutoJs.core.Manager.get(appModule).class);
             });

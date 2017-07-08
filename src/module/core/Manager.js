@@ -60,6 +60,8 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @memberOf MeinAutoJs.core.Manager
      * @private
      * @param {Object} module the module object with module class
+     * @param {string} module.type as module class name
+     * @param {Object=} module.parameters an object of construction parameters
      * @returns {(void|function)}
      * @todo refactor too long method {@link MeinAutoJs.core.Manager~register}
      */
@@ -175,8 +177,10 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
                 /**
                  * @description listen to event when module is ready;
-                 *  this listen event declaration has only the purpose
-                 *  of documentation
+                 *  this commented listen event declaration at
+                 *  {@link MeinAutoJs.core.Manager} has only the purpose
+                 *  of documentation linking of doc tags; these events will be triggered
+                 *  and can be listened by other module classes
                  * @event MeinAutoJs.core.Manager#ready
                  */
                 // $(_).on('ready', function (event, importedModuleClass) {
@@ -227,15 +231,23 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             return; // test runner applies to apps
         }
 
+        /**
+         * @description clone module class as copy from constructor per isolated test method
+         * @param {MeinAutoJs.core.Manager.Module.class} moduleClass
+         * @returns {*}
+         * @throws {Error} module class failed to clone for test
+         */
         var clone = function(moduleClass) {
             if (null !== moduleClass) {
                 var inheritClass = new moduleClass.constructor();
 
                 inheritClass.type = type;
 
+                delete inheritClass.construct;
+
                 return inheritClass;
             } else {
-                throw new Error('Can not clone module class as test reference!');
+                throw new Error('Can not clone module class "' + type + '" for test!');
             }
         };
 
@@ -271,6 +283,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @description inherit a module from another
      * @memberOf MeinAutoJs.core.Manager
      * @private
+     * @see MeinAutoJs.core.Extend
      * @param {MeinAutoJs.core.Manager.Module.class} inheritClass the inherited wrapper
      * @param {MeinAutoJs.core.Manager.Module.class} moduleClass the parent class
      * @returns {(null|MeinAutoJs.core.Manager.Module.class)}
@@ -380,7 +393,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         });
 
         if (typeof classScope !== 'object') {
-            throw new Error('Could not find  module class "' + type + '" as <Object>; got instead "' + typeof classScope + '"');
+            throw new Error('Could not find module class "' + type + '" as <object>; got instead "' + typeof classScope + '"');
         }
 
         return classScope;
@@ -551,7 +564,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         } else if (typeof type === 'string') {
             $resolver = register({type: type, parameters: parameters});
         } else {
-            console.error('Could not add module "' + type + '; Parameter "type" must be a string or array!');
+            console.error('Could not add module "' + type + '; Parameter "type" must be a <string> or <array>!');
         }
 
         return $resolver;

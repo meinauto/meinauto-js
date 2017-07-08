@@ -55,7 +55,7 @@ MeinAutoJs.define('MeinAutoJs.app.tool.DateTime', new function () {
             clearTimeout(interval);
             interval = 0;
 
-            if (null !== MeinAutoJs.core.Manager.get(_.type)) {
+            if (true === MeinAutoJs.core.Manager.has(_.type)) {
                 render();
             }
         });

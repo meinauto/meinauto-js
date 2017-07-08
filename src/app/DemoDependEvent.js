@@ -73,7 +73,9 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependEvent', new function () {
             clearTimeout(interval);
             interval = 0;
 
-            if (null !== MeinAutoJs.core.Manager.get('MeinAutoJs.app.DemoDependEvent.wrap.Markup')) {
+            if (true === MeinAutoJs.core.Manager
+                    .has('MeinAutoJs.app.DemoDependEvent.wrap.Markup')
+            ) {
                 render();
             }
         });
