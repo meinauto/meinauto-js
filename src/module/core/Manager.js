@@ -112,7 +112,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
         var layoutUri = null;
 
-        return $.get(moduleUrl)
+        return $.getScript(moduleUrl)
             .then(function () {
                 var importedClass = getModuleDOM(type);
 
@@ -174,29 +174,17 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 if (true === (MeinAutoJs.core.System.testing || false)) {
                     test(type, isAppLoad);
                 }
-
-                /**
-                 * @description listen to event when module is ready;
-                 *  this commented listen event declaration at
-                 *  {@link MeinAutoJs.core.Manager} has only the purpose
-                 *  of documentation linking of doc tags; these events will be triggered
-                 *  and can be listened by other module classes
-                 * @event MeinAutoJs.core.Manager#ready
-                 */
-                // $(_).on('ready', function (event, importedModuleClass) {
-                //     if (importedClass.type === importedModuleClass.type) {
-                //          // do something
-                //     }
-                // });
             })
             .then(function () {
                 var importedClass = getModuleDOM(type);
 
                 /**
                  * @description fires to event if module is ready
-                 * @fires MeinAutoJs.core.Manager#ready
+                 * @fires MeinAutoJs.core.Manager#ready:callback
                  */
-                $(_).trigger('ready', importedClass);
+                $(_).trigger('ready:callback', importedClass);
+
+                return importedClass;
             })
             .fail(function (error) {
                 console.error(
@@ -251,7 +239,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             }
         };
 
-        $.get(testUrl)
+        $.getScript(testUrl)
             .done(function () {
                 var moduleClass = getModuleDOM(type),
                     moduleClassTest = getModuleDOM(testCase);
@@ -516,6 +504,33 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
     };
 
     /**
+     * @description ready module;
+     *  the callback will be triggered if the named type
+     *  of the module class is ready
+     * @memberOf MeinAutoJs.core.Manager
+     * @param {string} type as module class name
+     * @param {function} callback runs after module class is ready
+     * @tutorial MODULE-ORCHESTRATION-SYSTEM
+     */
+    _.ready = function (type, callback) {
+        if (true === _.has(type)) {
+            callback(_.get(type).class);
+        } else {
+            /**
+             * @description listen to event when module is ready
+             * @event MeinAutoJs.core.Manager#ready:callback
+             * @example MeinAutoJs.core.Manager
+             *  .ready('MeinAutoJs.namespace.part.ClassName', function (module) {});
+             */
+            $(_).on('ready:callback', function (event, module) {
+                if (type === module.type) {
+                    callback(module);
+                }
+            });
+        }
+    };
+
+    /**
      * @description remove module
      * @memberOf MeinAutoJs.core.Manager
      * @param {string} type as module class name
@@ -564,7 +579,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         } else if (typeof type === 'string') {
             $resolver = register({type: type, parameters: parameters});
         } else {
-            console.error('Could not add module "' + type + '; Parameter "type" must be a <string> or <array>!');
+            console.error('Could not add module "' + type + '; parameter "type" must be a <string> or <array>!');
         }
 
         return $resolver;

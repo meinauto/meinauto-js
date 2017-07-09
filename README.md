@@ -14,7 +14,7 @@ These modules represented by a constructor function as a class object. They can 
 dependency injection methods and listen to asynchronously autoloads 
 by event or promise pattern.
 
-They can switch on to use layout files from sass generated as a 
+They can switch on to use layout files from [Sass][sass] generated as a 
 module class bound autoloaded stylesheet.
 
 Module classes are build in a namespace struture that can be used for 
@@ -23,7 +23,7 @@ everything what the power of JavaScript can do.
 Initializing of module classes can be done by a HTML attribute or by 
 another JavaScript that calls the module manager.
 
-A module test runner based on [QUnit][qunit] and isolated test methods is available.
+A module test runner based on [QUnit][qunit] and isolated test methods are available.
 
 Also a documentation runner that based on [JSDoc][jsdoc]; view the doc tag interpretation 
 in time at coding, with help of file watchers from [Gulp][gulp].

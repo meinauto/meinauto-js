@@ -21,7 +21,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager.Module.class', new function () {
     var _ = this;
 
     /**
-     * @description the manager assigns this property
+     * @description the manager assigns this property automatically
      * @memberOf MeinAutoJs.core.Manager.Module.class
      * @type {string}
      * @tutorial MODULE-ORCHESTRATION-SYSTEM
@@ -29,7 +29,8 @@ MeinAutoJs.define('MeinAutoJs.core.Manager.Module.class', new function () {
     _.type = 'MeinAutoJs.core.Manager.Module.class';
 
     /**
-     * @description extend from another module class
+     * @description extend from another module class;
+     *  this property is optional
      * @memberOf MeinAutoJs.core.Manager.Module.class
      * @type {string}
      */

@@ -76,6 +76,14 @@ MeinAutoJs.core.System = new function () {
     _.type = 'MeinAutoJs.core.System';
 
     /**
+     * @description is the testing framework is activated
+     * @memberOf MeinAutoJs.core.System
+     * @type {boolean}
+     * @default
+     */
+    _.testing = false;
+
+    /**
      * @description initialize manager, test and documentation framework
      * @memberOf MeinAutoJs.core.System
      */
@@ -160,9 +168,9 @@ MeinAutoJs.core.System = new function () {
 
         $.get(moduleUrl)
             .done(function () {
-                $(MeinAutoJs.core.Manager).on('ready', function () {
+                $(MeinAutoJs.core.Manager).on('ready:manager', function () {
                     MeinAutoJs.core.Manager.construct(moduleUri);
-                }).trigger('ready', module).off('ready');
+                }).trigger('ready:manager', module).off('ready:manager');
             })
             .fail(function (error) {
                 console.error(
@@ -265,6 +273,14 @@ MeinAutoJs.core.System = new function () {
         } else if (true === Boolean(sessionStorage.getItem('runTests')) ||
             -1 < location.search.indexOf('tests')
         ) {
+            $.ajax(testFrameworkThemeUri, {method: 'head'})
+                .fail(function (error) {
+                    console.error(
+                        error.status + ' ' + error.statusText +
+                        ' - Could not load layout for test framework!'
+                    );
+                });
+
             var $link = $('<link/>').attr({
                 'rel': 'stylesheet',
                 'href': testFrameworkThemeUri
@@ -279,10 +295,16 @@ MeinAutoJs.core.System = new function () {
 
             $.getScript(testFrameworkUnitUri)
                 .done(function () {
-                    _.testing = true;
+                    /**
+                     * @description test framework integration
+                     * @memberOf MeinAutoJs
+                     * @type {{Unit: QUnit}}
+                     */
                     MeinAutoJs.test = {
                         Unit: window.QUnit || {}
                     };
+
+                    _.testing = true;
                 });
 
             $('<button/>').prop({

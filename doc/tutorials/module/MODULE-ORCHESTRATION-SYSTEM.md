@@ -8,10 +8,8 @@ All modules stored in a Dependency Injection Container – in following called D
 the event will be fired on manager everytime if a module get registered.
 
 ```javascript
-$(MeinAutoJs.core.Manager).on('ready', function (event, module) {
-    if ('MeinAutoJs.app.MockApp' === module.type) {
-        var MockApp = module;
-    }
+MeinAutoJs.core.Manager.ready('MeinAutoJs.app.MockApp', function (module) {
+    var MockApp = module;
 });
 ```
 
@@ -24,7 +22,9 @@ $(MeinAutoJs.core.Manager).on('ready', function (event, module) {
  * @returns {Deferred}
  */
 MeinAutoJs.core.Manager.add('MeinAutoJs.app.MockApp', {})
-    .done(function () {/* on module done... */})
+    .done(function (module) {
+        var MockApp = module;
+    })
     .fail(function() {/* on module fail... */});
 ```
 

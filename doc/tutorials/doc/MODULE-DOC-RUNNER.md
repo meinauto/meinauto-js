@@ -18,10 +18,13 @@ to disable the doc runner send
 
 ### Start live documentation coding
 
-run watcher like described in README.md
+run watcher like described in [README.md][readme](../../../README.md)
 
     npm run dev-watch
 
 if doc runner is loaded, the browser refreshes the documentation
 from all documentated code changes as long as the mouse cursor 
 is not over the browser window.
+
+
+[readme]: https://github.com/xeroxzone/meinauto-js/blob/master/README.md
