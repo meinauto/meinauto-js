@@ -101,6 +101,7 @@ MeinAutoJs.core.System = new function () {
      * @private
      * @param {function} registerCallback the callback to register
      *  module manager, test and doc framework
+     * @throws {Error} could not interpret json configuration as <object>
      */
     var configure = function (registerCallback) {
         /**
@@ -117,13 +118,17 @@ MeinAutoJs.core.System = new function () {
 
         $.get(configPath)
             .done(function (data) {
+                if (typeof data !== 'object') {
+                    throw new Error('Invalid configuration json file!');
+                }
+
                 /**
                  * @type {{
-                         *  modulePath: string,
-                         *  docFramework: string,
-                         *  testFrameworkUnit: string,
-                         *  testFrameworkTheme: string
-                         * }}
+                 *  modulePath: string,
+                 *  docFramework: string,
+                 *  testFrameworkUnit: string,
+                 *  testFrameworkTheme: string
+                 * }}
                  */
                 configuration = data;
                 moduleUri = configuration.modulePath;
@@ -201,6 +206,14 @@ MeinAutoJs.core.System = new function () {
             '</section>');
 
             sessionStorage.setItem('runDocs', true);
+
+            $.ajax(docFrameworkUri, {method: 'head'})
+                .fail(function (error) {
+                    console.error(
+                        error.status + ' ' + error.statusText +
+                        ' - Could not load layout for test framework!'
+                    );
+                });
 
             $(function() {
                 var refreshTimeout = 10240,
@@ -305,6 +318,12 @@ MeinAutoJs.core.System = new function () {
                     };
 
                     _.testing = true;
+                })
+                .fail(function (error) {
+                    console.error(
+                        error.status + ' ' + error.statusText +
+                        ' - Could not load library for test framework!'
+                    );
                 });
 
             $('<button/>').prop({

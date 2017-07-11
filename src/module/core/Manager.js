@@ -112,7 +112,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
         var layoutUri = null;
 
-        return $.getScript(moduleUrl)
+        return $.get(moduleUrl)
             .then(function () {
                 var importedClass = getModuleDOM(type);
 
@@ -174,10 +174,10 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 if (true === (MeinAutoJs.core.System.testing || false)) {
                     test(type, isAppLoad);
                 }
-            })
-            .then(function () {
-                var importedClass = getModuleDOM(type);
 
+                return importedClass;
+            })
+            .then(function (importedClass) {
                 /**
                  * @description fires to event if module is ready
                  * @fires MeinAutoJs.core.Manager#ready:callback
@@ -189,7 +189,9 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             .fail(function (error) {
                 console.error(
                     error.status + ' ' + error.statusText +
-                    ' - Could not load module "' + namespace + '"!'
+                    ' - Could not load ' +
+                    ((isAppLoad) ? 'app' : '') + ' module "' +
+                    namespace + '"!'
                 );
             });
     };
@@ -201,7 +203,8 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @private
      * @param {string} type as module class name
      * @param {boolean} isAppLoad indicate module class as an app
-     * @throws {Error} if module class could not be cloned
+     * @returns {void}
+     * @throws {Error} if module class could not be cloned for test isolation
      * @tutorial MODULE-TEST-RUNNER
      * @todo refactor too long method test {@link MeinAutoJs.core.Manager~test}
      */
@@ -222,7 +225,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         /**
          * @description clone module class as copy from constructor per isolated test method
          * @param {MeinAutoJs.core.Manager.Module.class} moduleClass
-         * @returns {*}
+         * @returns {MeinAutoJs.core.Manager.Module.class}
          * @throws {Error} module class failed to clone for test
          */
         var clone = function(moduleClass) {
@@ -239,7 +242,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             }
         };
 
-        $.getScript(testUrl)
+        $.get(testUrl)
             .done(function () {
                 var moduleClass = getModuleDOM(type),
                     moduleClassTest = getModuleDOM(testCase);
@@ -253,10 +256,10 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                             MeinAutoJs.test.Unit.test(testCase + '.' + i, function(assert) {
                                 return test(assert, clone(moduleClass));
                             });
+                        } else {
+                            console.warn('Test "' + testCase + '" has no test methods!');
                         }
                     });
-                } else {
-                    console.warn('Test "' + testCase + '" has no test methods!');
                 }
             })
             .fail(function (error) {

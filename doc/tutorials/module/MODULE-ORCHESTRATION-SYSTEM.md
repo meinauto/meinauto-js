@@ -139,11 +139,11 @@ Bind class scope to private variable to set on this public interfaces:
 var _ = this;
 ```
 
-Define the autoload class method for module construction:
-
-This construct method get destroyed after module is loaded.
+It is optional to define the autoload class method for module construction.
 
 ### Define class autoload constructor
+
+This construct method get destroyed after module is loaded.
 
 Describe the class autoload construction:
 
