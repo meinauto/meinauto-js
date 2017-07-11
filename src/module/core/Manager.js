@@ -189,8 +189,8 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             .fail(function (error) {
                 console.error(
                     error.status + ' ' + error.statusText +
-                    ' - Could not load ' +
-                    ((isAppLoad) ? 'app' : '') + ' module "' +
+                    ' - Could not load' +
+                    ((isAppLoad) ? ' app' : '') + ' module "' +
                     namespace + '"!'
                 );
             });
