@@ -27,7 +27,7 @@ MeinAutoJs.define('MeinAutoJs.template.Module', new function () {
     _.layout = false;
 
     /**
-     * @description construct the super class;
+     * @description construct the module class;
      *  the method get destroyed by manager after module is loaded;
      *  this method is optional
      * @memberOf MeinAutoJs.template.Module
