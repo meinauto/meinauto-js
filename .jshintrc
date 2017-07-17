@@ -69,6 +69,6 @@
   "wsh": false,
   "yui": false,
   "globals": {
-    "LCARS": true
+    "MeinAutoJs": true
   }
 }

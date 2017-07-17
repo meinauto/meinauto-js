@@ -11,6 +11,6 @@ MeinAutoJs.define('MeinAutoJs.test.app.tool.TestsTest', new function () {
     this.testHasControl = function (assert) {
         var $control = $('[data-application="tool.Tests"]');
 
-        assert.ok($control.length > 0, "has control");
+        assert.ok($control.length > 0, 'has control');
     };
 });

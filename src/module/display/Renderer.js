@@ -42,11 +42,11 @@ MeinAutoJs.define('MeinAutoJs.display.Renderer', new function () {
     /**
      * @description initialize display
      * @memberOf MeinAutoJs.display.Renderer
-     * @fires MeinAutoJs.core.App#initialize
+     * @fires MeinAutoJs.core.App#app:initialize
      */
     _.construct = function () {
         $(function () {
-            $(MeinAutoJs.core.App).trigger('initialize');
+            $(MeinAutoJs.core.App).trigger('app:initialize');
         });
 
         _.display = initDisplay();

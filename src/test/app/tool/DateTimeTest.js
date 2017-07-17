@@ -10,6 +10,6 @@ MeinAutoJs.define('MeinAutoJs.test.app.tool.DateTimeTest', new function () {
      * @param {MeinAutoJs.app.tool.DateTime} moduleClass
      */
     this.testHasLayout = function (assert, moduleClass) {
-        assert.ok(moduleClass.layout, "has layout");
+        assert.ok(moduleClass.layout, 'has layout');
     };
 });

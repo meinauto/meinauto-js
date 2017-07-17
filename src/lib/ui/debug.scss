@@ -1,4 +1,4 @@
-@import "variables";
+@import "bootstrap";
 
 $main-size: 1rem;
 $main-highlight: $brand-warning;
@@ -35,25 +35,53 @@ $main-highlight: $brand-warning;
       list-style: inside none;
 
       li {
+        display: none;
         overflow: auto;
         margin-bottom: $main-size;
         padding: $main-size * .65;
 
         &.pass {
+          display: list-item;
           background-color: green;
         }
         &.fail {
+          display: list-item;
           background-color: darkred;
         }
 
         a {
           display: block;
+          width: 12rem;
+          margin: .5rem 0;
+          padding: .25rem;
+          border: dashed .05rem orange;
+          background-color: black;
+          color: orange;
+          font: 1rem monospace;
+          text-transform: uppercase;
+          text-decoration: none;
+          @include transition(all .25s ease-in-out);
+
+          &:hover {
+            background-color: orange;
+            color: black;
+            padding-right: 20%;
+            @include transition(all .25s ease-in-out);
+          }
+
+          &:active {
+            background-color: white;
+          }
         }
 
         ol {
           list-style-type: decimal;
         }
       }
+    }
+
+    #qunit-header {
+      margin: 0;
     }
 
     .qunit-source {
@@ -63,7 +91,7 @@ $main-highlight: $brand-warning;
   }
 
   #qunit-testrunner-toolbar {
-    margin: $main-size 0;
+    margin: $main-size * .8 0;
 
     form {
       margin: $main-size * .5 0;
@@ -77,10 +105,23 @@ $main-highlight: $brand-warning;
 
     label {
       margin-left: 0;
+      font-size: .8rem;
 
-      & + label {
+      & + label + label {
         margin-left: $main-size * .5;
       }
+
+      &[for="qunit-urlconfig-hidepassed"] {
+        display: none;
+      }
     }
+
+    #qunit-modulefilter {
+      display: none;
+    }
+  }
+
+  #qunit-userAgent {
+    font-size: 1rem;
   }
 }

@@ -11,6 +11,6 @@ MeinAutoJs.define('MeinAutoJs.test.app.DemoDependEventTest', new function () {
     this.testHasText = function (assert, module) {
         var $demo = $('[data-application="DemoDependEvent"]');
 
-        assert.ok($demo.text().indexOf('MeinAutoJs Demo on Event') > 0, "has text");
+        assert.ok($demo.text().indexOf('MeinAutoJs Demo on Event') > 0, 'has text');
     };
 });

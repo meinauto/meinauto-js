@@ -12,6 +12,6 @@ MeinAutoJs.define('MeinAutoJs.test.app.DemoDependEvent.wrap.MarkupTest', new fun
     this.testHasWrappedTextInHeadline = function (assert) {
         var $demo = $('[data-application="DemoDependEvent"]');
 
-        assert.ok($demo.find('h1').length > 0, "has wrapped text in headline");
+        assert.ok($demo.find('h1').length > 0, 'has wrapped text in headline');
     };
 });

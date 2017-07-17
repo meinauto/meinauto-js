@@ -27,6 +27,14 @@ MeinAutoJs.core.System = new function () {
     var _ = this;
 
     /**
+     * @description the system environment
+     * @memberOf MeinAutoJs.core.System
+     * @type {string}
+     * @default
+     */
+    var environment = 'dev';
+
+    /**
      * @description the system configuration
      *  {@link MeinAutoJs.core.System~configuration}
      * @memberOf MeinAutoJs.core.System
@@ -86,12 +94,20 @@ MeinAutoJs.core.System = new function () {
     /**
      * @description initialize manager, test and documentation framework
      * @memberOf MeinAutoJs.core.System
+     * @param {boolean=} testRun if true then system can be manually handled by tests
+     * @param {function=} testCallback if testRun is true then give a callback function
+     *  to get the finish of system configuration load
      */
-    _.construct = function () {
+    _.construct = function (testRun, testCallback) {
+        testRun = testRun || false;
         configure(function () {
-            register({type: 'MeinAutoJs.core.Manager'});
-            registerTestFramework();
-            registerDocFramework();
+            if (false === testRun) {
+                register({type: 'MeinAutoJs.core.Manager'});
+                registerTestFramework();
+                registerDocFramework();
+            } else {
+                testCallback();
+            }
         });
     };
 
@@ -101,7 +117,7 @@ MeinAutoJs.core.System = new function () {
      * @private
      * @param {function} registerCallback the callback to register
      *  module manager, test and doc framework
-     * @throws {Error} could not interpret json configuration as <object>
+     * @throws {Error} could not interpret json configuration as <Object>
      */
     var configure = function (registerCallback) {
         /**
@@ -124,6 +140,7 @@ MeinAutoJs.core.System = new function () {
 
                 /**
                  * @type {{
+                 *  environment: string,
                  *  modulePath: string,
                  *  docFramework: string,
                  *  testFrameworkUnit: string,
@@ -131,10 +148,22 @@ MeinAutoJs.core.System = new function () {
                  * }}
                  */
                 configuration = data;
+                environment = configuration.environment;
                 moduleUri = configuration.modulePath;
                 docFrameworkUri = configuration.docFramework;
                 testFrameworkUnitUri = configuration.testFrameworkUnit;
                 testFrameworkThemeUri = configuration.testFrameworkTheme;
+
+                if ('dev' !== environment) {
+                    var disabledConsole = MeinAutoJs.console = {};
+                    $(['clear', 'dir', 'trace', 'log',
+                        'info', 'warn', 'error'
+                    ]).each(function () {
+                        disabledConsole[this] = function () {};
+                    });
+                } else {
+                    MeinAutoJs.console = window.console || {};
+                }
 
                 if (typeof registerCallback === 'function') {
                     /**
@@ -149,7 +178,7 @@ MeinAutoJs.core.System = new function () {
                 }
             })
             .fail(function (error) {
-                console.error(
+                MeinAutoJs.console.error(
                     error.status + ' ' + error.statusText +
                     ' - Could not load configuration!'
                 );
@@ -178,7 +207,7 @@ MeinAutoJs.core.System = new function () {
                 }).trigger('ready:manager', module).off('ready:manager');
             })
             .fail(function (error) {
-                console.error(
+                MeinAutoJs.console.error(
                     error.status + ' ' + error.statusText +
                     ' - Could not load module "' + namespace + '"!'
                 );
@@ -209,7 +238,7 @@ MeinAutoJs.core.System = new function () {
 
             $.ajax(docFrameworkUri, {method: 'head'})
                 .fail(function (error) {
-                    console.error(
+                    MeinAutoJs.console.error(
                         error.status + ' ' + error.statusText +
                         ' - Could not load layout for test framework!'
                     );
@@ -288,7 +317,7 @@ MeinAutoJs.core.System = new function () {
         ) {
             $.ajax(testFrameworkThemeUri, {method: 'head'})
                 .fail(function (error) {
-                    console.error(
+                    MeinAutoJs.console.error(
                         error.status + ' ' + error.statusText +
                         ' - Could not load layout for test framework!'
                     );
@@ -320,7 +349,7 @@ MeinAutoJs.core.System = new function () {
                     _.testing = true;
                 })
                 .fail(function (error) {
-                    console.error(
+                    MeinAutoJs.console.error(
                         error.status + ' ' + error.statusText +
                         ' - Could not load library for test framework!'
                     );
@@ -351,7 +380,7 @@ MeinAutoJs.core.System = new function () {
      * @memberOf MeinAutoJs.core.System
      * @private
      * @param {string} type as module class name
-     * @param {function} moduleClass as module class function
+     * @param {MeinAutoJs.core.Manager.Module.class} moduleClass to be defined into DOM
      */
     var createModuleDOM = function (type, moduleClass) {
         var classScope = window,
@@ -379,7 +408,7 @@ MeinAutoJs.core.System = new function () {
      * @memberOf MeinAutoJs.core.System
      * @private
      * @param {string} type as module class name
-     * @param {function} moduleClass as module class function
+     * @param {MeinAutoJs.core.Manager.Module.class} moduleClass as class object
      * @throws {Error} module class definition wrong
      */
     var define = function (type, moduleClass) {
@@ -388,11 +417,11 @@ MeinAutoJs.core.System = new function () {
         }
 
         if (typeof moduleClass !== 'undefined' &&
-            (typeof moduleClass === 'function' || typeof moduleClass === 'object')
+            typeof moduleClass === 'object'
         ) {
             createModuleDOM(type, moduleClass);
         } else {
-            throw new Error('The module class must be of type <function> or <object>.');
+            throw new Error('The module class must be of type <Object>.');
         }
     };
 

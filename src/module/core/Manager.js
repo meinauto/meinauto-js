@@ -25,6 +25,14 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
     var moduleUri = '';
 
     /**
+     * @description setted true to test the manager by unit tests
+     * @memberOf MeinAutoJs.core.Manager
+     * @private
+     * @type {boolean}
+     */
+    var testing = false;
+
+    /**
      * @description set module type before autoload can do this
      * @memberOf MeinAutoJs.core.Manager
      * @type {string}
@@ -42,17 +50,23 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
     /**
      * @description initialize manager for DIC and autoload
      * @memberOf MeinAutoJs.core.Manager
+     * @param {string} uri the module uri path
+     * @param {boolean=} testRun if true then manager can be
+     *  manually handled by tests
      */
-    _.construct = function (uri) {
+    _.construct = function (uri, testRun) {
         moduleUri = uri || '';
+        testing = testRun || false;
 
-        _.add([
-            MeinAutoJs.core.System.type,
-            _.type,
-            'MeinAutoJs.core.Extend',
-            'MeinAutoJs.core.Controller',
-            'MeinAutoJs.core.App'
-        ]);
+        if (false === testing) {
+            _.add([
+                MeinAutoJs.core.System.type,
+                _.type,
+                'MeinAutoJs.core.Extend',
+                'MeinAutoJs.core.Controller',
+                'MeinAutoJs.core.App'
+            ]);
+        }
     };
 
     /**
@@ -66,6 +80,21 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @todo refactor too long method {@link MeinAutoJs.core.Manager~register}
      */
     var register = function (module) {
+        /**
+         * @type {{systemTests: boolean, appPath: string}}
+         */
+        var configuration = MeinAutoJs.core.System.getConfiguration();
+
+        /**
+         * @description indicates that the system core module itself will be tested
+         * @type {boolean}
+         */
+        var withSystemTests = configuration.systemTests || false;
+
+        /**
+         * @description type as module class name
+         * @type {string}
+         */
         var type = '';
 
         if (typeof module !== 'undefined' &&
@@ -75,17 +104,27 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         }
 
         if (null !== getModule(type)) {
-            console.warn('Module is already loaded!');
+            MeinAutoJs.console.warn('Module is already loaded!');
             return;
         }
 
         if (MeinAutoJs.core.System.type === type) {
             _.modules.push(createModule(MeinAutoJs.core.System));
             delete MeinAutoJs.core.System.construct;
+            if (true === withSystemTests &&
+                true === Boolean(sessionStorage.getItem('runTests'))
+            ) {
+                test(MeinAutoJs.core.System.type, false, true);
+            }
             return;
         } else if (_.type === type) {
             _.modules.push(createModule(_));
             delete _.construct;
+            if (true === withSystemTests &&
+                true === Boolean(sessionStorage.getItem('runTests'))
+            ) {
+                test(type, false, true);
+            }
             return;
         }
 
@@ -98,10 +137,6 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
         var classUri = moduleUri;
         if (true === isAppLoad) {
-            /**
-             * @type {{appPath: string}}
-             */
-            var configuration = MeinAutoJs.core.System.getConfiguration();
             classUri = configuration.appPath;
             namespace = namespace.replace(/app\//, '');
         }
@@ -123,19 +158,20 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 if (typeof importedClass.extend !== 'undefined' &&
                     typeof importedClass.extend === 'string'
                 ) {
-                    _.add(importedClass.extend);
-                    return; // only pre register module for inheritance
+                    return _.add(importedClass.extend); // only pre register module for inheritance
                 } else {
                     var inheritModule = getModuleByExtend(type);
+
                     if (null !== inheritModule) {
                         var inheritClass = extend(
                             inheritModule.class,
                             importedClass
                         );
 
-                        removeModule(importedClass.type, true);
+                        removeModule(importedClass.type);
 
                         importedClass = inheritClass;
+                        type = importedClass.type;
                     }
                 }
 
@@ -172,7 +208,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 }
 
                 if (true === (MeinAutoJs.core.System.testing || false)) {
-                    test(type, isAppLoad);
+                    test(type, isAppLoad, withSystemTests);
                 }
 
                 return importedClass;
@@ -187,7 +223,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 return importedClass;
             })
             .fail(function (error) {
-                console.error(
+                MeinAutoJs.console.error(
                     error.status + ' ' + error.statusText +
                     ' - Could not load' +
                     ((isAppLoad) ? ' app' : '') + ' module "' +
@@ -203,12 +239,15 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @private
      * @param {string} type as module class name
      * @param {boolean} isAppLoad indicate module class as an app
+     * @param {boolean} withSystemTests indicate to include core modules into test runner
      * @returns {void}
      * @throws {Error} if module class could not be cloned for test isolation
      * @tutorial MODULE-TEST-RUNNER
      * @todo refactor too long method test {@link MeinAutoJs.core.Manager~test}
      */
-    var test = function (type, isAppLoad) {
+    var test = function (type, isAppLoad, withSystemTests) {
+        if (true === testing) {return;} // if tests are testing the manager themself
+
         var namespace = MeinAutoJs.core.System.getNamespace(type),
             testCase = type.replace(/MeinAutoJs\./, 'MeinAutoJs.test.') + 'Test';
 
@@ -218,8 +257,8 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
         if (true === isAppLoad) {
             testUrl = testUrl.replace(/module/, '');
-        } else {
-            return; // test runner applies to apps
+        } else if (false === withSystemTests) {
+            return; // test runner applies only to apps
         }
 
         /**
@@ -234,12 +273,24 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
                 inheritClass.type = type;
 
-                delete inheritClass.construct;
-
                 return inheritClass;
             } else {
                 throw new Error('Can not clone module class "' + type + '" for test!');
             }
+        };
+
+        /**
+         * @returns {MeinAutoJs.core.Manager}
+         */
+        var getManagerMock = function () {
+            var manager = _,
+                reflection = new manager.constructor();
+
+            reflection.construct(moduleUri, true);
+
+            delete reflection.construct;
+
+            return reflection;
         };
 
         $.get(testUrl)
@@ -247,23 +298,39 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 var moduleClass = getModuleDOM(type),
                     moduleClassTest = getModuleDOM(testCase);
 
-                console.info('Test for module "' + namespace + '" loaded.');
+                if (typeof moduleClassTest.setup !== 'undefined' &&
+                    typeof moduleClassTest.setup === 'function'
+                ) {
+                    moduleClassTest.setup(getManagerMock());
+                }
 
                 if (0 < Object.keys(moduleClassTest).length) {
-                    $.each(moduleClassTest, function (i) {
-                        var test = moduleClassTest[i];
-                        if (typeof test === 'function' && /^test.*/.test(i)) {
-                            MeinAutoJs.test.Unit.test(testCase + '.' + i, function(assert) {
+                    var hasTestMethods = 0;
+                    $.each(moduleClassTest, function (testMethod) {
+                        var test = moduleClassTest[testMethod];
+                        if (typeof test === 'function' && /^test.*/.test(testMethod)) {
+                            MeinAutoJs.test.Unit.test(testCase + '. ' + testMethod, function(assert) {
                                 return test(assert, clone(moduleClass));
                             });
-                        } else {
-                            console.warn('Test "' + testCase + '" has no test methods!');
+                            hasTestMethods++;
                         }
                     });
+
+                    if (0 === hasTestMethods) {
+                        MeinAutoJs.console.warn('Test "' + testCase + '" has no test methods!');
+                    }
+                }
+
+                if (typeof moduleClassTest.teardown !== 'undefined' &&
+                    typeof moduleClassTest.teardown === 'function'
+                ) {
+                    setTimeout(function () {
+                        moduleClassTest.teardown();
+                    }, 1024);
                 }
             })
             .fail(function (error) {
-                console.error(
+                MeinAutoJs.console.error(
                     error.status + ' ' + error.statusText +
                     ' - Could not load test for module "' + namespace + '"!'
                 );
@@ -275,9 +342,9 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @memberOf MeinAutoJs.core.Manager
      * @private
      * @see MeinAutoJs.core.Extend
-     * @param {MeinAutoJs.core.Manager.Module.class} inheritClass the inherited wrapper
+     * @param {MeinAutoJs.core.Manager.Module.class} inheritClass the inherit class
      * @param {MeinAutoJs.core.Manager.Module.class} moduleClass the parent class
-     * @returns {(null|MeinAutoJs.core.Manager.Module.class)}
+     * @returns {?MeinAutoJs.core.Manager.Module.class}
      */
     var extend = function (inheritClass, moduleClass) {
         return MeinAutoJs.core.Extend.inherit(inheritClass, moduleClass);
@@ -291,7 +358,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @param {boolean} module.layout if module has layout
      * @param {string} module.type as module class name
      * @param {boolean} cacheBust bust the cache to get module stylesheet fresh
-     * @returns {(null|string)}
+     * @returns {?string}
      */
     var getLayout = function (module, cacheBust) {
         cacheBust = cacheBust || false;
@@ -315,22 +382,21 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
              * @type {string}
              */
             var layoutClassName = (function (toDashesLowerCase) {
-                return toDashesLowerCase
-                    .replace(/\W+/g, '-')
-                    .replace(/([a-z\d])([A-Z])/g, '$1-$2')
-                    .toLowerCase();
-            })(namespace.substr(namespace.lastIndexOf('/') + 1));
-
-            namespace = (namespace.substr(0, namespace.lastIndexOf('/') + 1)) +
+                    return toDashesLowerCase
+                        .replace(/\W+/g, '-')
+                        .replace(/([a-z\d])([A-Z])/g, '$1-$2')
+                        .toLowerCase();
+                })(namespace.substr(namespace.lastIndexOf('/') + 1)),
+                reNamespace = (namespace.substr(0, namespace.lastIndexOf('/') + 1)) +
                 layoutClassName;
 
             layoutUri = configuration.moduleLayout + '/' +
-                namespace.toLowerCase() + '.css' +
+                reNamespace.toLowerCase() + '.css' +
                 ((true === cacheBust) ? '?' + String((new Date()).getTime()) : '');
 
             $.ajax(layoutUri, {method: 'head'})
                 .fail(function (error) {
-                    console.error(
+                    MeinAutoJs.console.error(
                         error.status + ' ' + error.statusText +
                         ' - Could not load layout for module "' + namespace + '"!'
                     );
@@ -384,7 +450,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         });
 
         if (typeof classScope !== 'object') {
-            throw new Error('Could not find module class "' + type + '" as <object>; got instead "' + typeof classScope + '"');
+            throw new Error('Could not find module class "' + type + '" as <Object>; got instead "' + typeof classScope + '"');
         }
 
         return classScope;
@@ -395,7 +461,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @memberOf MeinAutoJs.core.Manager
      * @private
      * @param {string} type as module class name
-     * @returns {(null|MeinAutoJs.core.Manager.Module)}
+     * @returns {?MeinAutoJs.core.Manager.Module}
      */
     var getModule = function (type) {
         var module = null;
@@ -415,16 +481,18 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @memberOf MeinAutoJs.core.Manager
      * @private
      * @param {string} type as module class name
-     * @returns {(null|MeinAutoJs.core.Manager.Module)}
+     * @returns {?MeinAutoJs.core.Manager.Module}
      */
     var getModuleByExtend = function (type) {
         var inheritModule = null;
 
-        $(MeinAutoJs.core.Manager.modules).each(function () {
+        $(_.modules).each(function () {
             var module = this,
                 moduleClass = module.class;
 
-            if (type === moduleClass.extend) {
+            if (moduleClass.hasOwnProperty('extend') &&
+                type === moduleClass.extend
+            ) {
                 inheritModule = module;
             }
         });
@@ -471,15 +539,11 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @memberOf MeinAutoJs.core.Manager
      * @private
      * @param {string} type as module class name
-     * @param {boolean=} silent do not message about remove
      * @returns {boolean}
      */
-    var removeModule = function (type, silent) {
+    var removeModule = function (type) {
         var success = false,
-            namespace = MeinAutoJs.core.System.getNamespace(type),
             layoutUri = null;
-
-        silent = silent || false;
 
         $(_.modules).each(function (i) {
             var module = this;
@@ -496,10 +560,6 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 _.modules.splice(i);
 
                 success = true;
-
-                if (false === silent) {
-                    console.info('Module "' + namespace + '" successful removed.');
-                }
             }
         });
 
@@ -511,78 +571,162 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      *  the callback will be triggered if the named type
      *  of the module class is ready
      * @memberOf MeinAutoJs.core.Manager
-     * @param {string} type as module class name
+     * @param {(string|Array.<string>)} type as module class name
      * @param {function} callback runs after module class is ready
      * @tutorial MODULE-ORCHESTRATION-SYSTEM
+     * @see MeinAutoJs.core.Manager#ready:callback
+     * @example MeinAutoJs.core.Manager
+     *  .ready('MeinAutoJs.namespace.part.ClassName', function (module) {});
+     * @example MeinAutoJs.core.Manager.ready([
+     *      'MeinAutoJs.namespace.part.ClassNameA',
+     *      'MeinAutoJs.namespace.part.ClassNameB',
+     *      'MeinAutoJs.namespace.part.ClassNameC',
+     * ], function (module) {});
      */
     _.ready = function (type, callback) {
-        if (true === _.has(type)) {
-            callback(_.get(type).class);
-        } else {
+        /**
+         * @description set callback on ready event
+         * @memberOf MeinAutoJs.core.Manager.ready
+         * @param {string} type as module class name
+         * @param {function} callback runs after module class is ready
+         */
+        var onCallback = function (type, callback) {
             /**
              * @description listen to event when module is ready
              * @event MeinAutoJs.core.Manager#ready:callback
-             * @example MeinAutoJs.core.Manager
-             *  .ready('MeinAutoJs.namespace.part.ClassName', function (module) {});
              */
             $(_).on('ready:callback', function (event, module) {
                 if (type === module.type) {
+                    /**
+                     * @description the callback runs after module class is ready
+                     * @callback MeinAutoJs.core.Manager.ready
+                     * @param {MeinAutoJs.core.Manager.Module.class} module the module class
+                     */
                     callback(module);
                 }
             });
+        };
+
+        var onReadyError = function () {
+            MeinAutoJs.console.error(
+                'Parameter "type" must be a <string> or <Array> and "callback" a <function>!'
+            );
+        };
+
+        if (Array.isArray(type)) {
+            $(type).each(function () {
+                if (typeof this === 'string' &&
+                    typeof callback === 'function'
+                ) {
+                    if (true === _.has(this)) {
+                        callback(_.get(this).class);
+                    } else {
+                        onCallback(this, callback);
+                    }
+                } else {
+                    onReadyError();
+                }
+            });
+        } else if (typeof type === 'string' &&
+            typeof callback === 'function'
+        ) {
+            if (true === _.has(type)) {
+                callback(_.get(type).class);
+            } else {
+                onCallback(type, callback);
+            }
+        } else {
+            onReadyError();
         }
     };
 
     /**
      * @description remove module
      * @memberOf MeinAutoJs.core.Manager
-     * @param {string} type as module class name
+     * @param {(string|Array.<string>)} type as module class name
      * @returns {boolean}
      * @example MeinAutoJs.core.Manager.remove('MeinAutoJs.namespace.part.ClassName');
+     * @example MeinAutoJs.core.Manager.remove([
+     *      'MeinAutoJs.namespace.part.ClassNameA',
+     *      'MeinAutoJs.namespace.part.ClassNameB',
+     *      'MeinAutoJs.namespace.part.ClassNameC'
+ *     ]);
      * @tutorial MODULE-ORCHESTRATION-SYSTEM
      */
     _.remove = function (type) {
+        var onRemoveError = function (type) {
+            MeinAutoJs.console.error('Could not remove module "' + type + '".');
+        };
+
         if (Array.isArray(type)) {
             var done = false;
             $(type).each(function () {
                 done = removeModule(type);
                 if (false === done) {
-                    console.error('Could not remove module "' + type + '".');
+                    onRemoveError(type);
                 }
             });
             return done;
         } else if (typeof type === 'string') {
             return removeModule(type);
         } else {
-            console.error('Could not remove module "' + type + '; Parameter "type" must be a string or array!');
+            onRemoveError(type);
         }
     };
 
     /**
      * @description add module
      * @memberOf MeinAutoJs.core.Manager
-     * @param {(string|Array.<string>)} type as module class name
+     * @param {(string|Array.<string>|Array.Array.<string, Object>)} type as module class name
      * @param {Object=} parameters an object of construction parameters
      * @returns {(Deferred|function)}
+     * @example MeinAutoJs.core.Manager.add('MeinAutoJs.namespace.part.ClassName');
      * @example MeinAutoJs.core.Manager.add('MeinAutoJs.namespace.part.ClassName', {})
-     *  .done(function () {})
+     *  .done(function (module) {})
+     *  .fail(function () {});
+     * @example MeinAutoJs.core.Manager.add([
+     *      'MeinAutoJs.namespace.part.ClassNameA',
+     *      'MeinAutoJs.namespace.part.ClassNameB',
+     *      'MeinAutoJs.namespace.part.ClassNameC'
+     * ], {})
+     *  .done(function (module) {})
+     *  .fail(function () {});
+     * @example MeinAutoJs.core.Manager.add([
+     *      ['MeinAutoJs.namespace.part.ClassNameA', {}],
+     *      ['MeinAutoJs.namespace.part.ClassNameB', {}],
+     *      ['MeinAutoJs.namespace.part.ClassNameC', {}]
+     * ])
+     *  .done(function (module) {})
      *  .fail(function () {});
      * @tutorial MODULE-ORCHESTRATION-SYSTEM
      */
     _.add = function (type, parameters) {
-        var $resolver;
+        var $resolver,
+            onAddError = function (type) {
+                MeinAutoJs.console.error('Could not add module "' + type + ';' +
+                    ' parameter "type" must be a <string> or <Array>!' +
+                    ' and "parameters" if given; then as an <Object>'
+                );
+            };
+
         if (Array.isArray(type)) {
             $(type).each(function () {
                 if (Array.isArray(this)) {
-                    $resolver = register({type: this[0], parameters: this[1]});
-                } else {
+                    if (typeof this[0] === 'string' && typeof this[1] === 'object') {
+                        $resolver = register({type: this[0], parameters: this[1]});
+                    } else {
+                        onAddError(this[0]);
+                    }
+                } else if (typeof this === 'string') {
                     $resolver = register({type: this, parameters: parameters});
+                } else {
+                    onAddError(this);
                 }
             });
         } else if (typeof type === 'string') {
             $resolver = register({type: type, parameters: parameters});
         } else {
-            console.error('Could not add module "' + type + '; parameter "type" must be a <string> or <array>!');
+            onAddError(type);
         }
 
         return $resolver;

@@ -27,12 +27,13 @@ MeinAutoJs.define('MeinAutoJs.core.Extend', new function () {
     /**
      * @description inherit a module from another
      * @memberOf MeinAutoJs.core.Extend
-     * @param {MeinAutoJs.core.Manager.Module.class} inheritClass the inherited wrapper
+     * @param {MeinAutoJs.core.Manager.Module.class} inheritClass the inherit class
      * @param {MeinAutoJs.core.Manager.Module.class} moduleClass the parent class
-     * @returns {(null|MeinAutoJs.core.Manager.Module.class)}
+     * @returns {MeinAutoJs.core.Manager.Module.class}
+     * @throws {Error} if module class is not an object
      */
     _.inherit = function (inheritClass, moduleClass) {
-        if (null !== inheritClass && null !== moduleClass) {
+        if (typeof inheritClass === 'object' && typeof moduleClass === 'object') {
             $.each(moduleClass, function (property, mixed) {
                 if (-1 === excludeProperties.indexOf(property) &&
                     !(property in inheritClass)
@@ -48,6 +49,8 @@ MeinAutoJs.define('MeinAutoJs.core.Extend', new function () {
 
                 delete moduleClass.construct;
             }
+        } else {
+            throw new Error('Could not extend module! Expected two <Object>\'s as module class to extend.');
         }
 
         return inheritClass;

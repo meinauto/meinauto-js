@@ -37,7 +37,9 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependPromise', new function () {
                 renderDemo();
             })
             .fail(function () {
-                console.error('Could not load dependency "MeinAutoJs.app.DemoDependPromise.wrap.Markup"');
+                MeinAutoJs.console.error(
+                    'Could not load dependency "MeinAutoJs.app.DemoDependPromise.wrap.Markup"'
+                );
             });
     };
 

@@ -210,18 +210,19 @@ _.construct = function () {
         'MeinAutoJs.app.MockApp.model.Data',
         'MeinAutoJs.app.MockApp.view.Page'
     ]).done(function () {
-        $(_).trigger('custom:event');
+        $(_).trigger('custom:event', {});
     });
     
-    $(_).on('custom:event', function() {
-        doSomething();
+    $(_).on('custom:event', function(event, parameters) {
+        doSomething(parameters);
     });
 };
 
 /**
  * do something by class event
+ * @param {Object} parameters
  */
-var doSomething = function() {
+var doSomething = function(parameters) {
   /** @type {MeinAutoJs.app.MockApp.controller.Doing} */
   var controller = MeinAutoJs.app.MockApp.controller.Doing;
   

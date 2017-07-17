@@ -11,6 +11,6 @@ MeinAutoJs.define('MeinAutoJs.test.app.DemoDependPromiseTest', new function () {
     this.testHasText = function (assert) {
         var $demo = $('[data-application="DemoDependPromise"]');
 
-        assert.ok($demo.text().indexOf('MeinAutoJs Demo with Promise') > 0, "has text");
+        assert.ok($demo.text().indexOf('MeinAutoJs Demo with Promise') > 0, 'has text');
     };
 });

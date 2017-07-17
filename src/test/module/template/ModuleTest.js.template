@@ -5,11 +5,40 @@
  */
 MeinAutoJs.define('MeinAutoJs.test.template.ModuleTest', new function () {
     /**
+     * @description an optional DIC manager instance that is an isolated
+     *  for this test case
+     * @memberOf MeinAutoJs.test.template.ModuleTest
+     * @see MeinAutoJs.core.Manager
+     */
+    var manager;
+
+    /**
+     * @description setup things before created test methods executed
+     * @memberOf MeinAutoJs.test.template.ModuleTest
+     * @param {MeinAutoJs.core.Manager} managerInstance the DIC manager
+     *  as an isolated instance
+     */
+    this.setup = function (managerInstance) {
+        manager = managerInstance;
+
+        // setup something at vars or other ways
+    };
+
+    /**
      * @description test {@link MeinAutoJs.template.Module.layout} is setted
+     * @memberOf MeinAutoJs.test.template.ModuleTest
      * @param {MeinAutoJs.test.Unit.assert} assert
      * @param {MeinAutoJs.template.Module} moduleClass
      */
     this.testHasLayout = function (assert, moduleClass) {
-        assert.ok(moduleClass.layout, "has layout");
+        assert.ok(moduleClass.layout, 'has layout');
+    };
+
+    /**
+     * @description teardown things after created test methods executed
+     * @memberOf MeinAutoJs.test.template.ModuleTest
+     */
+    this.teardown = function () {
+        // teardown something
     };
 });

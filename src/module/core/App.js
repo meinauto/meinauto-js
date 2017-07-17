@@ -32,10 +32,10 @@ MeinAutoJs.define('MeinAutoJs.core.App', new function () {
      *  app modules will add dependencies to DIC
      *  {@link MeinAutoJs.core.Manager.modules}
      * @memberOf MeinAutoJs.core.App
-     * @event MeinAutoJs.core.App#initialize
+     * @event MeinAutoJs.core.App#app:initialize
      */
     _.construct = function () {
-        $(_).on('initialize', function () {
+        $(_).on('app:initialize', function () {
             initialize();
         });
     };

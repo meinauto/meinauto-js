@@ -34,6 +34,7 @@ to disable the test suit send
 MeinAutoJs.define('MeinAutoJs.test.app.MockApp', new function () {
     /**
      * @description test {@link MeinAutoJs.app.MockApp.layout} is setted
+     * @memberOf MeinAutoJs.test.app.MockApp
      * @param {MeinAutoJs.test.Unit.assert} assert the assertion interface
      * @param {MeinAutoJs.app.MockApp} moduleClass the process isolated module class
      */
