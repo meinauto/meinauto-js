@@ -151,7 +151,7 @@ MeinAutoJs.define('MeinAutoJs.test.core.ManagerTest', new function () {
      * @memberOf MeinAutoJs.test.core.ManagerTest
      */
     this.teardown = function () {
-        //removeModuleDOM('MeinAutoJs.mock.ExistingModule');
+        removeModuleDOM('MeinAutoJs.mock.ExistingModule');
     };
 
     /**
