@@ -5,7 +5,6 @@
  * @classdesc a test mock to represent an existing module class
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.mock.ExistingModule
- * @lends MeinAutoJs.mock.ExistingModule
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.mock.ExistingModule', new function () {

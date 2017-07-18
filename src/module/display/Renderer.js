@@ -5,7 +5,6 @@
  * @classdesc The renderer handles the display viewport for app views
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.display.Renderer
- * @lends MeinAutoJs.display.Renderer
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.display.Renderer', new function () {

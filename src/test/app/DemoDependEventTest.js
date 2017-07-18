@@ -2,7 +2,6 @@
 
 /**
  * @class
- * @lends MeinAutoJs.test.app.DemoDependEventTest
  */
 MeinAutoJs.define('MeinAutoJs.test.app.DemoDependEventTest', new function () {
     /**

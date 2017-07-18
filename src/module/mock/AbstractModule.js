@@ -5,7 +5,6 @@
  * @classdesc a test mock to represent an abstract module class
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.mock.AbstractModule
- * @lends MeinAutoJs.mock.AbstractModule
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.mock.AbstractModule', new function () {

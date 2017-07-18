@@ -5,7 +5,6 @@
  * @classdesc a test mock to represent an inherited module class
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.mock.InheritModule
- * @lends MeinAutoJs.mock.InheritModule
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.mock.InheritModule', new function () {

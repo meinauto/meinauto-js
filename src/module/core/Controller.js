@@ -6,7 +6,6 @@
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @augments {MeinAutoJs.abstract.Controller}
  * @typedef {function} MeinAutoJs.core.Controller
- * @lends MeinAutoJs.core.Controller
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.core.Controller', new function () {

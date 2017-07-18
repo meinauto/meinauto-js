@@ -7,7 +7,6 @@
  * @classdesc date time renderer
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.app.tool.DateTime
- * @lends MeinAutoJs.app.tool.DateTime
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.app.tool.DateTime', new function () {

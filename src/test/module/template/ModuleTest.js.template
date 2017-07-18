@@ -2,7 +2,6 @@
 
 /**
  * @class
- * @lends MeinAutoJs.test.template.ModuleTest
  */
 MeinAutoJs.define('MeinAutoJs.test.template.ModuleTest', new function () {
     /**

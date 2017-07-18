@@ -2,7 +2,6 @@
 
 /**
  * @class test system core module
- * @lends MeinAutoJs.test.core.SystemTest
  */
 MeinAutoJs.define('MeinAutoJs.test.core.SystemTest', new function () {
     /**

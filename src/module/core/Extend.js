@@ -5,7 +5,6 @@
  * @classdesc Extend a module by module {@link MeinAutoJs.core.Manager~register} a module
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.core.Extend
- * @lends MeinAutoJs.core.Extend
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.core.Extend', new function () {

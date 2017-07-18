@@ -5,7 +5,6 @@
  * @classdesc module description
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.template.Module
- * @lends MeinAutoJs.template.Module
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.template.Module', new function () {

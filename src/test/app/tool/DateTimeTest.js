@@ -2,7 +2,6 @@
 
 /**
  * @class
- * @lends MeinAutoJs.test.app.tool.DateTimeTest
  */
 MeinAutoJs.define('MeinAutoJs.test.app.tool.DateTimeTest', new function () {
     /**

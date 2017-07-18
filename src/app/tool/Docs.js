@@ -7,7 +7,6 @@
  * @classdesc doc runner control
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.app.tool.Docs
- * @lends MeinAutoJs.app.tool.Docs
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.app.tool.Docs', new function () {

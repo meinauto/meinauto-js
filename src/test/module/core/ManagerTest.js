@@ -2,7 +2,6 @@
 
 /**
  * @class test manager core module
- * @lends MeinAutoJs.test.core.ManagerTest
  */
 MeinAutoJs.define('MeinAutoJs.test.core.ManagerTest', new function () {
     /**
@@ -90,6 +89,13 @@ MeinAutoJs.define('MeinAutoJs.test.core.ManagerTest', new function () {
                 'get existing module'
             );
 
+            module.setFoo('bar');
+
+            assert.ok(
+                'bar' === module.foo,
+                'set property of existing module class'
+            );
+
             assertAsync();
         });
     };
@@ -145,7 +151,7 @@ MeinAutoJs.define('MeinAutoJs.test.core.ManagerTest', new function () {
      * @memberOf MeinAutoJs.test.core.ManagerTest
      */
     this.teardown = function () {
-        removeModuleDOM('MeinAutoJs.mock.ExistingModule');
+        //removeModuleDOM('MeinAutoJs.mock.ExistingModule');
     };
 
     /**
@@ -161,12 +167,7 @@ MeinAutoJs.define('MeinAutoJs.test.core.ManagerTest', new function () {
 
         $(classPath).each(function (i, className) {
             if (null !== classScope && className in classScope) {
-                if (1 === Object.keys(classScope[className]).length &&
-                    classPath.length - 2 === i
-                ) {
-                    delete classScope[className];
-                    success = true;
-                } else if (classPath.length - 1 === i) {
+                if (classPath.length - 1 === i) {
                     delete classScope[className];
                     success = true;
                 } else {

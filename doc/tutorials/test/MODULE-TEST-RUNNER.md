@@ -30,7 +30,6 @@ to disable the test suit send
 
 /**
  * @class
- * @lends MeinAutoJs.test.app.MockApp
  */
 MeinAutoJs.define('MeinAutoJs.test.app.MockApp', new function () {
     /**

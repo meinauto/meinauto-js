@@ -5,7 +5,6 @@
  * @classdesc The module manager for dependencies and class autoloads
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.core.Manager
- * @lends MeinAutoJs.core.Manager
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
