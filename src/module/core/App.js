@@ -6,6 +6,7 @@
  *  the module {@link MeinAutoJs.core.Manager}
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.core.App
+ * @lends MeinAutoJs.core.App
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.core.App', new function () {

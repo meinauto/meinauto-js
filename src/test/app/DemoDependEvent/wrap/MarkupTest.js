@@ -2,6 +2,7 @@
 
 /**
  * @class
+ * @lends MeinAutoJs.test.app.DemoDependEvent.wrap.MarkupTest
  */
 MeinAutoJs.define('MeinAutoJs.test.app.DemoDependEvent.wrap.MarkupTest', new function () {
     /**

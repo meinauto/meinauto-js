@@ -2,6 +2,7 @@
 
 /**
  * @class test extend core module
+ * @lends MeinAutoJs.test.core.ExtendTest
  */
 MeinAutoJs.define('MeinAutoJs.test.core.ExtendTest', new function () {
     /**

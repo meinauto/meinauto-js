@@ -91,6 +91,7 @@ For automated testing use the integrated test runner:
  * @classdesc my class description here
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.app.MockApp
+ * @lends MeinAutoJs.app.MockApp
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.app.MockApp', new function () {
@@ -248,6 +249,7 @@ var doSomething = function(parameters) {
  * @class
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.abstract.Controller
+ * @lends MeinAutoJs.abstract.Controller
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.abstract.Controller', new function () {
@@ -294,6 +296,7 @@ MeinAutoJs.define('MeinAutoJs.abstract.Controller', new function () {
  * @class
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.app.MockApp.controller.Doing
+ * @lends MeinAutoJs.app.MockApp.controller.Doing
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.app.MockApp.controller.Doing', new function () {

@@ -2,6 +2,7 @@
 
 /**
  * @class test controller core module
+ * @lends MeinAutoJs.test.core.ControllerTest
  */
 MeinAutoJs.define('MeinAutoJs.test.core.ControllerTest', new function () {
     /**

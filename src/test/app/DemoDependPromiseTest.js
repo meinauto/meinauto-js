@@ -2,6 +2,7 @@
 
 /**
  * @class
+ * @lends MeinAutoJs.test.app.DemoDependPromiseTest
  */
 MeinAutoJs.define('MeinAutoJs.test.app.DemoDependPromiseTest', new function () {
     /**

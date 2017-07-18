@@ -2,6 +2,7 @@
 
 /**
  * @class
+ * @lends MeinAutoJs.test.app.DemoDependPromise.wrap.MarkupTest
  */
 MeinAutoJs.define('MeinAutoJs.test.app.DemoDependPromise.wrap.MarkupTest', new function () {
     /**

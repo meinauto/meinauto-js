@@ -7,6 +7,7 @@
  * @classdesc an application demo with an event dependency
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.app.DemoDependEvent
+ * @lends MeinAutoJs.app.DemoDependEvent
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.app.DemoDependEvent', new function () {

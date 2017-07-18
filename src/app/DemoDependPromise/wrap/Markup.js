@@ -8,6 +8,7 @@
  * @classdesc an application demo event dependency
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.app.DemoDependPromise.wrap.Markup
+ * @lends MeinAutoJs.app.DemoDependPromise.wrap.Markup
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.app.DemoDependPromise.wrap.Markup', new function () {

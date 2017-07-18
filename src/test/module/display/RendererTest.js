@@ -2,6 +2,7 @@
 
 /**
  * @class test renderer display module
+ * @lends MeinAutoJs.test.display.RendererTest
  */
 MeinAutoJs.define('MeinAutoJs.test.display.RendererTest', new function () {
     /**

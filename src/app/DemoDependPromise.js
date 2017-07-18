@@ -7,6 +7,7 @@
  * @classdesc an application demo with a promise dependency
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.app.DemoDependPromise
+ * @lends MeinAutoJs.app.DemoDependPromise
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.app.DemoDependPromise', new function () {

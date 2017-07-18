@@ -7,6 +7,7 @@
  * @classdesc test runner control
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.app.tool.Tests
+ * @lends MeinAutoJs.app.tool.Tests
  * @constructs
  */
 MeinAutoJs.define('MeinAutoJs.app.tool.Tests', new function () {

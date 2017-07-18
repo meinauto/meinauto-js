@@ -2,6 +2,7 @@
 
 /**
  * @class
+ * @lends MeinAutoJs.test.app.tool.TestsTest
  */
 MeinAutoJs.define('MeinAutoJs.test.app.tool.TestsTest', new function () {
     /**

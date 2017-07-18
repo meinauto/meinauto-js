@@ -2,6 +2,7 @@
 
 /**
  * @class test manager core module
+ * @lends MeinAutoJs.test.core.ManagerTest
  */
 MeinAutoJs.define('MeinAutoJs.test.core.ManagerTest', new function () {
     /**

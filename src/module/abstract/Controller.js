@@ -5,6 +5,7 @@
  * @classdesc An abstract controller class
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.abstract.Controller
+ * @lends MeinAutoJs.abstract.Controller
  * @constructs
  * @abstract
  */

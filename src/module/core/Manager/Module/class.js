@@ -4,6 +4,7 @@
  * @interface
  * @classdesc Module class interface representation
  * @typedef {function} MeinAutoJs.core.Manager.Module.class
+ * @lends MeinAutoJs.core.Manager.Module.class
  * @constructs
  * @tutorial MODULE-ORCHESTRATION-SYSTEM
  * @see if the module class is initialized by DOM application

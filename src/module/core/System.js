@@ -15,6 +15,7 @@ var MeinAutoJs = {core: {}};
  *  the test runner and the doc runner
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.core.System
+ * @lends MeinAutoJs.core.System
  * @constructs
  */
 MeinAutoJs.core.System = new function () {
