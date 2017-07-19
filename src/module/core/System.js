@@ -376,7 +376,7 @@ MeinAutoJs.core.System = new function () {
     };
 
     /**
-     * @description prepare module class namespace before class autoload
+     * @description prepare module class namespace in DOM
      * @memberOf MeinAutoJs.core.System
      * @private
      * @param {string} type as module class name
