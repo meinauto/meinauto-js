@@ -5,7 +5,7 @@
  */
 MeinAutoJs.define('MeinAutoJs.test.template.ModuleTest', new function () {
     /**
-     * @description an optional DIC manager instance that is an isolated
+     * @description an optional DIC manager instance that is isolated
      *  for this test case
      * @memberOf MeinAutoJs.test.template.ModuleTest
      * @see MeinAutoJs.core.Manager
