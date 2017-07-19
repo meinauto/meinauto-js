@@ -332,7 +332,7 @@ At least the inherit constructor is called.
 If an inherited public property / method is set, it doesn't set the parent public property / method.
 
 ```javascript
-MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp.controller.Doing');
+MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp.controller.Doing').class;
 ```
 
 ```
