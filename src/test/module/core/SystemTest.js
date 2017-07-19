@@ -18,7 +18,7 @@ MeinAutoJs.define('MeinAutoJs.test.core.SystemTest', new function () {
 
         assert.ok(
             'MeinAutoJs.core.System' === moduleClass.type,
-            'pre setted type is set'
+            'is MeinAutoJs.core.System'
         );
     };
 
