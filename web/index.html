@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>MeinAutoJs</title>
-    <link rel="stylesheet" href="css/load.css">
-    <script src="js/lib/jquery.min.js"></script>
-    <script src="js/lib/init/Run.js"></script>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>MeinAutoJs</title>
+        <link rel="stylesheet" href="css/load.css">
+        <script src="js/lib/jquery.min.js"></script>
+    </head>
+    <body>
 
-<header>
-    <div class="runners">
-        <button type="button" class="hidden" data-application="tool.Tests">Tests</button>
-        <button type="button" class="hidden" data-application="tool.Docs">Docs</button>
-    </div>
-</header>
-
-<section>
-    <div class="content">
-
-        <div class="hidden" data-application="DemoDependPromise">
-            MeinAutoJs Demo with Promise
-        </div>
-
-        <div class="hidden" data-application="DemoDependEvent">
-            <div data-application="DemoDependEvent.wrap.Markup">
-                MeinAutoJs Demo on Event
+        <header>
+            <div class="runners">
+                <button type="button" class="hidden" data-application="tool.Tests">Tests</button>
+                <button type="button" class="hidden" data-application="tool.Docs">Docs</button>
             </div>
-        </div>
+        </header>
 
-    </div>
-</section>
+        <section>
+            <div class="content">
 
-<footer>
-    <div data-application="tool.DateTime"></div>
-</footer>
+                <div class="hidden" data-application="DemoDependPromise">
+                    MeinAutoJs Demo with Promise
+                </div>
 
-</body>
+                <div class="hidden" data-application="DemoDependEvent">
+                    <div data-application="DemoDependEvent.wrap.Markup">
+                        MeinAutoJs Demo on Event
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer>
+            <div data-application="tool.DateTime"></div>
+        </footer>
+
+        <script src="js/lib/init/Run.js"></script>
+
+    </body>
 </html>

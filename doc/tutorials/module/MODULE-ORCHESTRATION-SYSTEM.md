@@ -56,12 +56,21 @@ For example there is a [module template][module-template](../../../src/module/te
 First initializing point of the autoloaded module class could be an application 
 markup or a direct object call from another javascripts to access the module by DIC.
 
-### Append autoloader run script to document head
+### Append autoloader run script to document head or body bottom
 
 ```html
 <head>
     <script src="../src/lib/init/Run.js"></script>
 </head>
+```
+
+or
+
+```html
+<body>
+    <!-- some markup... -->
+    <script src="../src/lib/init/Run.js"></script>
+</body>
 ```
 
 ### Automated unit testing for modules with [QUnit][qunit]
@@ -75,6 +84,7 @@ For automated testing use the integrated test runner:
 ```html
 <body>
     <div class="hidden" data-application="MockApp"></div>
+    <!-- further markup... -->
 </body>
 ```
 

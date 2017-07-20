@@ -76,7 +76,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @param {Object} module the module object with module class
      * @param {string} module.type as module class name
      * @param {Object=} module.parameters an object of construction parameters
-     * @returns {(void|function)}
+     * @returns {(void|Deferred)}
      * @todo refactor too long method {@link MeinAutoJs.core.Manager~register}
      */
     var register = function (module) {
@@ -147,89 +147,108 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
         var layoutUri = null;
 
-        return $.get(moduleUrl)
-            .then(function () {
-                var importedClass = getModuleDOM(type);
-
-                importedClass.type = type;
-
-                _.modules.push(createModule(importedClass));
-
-                if (typeof importedClass.extend !== 'undefined' &&
-                    typeof importedClass.extend === 'string'
-                ) {
-                    return _.add(importedClass.extend); // only pre register module for inheritance
-                } else {
-                    var inheritModule = getModuleByExtend(type);
-
-                    if (null !== inheritModule) {
-                        var inheritClass = extend(
-                            inheritModule.class,
-                            importedClass
-                        );
-
-                        removeModule(importedClass.type);
-
-                        importedClass = inheritClass;
-                        type = importedClass.type;
-                    }
-                }
-
-                if (typeof importedClass.construct === 'undefined') {
-                    importedClass.construct = function () {};
-                }
-
-                if (typeof importedClass.construct.parentClass !== 'undefined' &&
-                    typeof importedClass.construct.parentClass === 'function'
-                ) {
-                    importedClass.construct.parentClass(module);
-                }
-
-                importedClass.construct(module);
-
-                delete importedClass.construct;
-
-                if (typeof module.parameters !== 'undefined' &&
-                    typeof module.parameters.app !== 'undefined' &&
-                    true === isAppLoad
-                ) {
-                    importedClass.__markup__ = module.parameters.app;
-                }
-
-                if (null !== (layoutUri = getLayout(importedClass, true))) {
-                    var $link = $('<link/>').attr({
-                        'rel': 'stylesheet',
-                        'href': layoutUri
-                    });
-
-                    importedClass.__layout__ = $link.get(0);
-
-                    $('head').append($link);
-                }
-
-                if (true === (MeinAutoJs.core.System.testing || false)) {
-                    test(type, isAppLoad, withSystemTests);
-                }
-
-                return importedClass;
-            })
-            .then(function (importedClass) {
-                /**
-                 * @description fires to event if module is ready
-                 * @fires MeinAutoJs.core.Manager#ready:callback
-                 */
-                $(_).trigger('ready:callback', importedClass);
-
-                return importedClass;
-            })
-            .fail(function (error) {
-                MeinAutoJs.console.error(
-                    error.status + ' ' + error.statusText +
-                    ' - Could not load' +
-                    ((isAppLoad) ? ' app' : '') + ' module "' +
-                    namespace + '"!'
+        var request = {
+            url: moduleUrl,
+            // if highlighted as unused property beforeSend bug:
+            // https://youtrack.jetbrains.com/issue/WEB-19393
+            beforeSend: function(request) {
+                request.setRequestHeader(
+                    'Cache-Control',
+                    'no-cache, no-store, must-revalidate'
                 );
-            });
+                request.setRequestHeader(
+                    'Pragma',
+                    'no-cache'
+                );
+                request.setRequestHeader(
+                    'Expires',
+                    '0'
+                );
+            }
+        };
+
+        return $.ajax(request).then(function () {
+            var importedClass = getModuleDOM(type);
+
+            importedClass.type = type;
+
+            _.modules.push(createModule(importedClass));
+
+            if (typeof importedClass.extend !== 'undefined' &&
+                typeof importedClass.extend === 'string'
+            ) {
+                return _.add(importedClass.extend); // only pre register module for inheritance
+            } else {
+                var inheritModule = getModuleByExtend(type);
+
+                if (null !== inheritModule) {
+                    var inheritClass = extend(
+                        inheritModule.class,
+                        importedClass
+                    );
+
+                    removeModule(importedClass.type);
+
+                    importedClass = inheritClass;
+                    type = importedClass.type;
+                }
+            }
+
+            if (typeof importedClass.construct === 'undefined') {
+                importedClass.construct = function () {};
+            }
+
+            if (typeof importedClass.construct.parentClass !== 'undefined' &&
+                typeof importedClass.construct.parentClass === 'function'
+            ) {
+                importedClass.construct.parentClass(module);
+            }
+
+            importedClass.construct(module);
+
+            delete importedClass.construct;
+
+            if (typeof module.parameters !== 'undefined' &&
+                typeof module.parameters.app !== 'undefined' &&
+                true === isAppLoad
+            ) {
+                importedClass.__markup__ = module.parameters.app;
+            }
+
+            if (null !== (layoutUri = getLayout(importedClass, true))) {
+                var $link = $('<link/>').attr({
+                    'rel': 'stylesheet',
+                    'href': layoutUri
+                });
+
+                importedClass.__layout__ = $link.get(0);
+
+                $('head').append($link);
+            }
+
+            if (true === (MeinAutoJs.core.System.testing || false)) {
+                test(type, isAppLoad, withSystemTests);
+            }
+
+            return importedClass;
+        })
+        .then(function (importedClass) {
+            /**
+             * @description fires to event if module is ready
+             * @fires MeinAutoJs.core.Manager#ready:callback
+             */
+            $(_).trigger('ready:callback', importedClass);
+
+            return importedClass;
+        })
+        .fail(function (error) {
+            MeinAutoJs.console.error(
+                error.status + ' ' + error.statusText +
+                ' - Could not load' +
+                ((isAppLoad) ? ' app' : '') + ' module "' +
+                namespace + '"!'
+            );
+        });
     };
 
     /**
