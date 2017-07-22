@@ -19,17 +19,77 @@ MeinAutoJs.define('MeinAutoJs.mock.ExistingModule', new function () {
     /**
      * @description test property foo
      * @memberOf MeinAutoJs.mock.ExistingModule
-     * @type {?string}
-     * @default
+     * @private
+     * @type {Object}
      */
-    _.foo = null;
+    var foo = {};
 
     /**
-     * @description test set property foo
+     * @description test set property foo.first
      * @memberOf MeinAutoJs.mock.ExistingModule
      * @param {string} bar
+     * @returns {this}
      */
-    _.setFoo = function (bar) {
-        _.foo = bar;
+    _.setFooFirst = function (bar) {
+        foo.first = bar;
+
+        return _;
+    };
+
+    /**
+     * @description test set property foo.second
+     * @memberOf MeinAutoJs.mock.ExistingModule
+     * @param {string} bar
+     * @returns {this}
+     */
+    _.setFooSecond = function (bar) {
+        foo.second = bar;
+
+        return _;
+    };
+
+    /**
+     * @description test set property foo.third
+     * @memberOf MeinAutoJs.mock.ExistingModule
+     * @param {string} bar
+     * @returns {this}
+     */
+    _.setFooThird = function (bar) {
+        foo.third = bar;
+
+        return _;
+    };
+
+    /**
+     * @description test set property foo.fourth
+     * @memberOf MeinAutoJs.mock.ExistingModule
+     * @param {string} bar
+     * @returns {this}
+     */
+    _.setFooFourth = function (bar) {
+        foo.fourth = bar;
+
+        return _;
+    };
+
+    /**
+     * @description test set property foo.fifth
+     * @memberOf MeinAutoJs.mock.ExistingModule
+     * @param {string} bar
+     * @returns {this}
+     */
+    _.setFooFifth = function (bar) {
+        foo.fifth = bar;
+
+        return _;
+    };
+
+    /**
+     * @description get foo object
+     * @memberOf MeinAutoJs.mock.ExistingModule
+     * @returns {Object}
+     */
+    _.getFoo = function () {
+        return foo;
     };
 });

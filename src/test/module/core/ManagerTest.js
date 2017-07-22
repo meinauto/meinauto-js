@@ -89,33 +89,25 @@ MeinAutoJs.define('MeinAutoJs.test.core.ManagerTest', new function () {
                 'get existing module'
             );
 
-            module.setFoo('bar');
+            module
+                .setFooFirst('bar')
+                .setFooSecond('bar')
+                .setFooThird('bar')
+                .setFooFourth('bar')
+                .setFooFifth('bar')
+            ;
+
+            var expect = {
+                first: 'bar',
+                second: 'bar',
+                third: 'bar',
+                fourth: 'bar',
+                fifth: 'bar'
+            };
 
             assert.ok(
-                'bar' === module.foo,
+                JSON.stringify(expect) === JSON.stringify(module.getFoo()),
                 'set property of existing module class'
-            );
-
-            assertAsync();
-        });
-    };
-
-    /**
-     * @description test remove existing module success
-     * @memberOf MeinAutoJs.test.core.ManagerTest
-     * @param {MeinAutoJs.test.Unit.assert} assert
-     * @param {MeinAutoJs.core.Manager} moduleClass
-     */
-    this.testRemoveExistingModuleSuccess = function (assert, moduleClass) {
-        var assertAsync = assert.async(),
-            manager = moduleClass;
-
-        manager.construct(moduleAutoloadPath, true);
-
-        manager.add('MeinAutoJs.mock.ExistingModule').done(function (module) {
-            assert.ok(
-                true === manager.remove(module.type),
-                'add and remove existing module'
             );
 
             assertAsync();
@@ -144,6 +136,28 @@ MeinAutoJs.define('MeinAutoJs.test.core.ManagerTest', new function () {
         });
 
         manager.add('MeinAutoJs.mock.ExistingModule');
+    };
+
+    /**
+     * @description test remove existing module success
+     * @memberOf MeinAutoJs.test.core.ManagerTest
+     * @param {MeinAutoJs.test.Unit.assert} assert
+     * @param {MeinAutoJs.core.Manager} moduleClass
+     */
+    this.testRemoveExistingModuleSuccess = function (assert, moduleClass) {
+        var assertAsync = assert.async(),
+            manager = moduleClass;
+
+        manager.construct(moduleAutoloadPath, true);
+
+        manager.add('MeinAutoJs.mock.ExistingModule').done(function (module) {
+            assert.ok(
+                true === manager.remove(module.type),
+                'add and remove existing module'
+            );
+
+            assertAsync();
+        });
     };
 
     /**

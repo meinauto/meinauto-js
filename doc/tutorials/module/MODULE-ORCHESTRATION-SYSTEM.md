@@ -83,7 +83,18 @@ For automated testing use the integrated test runner:
 
 ```html
 <body>
+    <!-- markup... -->
     <div class="hidden" data-application="MockApp"></div>
+    <!-- further markup... -->
+</body>
+```
+
+or with construction parameters
+
+```html
+<body>
+    <!-- markup... -->
+    <div class="hidden" data-application="MockApp" data-parameters='{"a": true}'></div>
     <!-- further markup... -->
 </body>
 ```

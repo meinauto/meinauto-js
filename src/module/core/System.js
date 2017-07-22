@@ -29,6 +29,7 @@ MeinAutoJs.core.System = new function () {
     /**
      * @description the system environment
      * @memberOf MeinAutoJs.core.System
+     * @private
      * @type {string}
      * @default
      */

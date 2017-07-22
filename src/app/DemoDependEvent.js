@@ -19,6 +19,15 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependEvent', new function () {
     var _ = this;
 
     /**
+     * @description the markup class
+     * @memberOf MeinAutoJs.app.DemoDependEvent
+     * @private
+     * @alias {MeinAutoJs.app.DemoDependEvent.wrap.Markup}
+     * @see MeinAutoJs.app.DemoDependEvent.wrap.Markup
+     */
+    var Markup;
+
+    /**
      * @description autoload stylesheet for display
      * @memberOf MeinAutoJs.app.DemoDependEvent
      * @type {boolean}
@@ -32,7 +41,9 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependEvent', new function () {
      */
     _.construct = function () {
         MeinAutoJs.core.Manager
-            .ready('MeinAutoJs.app.DemoDependEvent.wrap.Markup', function () {
+            .ready('MeinAutoJs.app.DemoDependEvent.wrap.Markup', function (module) {
+                Markup = module;
+
                 renderDemo();
             });
     };
@@ -45,7 +56,7 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependEvent', new function () {
     var renderDemo = function () {
         var $demo = $('[data-application="DemoDependEvent"]');
 
-        $demo.removeClass('hidden');
+        Markup.wrapMarkup($demo);
 
         var color = 1,
             interval = 0,

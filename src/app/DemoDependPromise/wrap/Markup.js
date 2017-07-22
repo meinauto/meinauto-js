@@ -20,21 +20,11 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependPromise.wrap.Markup', new function (
     var _ = this;
 
     /**
-     * @description initialize application demo dependency
-     * @memberOf MeinAutoJs.app.DemoDependPromise.wrap.Markup
-     */
-    _.construct = function () {
-        wrapMarkup();
-    };
-
-    /**
      * @description wrap the demo markup with headline tag
      * @memberOf MeinAutoJs.app.DemoDependPromise.wrap.Markup
-     * @private
+     * @param {jQuery} $demo the demo markup
      */
-    var wrapMarkup = function () {
-        var $demo = $('[data-application="DemoDependPromise"]');
-
+    _.wrapMarkup = function ($demo) {
         var title = $demo.text();
 
         $demo.html('<h1>' + title + '</h1>');

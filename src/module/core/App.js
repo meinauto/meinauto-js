@@ -51,11 +51,15 @@ MeinAutoJs.define('MeinAutoJs.core.App', new function () {
 
         $apps.each(function () {
             var $app = $(this),
+                parameters = $app.data('parameters'),
                 appModule = 'MeinAutoJs.app.' + $app.data('application');
 
             _.collection.push(this);
 
-            MeinAutoJs.core.Manager.add(appModule, {app: this}).done(function () {
+            MeinAutoJs.core.Manager.add(appModule, {
+                app: this,
+                data: parameters
+            }).done(function () {
                 /**
                  * @description each [data-application] attribute selector got appended
                  *  a property <HTMLElement>.__class__ to access

@@ -303,13 +303,13 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
          */
         var getManagerMock = function () {
             var manager = _,
-                reflection = new manager.constructor();
+                mock = new manager.constructor();
 
-            reflection.construct(moduleUri, true);
+            mock.construct(moduleUri, true);
 
-            delete reflection.construct;
+            delete mock.construct;
 
-            return reflection;
+            return mock;
         };
 
         $.get(testUrl)
@@ -619,6 +619,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         /**
          * @description set callback on ready event
          * @memberOf MeinAutoJs.core.Manager.ready
+         * @private
          * @param {string} type as module class name
          * @param {function} callback runs after module class is ready
          */

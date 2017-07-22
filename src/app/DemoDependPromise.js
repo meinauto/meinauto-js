@@ -19,6 +19,15 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependPromise', new function () {
     var _ = this;
 
     /**
+     * @description the markup class
+     * @memberOf MeinAutoJs.app.DemoDependPromise
+     * @private
+     * @alias {MeinAutoJs.app.DemoDependPromise.wrap.Markup}
+     * @see MeinAutoJs.app.DemoDependPromise.wrap.Markup
+     */
+    var Markup;
+
+    /**
      * @description autoload stylesheet for display
      * @memberOf MeinAutoJs.app.DemoDependPromise
      * @type {boolean}
@@ -33,7 +42,9 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependPromise', new function () {
     _.construct = function () {
         MeinAutoJs.core.Manager
             .add('MeinAutoJs.app.DemoDependPromise.wrap.Markup')
-            .done(function () {
+            .done(function (module) {
+                Markup = module;
+
                 renderDemo();
             })
             .fail(function () {
@@ -50,6 +61,8 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependPromise', new function () {
      */
     var renderDemo = function () {
         var $demo = $('[data-application="DemoDependPromise"]');
+
+        Markup.wrapMarkup($demo);
 
         var color = 1,
             interval = 0,
