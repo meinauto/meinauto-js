@@ -77,6 +77,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @param {string} module.type as module class name
      * @param {Object=} module.parameters an object of construction parameters
      * @returns {(void|Deferred)}
+     * @throws {Error} if any module class construct exceptions are thrown
      * @todo refactor too long method {@link MeinAutoJs.core.Manager~register}
      */
     var register = function (module) {
@@ -104,8 +105,10 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         }
 
         if (null !== getModule(type)) {
-            MeinAutoJs.console.warn('Module is already loaded!');
-            return;
+            return $.Deferred(function () {
+                var $defer = this;
+                $defer.resolve(getModule(type).class);
+            });
         }
 
         if (MeinAutoJs.core.System.type === type) {
@@ -204,7 +207,11 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 importedClass.construct.parentClass(module);
             }
 
-            importedClass.construct(module);
+            try {
+                importedClass.construct(module);
+            } catch (error) {
+                console.error(error);
+            }
 
             delete importedClass.construct;
 
@@ -243,7 +250,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         })
         .fail(function (error) {
             MeinAutoJs.console.error(
-                error.status + ' ' + error.statusText +
+                (error.status || '0') + ' ' + (error.statusText || 'Error') +
                 ' - Could not load' +
                 ((isAppLoad) ? ' app' : '') + ' module "' +
                 namespace + '"!'
@@ -712,7 +719,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @memberOf MeinAutoJs.core.Manager
      * @param {(string|Array.<string>|Array.Array.<string, Object>)} type as module class name
      * @param {Object=} parameters an object of construction parameters
-     * @returns {(Deferred|function)}
+     * @returns {Deferred}
      * @example MeinAutoJs.core.Manager.add('MeinAutoJs.namespace.part.ClassName');
      * @example MeinAutoJs.core.Manager.add('MeinAutoJs.namespace.part.ClassName', {})
      *  .done(function (module) {})
@@ -760,6 +767,12 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             $resolver = register({type: type, parameters: parameters});
         } else {
             onAddError(type);
+        }
+
+        if (typeof $resolver === 'undefined') {
+            $resolver = $.Deferred(function () {
+                this.reject(); // if nothing resolvable then reject immediately on return
+            });
         }
 
         return $resolver;

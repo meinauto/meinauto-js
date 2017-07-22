@@ -1,0 +1,107 @@
+"use strict";
+
+/**
+ * @class test demo factory
+ */
+MeinAutoJs.define('MeinAutoJs.test.app.DemoFactoryTest', new function () {
+    /**
+     * @description the manager mock
+     * @memberOf MeinAutoJs.test.app.DemoFactoryTest
+     * @type {MeinAutoJs.core.Manager}
+     */
+    var manager;
+
+    /**
+     * @description setup the manager
+     * @memberOf MeinAutoJs.test.app.DemoFactoryTest
+     * @param {MeinAutoJs.core.Manager} managerInstance
+     */
+    this.setup = function (managerInstance) {
+        manager = managerInstance;
+    };
+
+    /**
+     * @description test has assigned module class type by manager
+     * @memberOf MeinAutoJs.test.app.DemoFactoryTest
+     * @param {MeinAutoJs.test.Unit.assert} assert
+     * @param {MeinAutoJs.app.DemoFactory} moduleClass
+     */
+    this.testHasAssignedTypeByManager = function (assert, moduleClass) {
+        assert.ok(
+            'MeinAutoJs.app.DemoFactory' === moduleClass.type,
+            'is MeinAutoJs.app.DemoFactory'
+        );
+    };
+
+    /**
+     * @description test factory class with wrong construction parameters
+     * @memberOf MeinAutoJs.test.app.DemoFactoryTest
+     * @param {MeinAutoJs.test.Unit.assert} assert
+     * @param {MeinAutoJs.app.DemoFactory} moduleClass
+     */
+    this.testWithWrongConstructionParameters = function (assert, moduleClass) {
+        assert.throws(
+            function() {
+                moduleClass.construct();
+            },
+            new Error('Missing construction parameters object!'),
+            'exception was thrown on missing construction parameters object'
+        );
+
+        assert.throws(
+            function() {
+                moduleClass.construct({
+                    parameters: {}
+                });
+            },
+            new Error('Missing construction parameters object properties!'),
+            'exception was thrown on missing construction parameters object properties'
+        );
+    };
+
+    /**
+     * @description test render circles without construct the factory class
+     * @memberOf MeinAutoJs.test.app.DemoFactoryTest
+     * @param {MeinAutoJs.test.Unit.assert} assert
+     * @param {MeinAutoJs.app.DemoFactory} moduleClass
+     */
+    this.testRenderCirclesWithoutConstruct = function (assert, moduleClass) {
+        assert.throws(
+            function() {
+                moduleClass.renderCircles();
+            },
+            new Error('No circles yet constructed!'),
+            'exception was thrown on not constructed factory class'
+        );
+    };
+
+    /**
+     * @description test render circles with circle model
+     * @memberOf MeinAutoJs.test.app.DemoFactoryTest
+     * @param {MeinAutoJs.test.Unit.assert} assert
+     * @param {MeinAutoJs.app.DemoFactory} moduleClass
+     */
+    this.testRenderCirclesWithCircleModel = function (assert, moduleClass) {
+        var assertAsync = assert.async();
+
+        manager.add(moduleClass.type, {
+            data: {
+                "amount": 2,
+                "size": ["5rem", "4rem"],
+                "background": ["red", "green"],
+                "border": ["black", "black"]
+            }
+        }).done(function (module) {
+            module.$demoFactoryApp = $('[data-application="DemoFactory"]');
+
+            module.renderCircles();
+
+            assert.ok(
+                2 === module.$demoFactoryApp.find('.circle').length,
+                'get rendered circles'
+            );
+
+            assertAsync();
+        });
+    };
+});

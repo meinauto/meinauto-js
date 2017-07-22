@@ -5,6 +5,8 @@
  */
 MeinAutoJs.define('MeinAutoJs.test.core.ExtendTest', new function () {
     /**
+     * @description the manager mock
+     * @memberOf MeinAutoJs.test.core.ExtendTest
      * @type {MeinAutoJs.core.Manager}
      */
     var manager;
