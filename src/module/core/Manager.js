@@ -33,6 +33,14 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
     var testing = false;
 
     /**
+     * @description stored type names to prepare modules for DIC
+     * @memberOf MeinAutoJs.core.Manager
+     * @private
+     * @type {Array.<string>}
+     */
+    var prepared = [];
+
+    /**
      * @description set module type before autoload can do this
      * @memberOf MeinAutoJs.core.Manager
      * @type {string}
@@ -104,10 +112,22 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             type = module.type;
         }
 
+        /* return resolver if module is already called or loaded */
         if (null !== getModule(type)) {
             return $.Deferred(function () {
                 var $defer = this;
                 $defer.resolve(getModule(type).class);
+            });
+        } else if (-1 === prepared.indexOf(type)) {
+            prepared.push(type);
+        } else if (-1 < prepared.indexOf(type) &&
+            null === getModule(type)
+        ) {
+            return $.Deferred(function () {
+                var $defer = this;
+                _.ready(type, function (module) {
+                    $defer.resolve(module);
+                });
             });
         }
 
@@ -475,12 +495,14 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @memberOf MeinAutoJs.core.Manager
      * @private
      * @param {string} type as module class name
-     * @returns {(Window|MeinAutoJs.core.Manager.Module.class)}
+     * @returns {?MeinAutoJs.core.Manager.Module.class}
      * @throws {Error} if module class is not of type {Object}
      */
     var getModuleDOM = function(type) {
-        var classScope = window,
+        var classScope = null,
             classPath = type.split('.');
+
+        classScope = window; // set initial DOM crawl pointer
 
         $(classPath).each(function (i, className) {
             if (className in classScope) {
@@ -490,6 +512,10 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
         if (typeof classScope !== 'object') {
             throw new Error('Could not find module class "' + type + '" as <Object>; got instead "' + typeof classScope + '"');
+        }
+
+        if (classScope instanceof Window) {
+            classScope = null;
         }
 
         return classScope;
@@ -597,6 +623,11 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 $(_.modules[i]).off();
 
                 _.modules.splice(i);
+
+                var preparedType = prepared.indexOf(type);
+                if (preparedType > -1) {
+                    prepared.splice(preparedType);
+                }
 
                 success = true;
             }

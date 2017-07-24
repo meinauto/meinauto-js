@@ -84,7 +84,7 @@ MeinAutoJs.define('MeinAutoJs.app.DemoFactory', new function () {
      */
     _.renderCircles = function () {
         if (0 === circles.length) {
-            throw new Error('No circles yet constructed!');
+            throw new Error('No circles constructed yet!');
         }
 
         $(circles).each(function () {

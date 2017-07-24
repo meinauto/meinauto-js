@@ -70,7 +70,7 @@ MeinAutoJs.define('MeinAutoJs.test.app.DemoFactoryTest', new function () {
             function() {
                 moduleClass.renderCircles();
             },
-            new Error('No circles yet constructed!'),
+            new Error('No circles constructed yet!'),
             'exception was thrown on not constructed factory class'
         );
     };
