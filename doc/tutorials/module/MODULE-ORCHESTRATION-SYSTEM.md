@@ -244,13 +244,13 @@ _.construct = function () {
  * @param {Object} parameters
  */
 var doSomething = function(parameters) {
-  /** @type {MeinAutoJs.app.MockApp.controller.Doing} */
+  /** @alias {MeinAutoJs.app.MockApp.controller.Doing} */
   var controller = MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp.controller.Doing');
   
-  /** @type {MeinAutoJs.app.MockApp.model.Data} */
+  /** @alias {MeinAutoJs.app.MockApp.model.Data} */
   var model = MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp.model.Data');
   
-  /** @type {MeinAutoJs.app.MockApp.view.Page} */
+  /** @alias {MeinAutoJs.app.MockApp.view.Page} */
   var view = MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp.view.Page');
 };
 ```
