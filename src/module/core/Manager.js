@@ -813,7 +813,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @description get module
      * @memberOf MeinAutoJs.core.Manager
      * @param {string} type as module class name
-     * @returns {(null|MeinAutoJs.core.Manager.Module)}
+     * @returns {?MeinAutoJs.core.Manager.Module}
      * @example MeinAutoJs.core.Manager.get('MeinAutoJs.namespace.part.ClassName');
      * @tutorial MODULE-ORCHESTRATION-SYSTEM
      */
