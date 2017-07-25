@@ -721,7 +721,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      *      'MeinAutoJs.namespace.part.ClassNameA',
      *      'MeinAutoJs.namespace.part.ClassNameB',
      *      'MeinAutoJs.namespace.part.ClassNameC'
- *     ]);
+     *  ]);
      * @tutorial MODULE-ORCHESTRATION-SYSTEM
      */
     _.remove = function (type) {
