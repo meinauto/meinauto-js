@@ -20,6 +20,7 @@ MeinAutoJs.define('MeinAutoJs.template.Module', new function () {
      * @description autoload stylesheet for display
      * @memberOf MeinAutoJs.template.Module
      * @type {boolean}
+     * @default
      * @example: if true then
      *  add sass css file to ui library
      *  like ./src/lib/ui/template/module.scss.template
