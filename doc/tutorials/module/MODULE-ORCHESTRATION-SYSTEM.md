@@ -5,7 +5,7 @@
 All modules stored in a Dependency Injection Container – in following called DIC
 
 - listen to event when module is ready registered into DIC;
-the event will be fired on manager everytime if a module get registered.
+the event will be fired on manager everytime if a module class get registered.
 
 ```javascript
 MeinAutoJs.core.Manager.ready('MeinAutoJs.app.MockApp', function (module) {
@@ -13,7 +13,7 @@ MeinAutoJs.core.Manager.ready('MeinAutoJs.app.MockApp', function (module) {
 });
 ```
 
-- register a module into DIC and receive a promise resolver
+- register a module class into DIC and receive a promise resolver
 
 ```javascript
 /**
