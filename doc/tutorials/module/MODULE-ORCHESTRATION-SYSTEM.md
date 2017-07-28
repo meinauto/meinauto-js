@@ -38,7 +38,7 @@ if (true === MeinAutoJs.core.Manager.has('MeinAutoJs.app.MockApp')) {}
 
 ```javascript
 /**
- * @type {MeinAutoJs.app.MockApp} MockApp
+ * @alias {MeinAutoJs.app.MockApp} MockApp
  */
 var MockApp = MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp').class;
 ```
