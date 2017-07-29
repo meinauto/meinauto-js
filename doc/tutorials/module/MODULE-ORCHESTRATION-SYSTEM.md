@@ -4,7 +4,7 @@
 
 All modules stored in a Dependency Injection Container – in following called DIC
 
-- listen to event when module is ready registered into DIC;
+- listen to event when module class is ready registered into DIC;
 the event will be fired on manager everytime if a module class get registered.
 
 ```javascript
