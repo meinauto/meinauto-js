@@ -18,6 +18,13 @@ MeinAutoJs.define('MeinAutoJs.core.App', new function () {
     var _ = this;
 
     /**
+     * @description holds jQuery collection of app selectors
+     * @memberOf MeinAutoJs.core.App
+     * @type {?jQuery}
+     */
+    var $apps = null;
+
+    /**
      * @description stored app views; the DOM representations
      *  of the app module classes
      * @memberOf MeinAutoJs.core.App
@@ -36,6 +43,8 @@ MeinAutoJs.define('MeinAutoJs.core.App', new function () {
      */
     _.construct = function () {
         $(_).on('app:initialize', function () {
+            $apps = $('[data-application]');
+
             initialize();
         });
     };
@@ -47,8 +56,6 @@ MeinAutoJs.define('MeinAutoJs.core.App', new function () {
      * @private
      */
     var initialize = function () {
-        var $apps = $('[data-application]');
-
         $apps.each(function () {
             var $app = $(this),
                 parameters = $app.data('parameters'),

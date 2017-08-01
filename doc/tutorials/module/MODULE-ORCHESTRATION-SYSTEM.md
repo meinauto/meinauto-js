@@ -23,6 +23,9 @@ MeinAutoJs.core.Manager.ready('MeinAutoJs.app.MockApp', function (module) {
  */
 MeinAutoJs.core.Manager.add('MeinAutoJs.app.MockApp', {})
     .done(function (module) {
+        /**
+        * @alias {MeinAutoJs.app.MockApp}
+        */
         var MockApp = module;
     })
     .fail(function() {/* on module fail... */});

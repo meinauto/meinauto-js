@@ -16,4 +16,22 @@ MeinAutoJs.define('MeinAutoJs.test.core.AppTest', new function () {
             'is MeinAutoJs.core.App'
         );
     };
+
+    /**
+     * @description test if the {@link MeinAutoJs.core.App#app:initialize}
+     *  event has been fired
+     * @memberOf MeinAutoJs.test.core.AppTest
+     * @param {MeinAutoJs.test.Unit.assert} assert
+     * @param {MeinAutoJs.core.App} moduleClass
+     */
+    this.testAreAppsInitialized = function (assert, moduleClass) {
+        moduleClass.construct();
+
+        $(moduleClass).trigger('app:initialize');
+
+        assert.ok(
+            0 < moduleClass.collection.length,
+            'event "app:initialize" has been fired'
+        );
+    };
 });

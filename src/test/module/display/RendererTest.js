@@ -16,4 +16,19 @@ MeinAutoJs.define('MeinAutoJs.test.display.RendererTest', new function () {
             'is MeinAutoJs.display.Renderer'
         );
     };
+
+    /**
+     * @description test is display available
+     * @memberOf MeinAutoJs.test.display.RendererTest
+     * @param {MeinAutoJs.test.Unit.assert} assert
+     * @param {MeinAutoJs.display.Renderer} moduleClass
+     */
+    this.testIsDisplayAvailable = function (assert, moduleClass) {
+        moduleClass.construct();
+
+        assert.ok(
+            moduleClass.display.hasClass('display'),
+            'display target viewport is available'
+        );
+    };
 });
