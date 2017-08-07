@@ -104,8 +104,10 @@ MeinAutoJs.core.System = new function () {
         configure(function () {
             if (false === testRun) {
                 register({type: 'MeinAutoJs.core.Manager'});
-                registerTestFramework();
-                registerDocFramework();
+                if ('dev' === environment) {
+                    registerTestFramework();
+                    registerDocFramework();
+                }
             } else {
                 testCallback();
             }
@@ -342,6 +344,8 @@ MeinAutoJs.core.System = new function () {
                      * @description test framework integration
                      * @memberOf MeinAutoJs
                      * @type {{Unit: QUnit}}
+                     * @typedef {QUnit} MeinAutoJs.test.Unit
+                     * @typedef {Assert} MeinAutoJs.test.Unit.assert
                      */
                     MeinAutoJs.test = {
                         Unit: window.QUnit || {}

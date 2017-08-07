@@ -6,6 +6,7 @@
 MeinAutoJs.define('MeinAutoJs.test.app.tool.DateTimeTest', new function () {
     /**
      * @description test {@link MeinAutoJs.app.tool.DateTime.layout} is setted
+     * @memberOf MeinAutoJs.test.app.tool.DateTimeTest
      * @param {MeinAutoJs.test.Unit.assert} assert
      * @param {MeinAutoJs.app.tool.DateTime} moduleClass
      */

@@ -7,17 +7,27 @@ MeinAutoJs.define('MeinAutoJs.test.app.DemoFactoryTest', new function () {
     /**
      * @description the manager mock
      * @memberOf MeinAutoJs.test.app.DemoFactoryTest
-     * @type {MeinAutoJs.core.Manager}
+     * @alias {MeinAutoJs.core.Manager}
      */
     var manager;
 
     /**
      * @description setup the manager
      * @memberOf MeinAutoJs.test.app.DemoFactoryTest
+     * @type {?jQuery}
+     */
+    var $mockApp = null;
+
+    /**
+     * @description setup the manager and variables
+     * @memberOf MeinAutoJs.test.app.DemoFactoryTest
      * @param {MeinAutoJs.core.Manager} managerInstance
      */
     this.setup = function (managerInstance) {
         manager = managerInstance;
+
+        $mockApp = $('<div/>').addClass('app-demo-factory-mock')
+            .html('<button class="hidden"></button>');
     };
 
     /**
@@ -92,14 +102,24 @@ MeinAutoJs.define('MeinAutoJs.test.app.DemoFactoryTest', new function () {
                 "border": ["black", "black"]
             }
         }).done(function (module) {
-            module.$demoFactoryApp = $('[data-application="DemoFactory"]');
+            module.$demoFactoryApp = $mockApp;
 
-            module.renderCircles();
+            manager.ready('MeinAutoJs.app.DemoFactory.model.Circle', function () {
+                try {
+                    module.renderCircles();
+                } catch (error) {
+                    console.error(error);
+                }
 
-            assert.ok(
-                2 === module.$demoFactoryApp.find('.circle').length,
-                'get rendered circles'
-            );
+                assert.ok(
+                    2 === module.$demoFactoryApp.find('.circle').length,
+                    'get rendered circles'
+                );
+
+                assertAsync();
+            });
+        }).fail(function () {
+            assert.notOk(false, 'could not load module');
 
             assertAsync();
         });

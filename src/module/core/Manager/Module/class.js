@@ -24,6 +24,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager.Module.class', new function () {
      * @description the manager assigns this property automatically
      * @memberOf MeinAutoJs.core.Manager.Module.class
      * @type {string}
+     * @typedef {string} MeinAutoJs.core.Manager.Module.class.type
      * @tutorial MODULE-ORCHESTRATION-SYSTEM
      */
     _.type = 'MeinAutoJs.core.Manager.Module.class';
@@ -33,6 +34,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager.Module.class', new function () {
      *  this property is optional
      * @memberOf MeinAutoJs.core.Manager.Module.class
      * @type {string}
+     * @typedef {string} MeinAutoJs.core.Manager.Module.class.extend
      */
     _.extend = 'MeinAutoJs.core.Manager.Module.class';
 
@@ -42,6 +44,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager.Module.class', new function () {
      *  this property is optional
      * @memberOf MeinAutoJs.core.Manager.Module.class
      * @type {boolean}
+     * @typedef {boolean} MeinAutoJs.core.Manager.Module.class.layout
      * @see '/src/lib/ui/template/module.scss.template'
      * @see MeinAutoJs.core.Manager.Module.class.__layout__ the css reference
      */
@@ -55,4 +58,14 @@ MeinAutoJs.define('MeinAutoJs.core.Manager.Module.class', new function () {
      * @typedef {function} MeinAutoJs.core.Manager.Module.class.construct
      */
     _.construct = function () {};
+
+    /**
+     * @description get the module class manager interface;
+     *  the manager assigns this method automatically;
+     *  the usage of this method is optional but better for
+     *  test cases with mocked manager instance
+     * @memberOf MeinAutoJs.core.Manager.Module.class
+     * @typedef {MeinAutoJs.core.Manager} MeinAutoJs.core.Manager.Module.class.getManager
+     */
+    _.getManager = function () {};
 });

@@ -35,6 +35,13 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependEvent', new function () {
     _.layout = true;
 
     /**
+     * @description the application demo DOM
+     * @memberOf MeinAutoJs.app.DemoDependEvent
+     * @type {?jQuery}
+     */
+    _.$demo = null;
+
+    /**
      * @description initialize application demo
      * @memberOf MeinAutoJs.app.DemoDependEvent
      * @requires module:app/DemoDependEvent/wrap/Markup
@@ -54,14 +61,14 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependEvent', new function () {
      * @private
      */
     var renderDemo = function () {
-        var $demo = $('[data-application="DemoDependEvent"]');
+        _.$demo = $('[data-application="DemoDependEvent"]');
 
-        Markup.wrapMarkup($demo);
+        Markup.wrapMarkup(_.$demo);
 
         var color = 1,
             interval = 0,
             render = function () {
-                $demo.find('h1').prop('class', 'color-event-' + color);
+                _.$demo.find('h1').prop('class', 'color-event-' + color);
 
                 if (interval > 0) {return;}
                 interval = setTimeout(function () {
@@ -79,7 +86,12 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependEvent', new function () {
             clearTimeout(interval);
             interval = 0;
 
-            if (true === MeinAutoJs.core.Manager
+            if (false === MeinAutoJs.core.Manager
+                    .has('MeinAutoJs.app.DemoDependEvent')
+            ) {
+                MeinAutoJs.core.Manager
+                    .remove('MeinAutoJs.app.DemoDependEvent.wrap.Markup');
+            } else if (true === MeinAutoJs.core.Manager
                     .has('MeinAutoJs.app.DemoDependEvent.wrap.Markup')
             ) {
                 render();

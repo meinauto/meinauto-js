@@ -29,6 +29,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @memberOf MeinAutoJs.core.Manager
      * @private
      * @type {boolean}
+     * @default
      */
     var testing = false;
 
@@ -81,7 +82,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @description register a module into DIC
      * @memberOf MeinAutoJs.core.Manager
      * @private
-     * @param {Object} module the module object with module class
+     * @param {Object} module an object with module class construction parameters
      * @param {string} module.type as module class name
      * @param {Object=} module.parameters an object of construction parameters
      * @returns {(void|Deferred)}
@@ -133,11 +134,20 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
         if (MeinAutoJs.core.System.type === type) {
             _.modules.push(createModule(MeinAutoJs.core.System));
+            /**
+             * @description get module class manager
+             * @memberOf MeinAutoJs.core.System
+             * @see MeinAutoJs.core.Manager.Module.class.getManager
+             * @return {MeinAutoJs.core.Manager}
+             */
+            MeinAutoJs.core.System.getManager = function () {
+                return _;
+            };
             delete MeinAutoJs.core.System.construct;
             if (true === withSystemTests &&
                 true === Boolean(sessionStorage.getItem('runTests'))
             ) {
-                test(MeinAutoJs.core.System.type, false, true);
+                test({type: MeinAutoJs.core.System.type}, false, true);
             }
             return;
         } else if (_.type === type) {
@@ -146,7 +156,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             if (true === withSystemTests &&
                 true === Boolean(sessionStorage.getItem('runTests'))
             ) {
-                test(type, false, true);
+                test({type: type}, false, true);
             }
             return;
         }
@@ -191,7 +201,16 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         };
 
         return $.ajax(request).then(function () {
+            /**
+             * @type {MeinAutoJs.core.Manager.Module.class}
+             */
             var importedClass = getModuleDOM(type);
+
+            if (true === testing && MeinAutoJs.core.Manager.has(type)) {
+                // create a module class as mock for manager in test cases
+                var mockClass = MeinAutoJs.core.Manager.get(type).class;
+                importedClass = new mockClass.constructor();
+            }
 
             importedClass.type = type;
 
@@ -217,6 +236,14 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 }
             }
 
+            /**
+             * @see MeinAutoJs.core.Manager.Module.class.getManager
+             * @return {MeinAutoJs.core.Manager}
+             */
+            importedClass.getManager = function () {
+                return _;
+            };
+
             if (typeof importedClass.construct === 'undefined') {
                 importedClass.construct = function () {};
             }
@@ -224,7 +251,11 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             if (typeof importedClass.construct.parentClass !== 'undefined' &&
                 typeof importedClass.construct.parentClass === 'function'
             ) {
-                importedClass.construct.parentClass(module);
+                try {
+                    importedClass.construct.parentClass(module);
+                } catch (error) {
+                    console.error(error);
+                }
             }
 
             try {
@@ -254,7 +285,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             }
 
             if (true === (MeinAutoJs.core.System.testing || false)) {
-                test(type, isAppLoad, withSystemTests);
+                test(module, isAppLoad, withSystemTests);
             }
 
             return importedClass;
@@ -283,7 +314,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      *  for every module class autoload
      * @memberOf MeinAutoJs.core.Manager
      * @private
-     * @param {string} type as module class name
+     * @param {Object} module an object with module class construction parameters
      * @param {boolean} isAppLoad indicate module class as an app
      * @param {boolean} withSystemTests indicate to include core modules into test runner
      * @returns {void}
@@ -291,8 +322,12 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @tutorial MODULE-TEST-RUNNER
      * @todo refactor too long method test {@link MeinAutoJs.core.Manager~test}
      */
-    var test = function (type, isAppLoad, withSystemTests) {
+    var test = function (module, isAppLoad, withSystemTests) {
         if (true === testing) {return;} // if tests are testing the manager themself
+
+        var type = module.type,
+            parameters = module.parameters
+        ;
 
         var namespace = MeinAutoJs.core.System.getNamespace(type),
             testCase = type.replace(/MeinAutoJs\./, 'MeinAutoJs.test.') + 'Test';
@@ -318,6 +353,12 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 var inheritClass = new moduleClass.constructor();
 
                 inheritClass.type = type;
+
+                if (typeof parameters !== 'undefined' &&
+                    true === isAppLoad
+                ) {
+                    inheritClass.__markup__ = parameters.app;
+                }
 
                 return inheritClass;
             } else {
@@ -361,8 +402,12 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                         $.each(deferTestCase, function (testMethod) {
                             var test = deferTestCase[testMethod];
                             if (typeof test === 'function' && /^test.*/.test(String(testMethod))) {
-                                MeinAutoJs.test.Unit.test(testCase + '. ' + testMethod, function(assert) {
-                                    return test(assert, clone(moduleClass));
+                                MeinAutoJs.test.Unit.test(testCase + '. ' + testMethod, function (assert) {
+                                    try {
+                                        return test(assert, clone(moduleClass));
+                                    } catch (error) {
+                                        console.error(error);
+                                    }
                                 });
                                 hasTestMethods++;
                             }
@@ -380,9 +425,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                     if (typeof deferTestCase.teardown !== 'undefined' &&
                         typeof deferTestCase.teardown === 'function'
                     ) {
-                        setTimeout(function () {
-                            deferTestCase.teardown();
-                        }, 1024);
+                        deferTestCase.teardown();
                     }
                 });
 
@@ -579,20 +622,22 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             success = false;
 
         $(classPath).each(function (i, className) {
-            if (className in classScope) {
-                if (1 === Object.keys(classScope[className]).length &&
-                    classPath.length - 2 === i
-                ) {
-                    delete classScope[className];
-                    success = true;
-                } else if (classPath.length - 1 === i) {
-                    delete classScope[className];
-                    success = true;
+            if (null !== classScope) {
+                if (className in classScope) {
+                    if (1 === Object.keys(classScope[className]).length &&
+                        classPath.length - 2 === i
+                    ) {
+                        delete classScope[className];
+                        success = true;
+                    } else if (classPath.length - 1 === i) {
+                        delete classScope[className];
+                        success = true;
+                    } else {
+                        classScope = classScope[className];
+                    }
                 } else {
-                    classScope = classScope[className];
+                    classScope = null;
                 }
-            } else {
-                classScope = null;
             }
         });
 
@@ -613,7 +658,11 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         $(_.modules).each(function (i) {
             var module = this;
 
-            if (type === module.type && true === removeModuleDOM(type)) {
+            if (false === testing) {
+                removeModuleDOM(type);
+            }
+
+            if (type === module.type) {
                 var moduleClass = _.modules[i].class;
 
                 if (null !== (layoutUri = getLayout(moduleClass, false))) {
@@ -622,7 +671,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
                 $(_.modules[i]).off();
 
-                _.modules.splice(i);
+                _.modules.splice(i, 1);
 
                 var preparedType = prepared.indexOf(type);
                 if (preparedType > -1) {

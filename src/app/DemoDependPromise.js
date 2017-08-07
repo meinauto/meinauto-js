@@ -87,6 +87,9 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependPromise', new function () {
 
             if (true === MeinAutoJs.core.Manager.has(_.type)) {
                 render();
+            } else {
+                MeinAutoJs.core.Manager
+                    .remove('MeinAutoJs.app.DemoDependPromise.wrap.Markup');
             }
         });
 

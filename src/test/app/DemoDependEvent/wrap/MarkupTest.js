@@ -7,6 +7,7 @@ MeinAutoJs.define('MeinAutoJs.test.app.DemoDependEvent.wrap.MarkupTest', new fun
     /**
      * @description test {@link MeinAutoJs.app.DemoDependEvent.wrap.Markup}
      *  has wrapped the text in headline
+     * @memberOf MeinAutoJs.test.app.DemoDependEvent.wrap.MarkupTest
      * @param {MeinAutoJs.test.Unit.assert} assert
      */
     this.testHasWrappedTextInHeadline = function (assert) {

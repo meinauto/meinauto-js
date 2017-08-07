@@ -138,7 +138,7 @@ MeinAutoJs.define('MeinAutoJs.app.DemoFactory', new function () {
                 border: parameters.data.border
             };
 
-            MeinAutoJs.core.Manager.add('MeinAutoJs.app.DemoFactory.model.Circle')
+            _.getManager().add('MeinAutoJs.app.DemoFactory.model.Circle')
                 .done(function (module) {
                     Circle = module;
 
@@ -158,12 +158,14 @@ MeinAutoJs.define('MeinAutoJs.app.DemoFactory', new function () {
      */
     var handleCircles = function (amount, options) {
         $(new Array(amount)).each(function (i) {
-            circles.push(createCircle(
+            var cicle = createCircle(
                 i,
                 options.size[i],
                 options.background[i],
                 options.border[i]
-            ));
+            );
+
+            circles.push(cicle);
         });
     };
 

@@ -7,7 +7,7 @@ MeinAutoJs.define('MeinAutoJs.test.app.DemoFactory.model.CircleTest', new functi
     /**
      * @description the manager mock
      * @memberOf MeinAutoJs.test.app.DemoFactoryTest.model.CircleTest
-     * @type {MeinAutoJs.core.Manager}
+     * @alias {MeinAutoJs.core.Manager}
      */
     var manager;
 
