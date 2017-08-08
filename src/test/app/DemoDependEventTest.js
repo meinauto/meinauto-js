@@ -32,25 +32,27 @@ MeinAutoJs.define('MeinAutoJs.test.app.DemoDependEventTest', new function () {
     };
 
     /**
-     * @description test {@link MeinAutoJs.app.DemoDependEvent} has a text
+     * @description test markup wrapper class dependency is ready
      * @memberOf MeinAutoJs.test.app.DemoDependEventTest
      * @param {MeinAutoJs.test.Unit.assert} assert
      * @param {MeinAutoJs.app.DemoDependEvent} moduleClass
      */
-    // this.testMarkupWrapperIsReady = function (assert, moduleClass) {
-    //     var assertAsync = assert.async(),
-    //         $demo = $('[data-application="DemoDependEvent"]');
-    //
-    //     manager.add(moduleClass.type).done(function () {
-    //         manager.ready(moduleClass.type + '.wrap.Markup', function (module) {
-    //             module.$demo = $demo;
-    //
-    //             assert.ok(false, 'fail');
-    //
-    //             assertAsync();
-    //         });
-    //
-    //         manager.add(moduleClass.type + '.wrap.Markup');
-    //     });
-    // };
+    this.testMarkupWrapperIsReady = function (assert, moduleClass) {
+        var assertAsync = assert.async(),
+            $demo = $('<div/>').addClass('test-mock').append(
+                $('<h1/>').addClass('color-event-1')
+            );
+
+        manager.add(moduleClass.type, {app: $demo.get(0)}).done(function () {
+            manager.ready(moduleClass.type + '.wrap.Markup', function () {
+                assert.ok(manager.has(moduleClass.type), 'markup wrapper is ready');
+
+                assertAsync();
+
+                manager.remove('MeinAutoJs.app.DemoDependEvent');
+            });
+
+            manager.add(moduleClass.type + '.wrap.Markup');
+        });
+    };
 });

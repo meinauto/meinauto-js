@@ -65,7 +65,15 @@ MeinAutoJs.define('MeinAutoJs.core.Manager.Module.class', new function () {
      *  the usage of this method is optional but better for
      *  test cases with mocked manager instance
      * @memberOf MeinAutoJs.core.Manager.Module.class
-     * @typedef {MeinAutoJs.core.Manager} MeinAutoJs.core.Manager.Module.class.getManager
+     * @typedef {MeinAutoJs.core.Manager} MeinAutoJs.core.Manager.Module.class.__manager__
      */
-    _.getManager = function () {};
+    _.__manager__ = {};
+
+    /**
+     * @description get the css reference if module layout is true;
+     *  the manager assigns this method automatically;
+     * @memberOf MeinAutoJs.core.Manager.Module.class
+     * @typedef {HTMLLinkElement} MeinAutoJs.core.Manager.Module.class.__layout__
+     */
+    _.__layout__ = {};
 });

@@ -105,18 +105,21 @@ MeinAutoJs.define('MeinAutoJs.test.app.DemoFactoryTest', new function () {
             module.$demoFactoryApp = $mockApp;
 
             manager.ready('MeinAutoJs.app.DemoFactory.model.Circle', function () {
-                try {
-                    module.renderCircles();
-                } catch (error) {
-                    console.error(error);
-                }
+                // awaiting user click interaction
+                setTimeout(function () {
+                    try {
+                        module.renderCircles();
 
-                assert.ok(
-                    2 === module.$demoFactoryApp.find('.circle').length,
-                    'get rendered circles'
-                );
+                        assert.ok(
+                            2 === module.$demoFactoryApp.find('.circle').length,
+                            'get rendered circles'
+                        );
 
-                assertAsync();
+                        assertAsync();
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }, 1000);
             });
         }).fail(function () {
             assert.notOk(false, 'could not load module');

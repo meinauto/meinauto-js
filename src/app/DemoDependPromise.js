@@ -40,7 +40,7 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependPromise', new function () {
      * @requires module:app/DemoDependPromise/wrap/Markup
      */
     _.construct = function () {
-        MeinAutoJs.core.Manager
+        _.__manager__
             .add('MeinAutoJs.app.DemoDependPromise.wrap.Markup')
             .done(function (module) {
                 Markup = module;
@@ -60,24 +60,26 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependPromise', new function () {
      * @private
      */
     var renderDemo = function () {
-        var $demo = $('[data-application="DemoDependPromise"]');
+        var $demo = $(_.__markup__);
 
         Markup.wrapMarkup($demo);
 
         var color = 1,
             interval = 0,
             render = function () {
-                $demo.find('h1').prop('class', 'color-promise-' + color);
+                if (null !== _.$demo) {
+                    $demo.find('h1').prop('class', 'color-promise-' + color);
 
-                if (interval > 0) {return;}
-                interval = setTimeout(function () {
-                    $(_).trigger('interval');
-                }, 1000);
+                    if (interval > 0) {return;}
+                    interval = setTimeout(function () {
+                        $(_).trigger('interval');
+                    }, 1000);
 
-                color++;
+                    color++;
 
-                if (5 < color) {
-                    color = 1;
+                    if (5 < color) {
+                        color = 1;
+                    }
                 }
             };
 
@@ -85,10 +87,10 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependPromise', new function () {
             clearTimeout(interval);
             interval = 0;
 
-            if (true === MeinAutoJs.core.Manager.has(_.type)) {
+            if (true === _.__manager__.has(_.type)) {
                 render();
             } else {
-                MeinAutoJs.core.Manager
+                _.__manager__
                     .remove('MeinAutoJs.app.DemoDependPromise.wrap.Markup');
             }
         });

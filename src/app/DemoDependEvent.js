@@ -47,9 +47,11 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependEvent', new function () {
      * @requires module:app/DemoDependEvent/wrap/Markup
      */
     _.construct = function () {
-        MeinAutoJs.core.Manager
+        _.__manager__
             .ready('MeinAutoJs.app.DemoDependEvent.wrap.Markup', function (module) {
                 Markup = module;
+
+                _.$demo = $(_.__markup__);
 
                 renderDemo();
             });
@@ -61,24 +63,24 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependEvent', new function () {
      * @private
      */
     var renderDemo = function () {
-        _.$demo = $('[data-application="DemoDependEvent"]');
-
         Markup.wrapMarkup(_.$demo);
 
         var color = 1,
             interval = 0,
             render = function () {
-                _.$demo.find('h1').prop('class', 'color-event-' + color);
+                if (null !== _.$demo) {
+                    _.$demo.find('h1').prop('class', 'color-event-' + color);
 
-                if (interval > 0) {return;}
-                interval = setTimeout(function () {
-                    $(_).trigger('interval');
-                }, 1000);
+                    if (interval > 0) {return;}
+                    interval = setTimeout(function () {
+                        $(_).trigger('interval');
+                    }, 1000);
 
-                color++;
+                    color++;
 
-                if (5 < color) {
-                    color = 1;
+                    if (5 < color) {
+                        color = 1;
+                    }
                 }
             };
 
@@ -86,12 +88,12 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDependEvent', new function () {
             clearTimeout(interval);
             interval = 0;
 
-            if (false === MeinAutoJs.core.Manager
+            if (false === _.__manager__
                     .has('MeinAutoJs.app.DemoDependEvent')
             ) {
-                MeinAutoJs.core.Manager
+                _.__manager__
                     .remove('MeinAutoJs.app.DemoDependEvent.wrap.Markup');
-            } else if (true === MeinAutoJs.core.Manager
+            } else if (true === _.__manager__
                     .has('MeinAutoJs.app.DemoDependEvent.wrap.Markup')
             ) {
                 render();

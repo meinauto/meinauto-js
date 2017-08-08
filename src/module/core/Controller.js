@@ -18,13 +18,6 @@ MeinAutoJs.define('MeinAutoJs.core.Controller', new function () {
     var _ = this;
 
     /**
-     * @description extend base controller
-     * @memberOf MeinAutoJs.core.Controller
-     * @type {string}
-     */
-    _.extend = 'MeinAutoJs.abstract.Controller';
-
-    /**
      * @description initialize renderer
      * @memberOf MeinAutoJs.core.Controller
      */

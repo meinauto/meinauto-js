@@ -133,16 +133,14 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         }
 
         if (MeinAutoJs.core.System.type === type) {
-            _.modules.push(createModule(MeinAutoJs.core.System));
             /**
              * @description get module class manager
              * @memberOf MeinAutoJs.core.System
-             * @see MeinAutoJs.core.Manager.Module.class.getManager
+             * @see MeinAutoJs.core.Manager.Module.class.__manager__
              * @return {MeinAutoJs.core.Manager}
              */
-            MeinAutoJs.core.System.getManager = function () {
-                return _;
-            };
+            MeinAutoJs.core.System.__manager__ = _;
+            _.modules.push(createModule(MeinAutoJs.core.System));
             delete MeinAutoJs.core.System.construct;
             if (true === withSystemTests &&
                 true === Boolean(sessionStorage.getItem('runTests'))
@@ -214,6 +212,12 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
             importedClass.type = type;
 
+            /**
+             * @see MeinAutoJs.core.Manager.Module.class.__manager__
+             * @return {MeinAutoJs.core.Manager}
+             */
+            importedClass.__manager__ = _;
+
             _.modules.push(createModule(importedClass));
 
             if (typeof importedClass.extend !== 'undefined' &&
@@ -235,14 +239,6 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                     type = importedClass.type;
                 }
             }
-
-            /**
-             * @see MeinAutoJs.core.Manager.Module.class.getManager
-             * @return {MeinAutoJs.core.Manager}
-             */
-            importedClass.getManager = function () {
-                return _;
-            };
 
             if (typeof importedClass.construct === 'undefined') {
                 importedClass.construct = function () {};
