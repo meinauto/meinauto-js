@@ -61,8 +61,8 @@ MeinAutoJs.define('MeinAutoJs.core.Manager.Module.class', new function () {
 
     /**
      * @description get the module class manager interface;
-     *  the manager assigns this method automatically;
-     *  the usage of this method is optional but better for
+     *  the manager assigns this property automatically;
+     *  the usage of this property is optional but better for
      *  test cases with mocked manager instance
      * @memberOf MeinAutoJs.core.Manager.Module.class
      * @typedef {MeinAutoJs.core.Manager} MeinAutoJs.core.Manager.Module.class.__manager__
@@ -71,9 +71,17 @@ MeinAutoJs.define('MeinAutoJs.core.Manager.Module.class', new function () {
 
     /**
      * @description get the css reference if module layout is true;
-     *  the manager assigns this method automatically;
+     *  the manager assigns this property automatically;
      * @memberOf MeinAutoJs.core.Manager.Module.class
      * @typedef {HTMLLinkElement} MeinAutoJs.core.Manager.Module.class.__layout__
      */
     _.__layout__ = {};
+
+    /**
+     * @description get the application DOM reference if module initialized from [data-application] attribute;
+     *  the manager assigns this property automatically;
+     * @memberOf MeinAutoJs.core.Manager.Module.class
+     * @typedef {HTMLElement} MeinAutoJs.core.Manager.Module.class.__markup__
+     */
+    _.__markup__ = {};
 });

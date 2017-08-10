@@ -117,7 +117,7 @@ MeinAutoJs.define('MeinAutoJs.test.app.DemoFactoryTest', new function () {
 
                         assertAsync();
                     } catch (error) {
-                        console.error(error);
+                        MeinAutoJs.console.error(error);
                     }
                 }, 1000);
             });

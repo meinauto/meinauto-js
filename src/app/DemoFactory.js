@@ -190,7 +190,7 @@ MeinAutoJs.define('MeinAutoJs.app.DemoFactory', new function () {
                 .setBorderColor(border)
             ;
         } catch (error) {
-            console.error(error);
+            MeinAutoJs.console.error(error);
         }
 
         return circle;

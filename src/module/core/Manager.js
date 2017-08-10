@@ -42,6 +42,14 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
     var prepared = [];
 
     /**
+     * @description collection of queued requests
+     * @memberOf MeinAutoJs.core.Manager
+     * @private
+     * @type {jQuery}
+     */
+    var $requests = $({});
+
+    /**
      * @description set module type before autoload can do this
      * @memberOf MeinAutoJs.core.Manager
      * @type {string}
@@ -198,7 +206,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             }
         };
 
-        return $.ajax(request).then(function () {
+        return registerRequest(request).then(function () {
             /**
              * @type {MeinAutoJs.core.Manager.Module.class}
              */
@@ -214,7 +222,6 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
             /**
              * @see MeinAutoJs.core.Manager.Module.class.__manager__
-             * @return {MeinAutoJs.core.Manager}
              */
             importedClass.__manager__ = _;
 
@@ -240,32 +247,13 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 }
             }
 
-            if (typeof importedClass.construct === 'undefined') {
-                importedClass.construct = function () {};
-            }
-
-            if (typeof importedClass.construct.parentClass !== 'undefined' &&
-                typeof importedClass.construct.parentClass === 'function'
-            ) {
-                try {
-                    importedClass.construct.parentClass(module);
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-
-            try {
-                importedClass.construct(module);
-            } catch (error) {
-                console.error(error);
-            }
-
-            delete importedClass.construct;
-
             if (typeof module.parameters !== 'undefined' &&
                 typeof module.parameters.app !== 'undefined' &&
                 true === isAppLoad
             ) {
+                /**
+                 * @see MeinAutoJs.core.Manager.Module.class.__markup__
+                 */
                 importedClass.__markup__ = module.parameters.app;
             }
 
@@ -280,6 +268,34 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 $('head').append($link);
             }
 
+            return importedClass;
+        })
+        .then(function (importedClass) {
+            if (typeof importedClass.construct === 'undefined') {
+                importedClass.construct = function () {};
+            }
+
+            if (typeof importedClass.construct.parentClass !== 'undefined' &&
+                typeof importedClass.construct.parentClass === 'function'
+            ) {
+                try {
+                    importedClass.construct.parentClass(module);
+                } catch (error) {
+                    MeinAutoJs.console.error(error);
+                }
+            }
+
+            try {
+                importedClass.construct(module);
+            } catch (error) {
+                MeinAutoJs.console.error(error);
+            }
+
+            delete importedClass.construct;
+
+            return importedClass;
+        })
+        .then(function (importedClass) {
             if (true === (MeinAutoJs.core.System.testing || false)) {
                 test(module, isAppLoad, withSystemTests);
             }
@@ -376,7 +392,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             return mock;
         };
 
-        $.get(testUrl)
+        registerRequest({url: testUrl})
             .done(function () {
                 var moduleClass = getModuleDOM(type),
                     moduleClassTest = getModuleDOM(testCase);
@@ -402,7 +418,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                                     try {
                                         return test(assert, clone(moduleClass));
                                     } catch (error) {
-                                        console.error(error);
+                                        MeinAutoJs.console.error(error);
                                     }
                                 });
                                 hasTestMethods++;
@@ -492,7 +508,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 reNamespace.toLowerCase() + '.css' +
                 ((true === cacheBust) ? '?' + String((new Date()).getTime()) : '');
 
-            $.ajax(layoutUri, {method: 'head'})
+            registerRequest({url: layoutUri, method: 'head'})
                 .fail(function (error) {
                     MeinAutoJs.console.error(
                         error.status + ' ' + error.statusText +
@@ -502,6 +518,56 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         }
 
         return layoutUri;
+    };
+
+    /**
+     * @description register an asynchronous request
+     * @memberOf MeinAutoJs.core.Manager
+     * @param {Object} request a jQuery ajax request object definition
+     * @return {Deferred}
+     * @see http://api.jquery.com/jQuery.ajax/
+     * @see http://api.jquery.com/jQuery.queue/
+     */
+    var registerRequest = function(request) {
+        var $async,
+            $defer = $.Deferred(),
+            $resolver = $defer.promise();
+
+        var registerCall = function (pipe) {
+            $async = $.ajax(request);
+            $async
+                .done($defer.resolve)
+                .fail($defer.reject)
+                .then(pipe, pipe);
+        };
+
+        $requests.queue(registerCall);
+
+        $resolver.abort = function(statusText) {
+            if ($async) {
+                return $async.abort(statusText);
+            }
+
+            var $queue = $requests.queue(),
+                index = $.inArray(registerCall, $queue);
+
+            if (-1 < index) {
+                $queue.splice(index, 1);
+            }
+
+            $defer.rejectWith(
+                request.context || request,
+                [
+                    $resolver,
+                    statusText,
+                    ''
+                ]
+            );
+
+            return $resolver;
+        };
+
+        return $resolver;
     };
 
     /**
