@@ -549,14 +549,16 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             }
 
             var $queue = $requests.queue(),
-                index = $.inArray(registerCall, $queue);
+                index = $.inArray(registerCall, $queue),
+                context = request.context || request
+            ;
 
             if (-1 < index) {
                 $queue.splice(index, 1);
             }
 
             $defer.rejectWith(
-                request.context || request,
+                context,
                 [
                     $resolver,
                     statusText,
@@ -616,7 +618,9 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         });
 
         if (typeof classScope !== 'object') {
-            throw new Error('Could not find module class "' + type + '" as <Object>; got instead "' + typeof classScope + '"');
+            throw new Error(
+                'Could not find module class "' + type + '" as <Object>; got instead "' + typeof classScope + '"'
+            );
         }
 
         if (classScope instanceof Window) {

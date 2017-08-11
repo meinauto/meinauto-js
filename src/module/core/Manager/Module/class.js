@@ -60,7 +60,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager.Module.class', new function () {
     _.construct = function () {};
 
     /**
-     * @description get the module class manager interface;
+     * @description the module class manager interface;
      *  the manager assigns this property automatically;
      *  the usage of this property is optional but better for
      *  test cases with mocked manager instance

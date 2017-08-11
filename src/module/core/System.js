@@ -254,6 +254,8 @@ MeinAutoJs.core.System = new function () {
                         $('> iframe', '#' + docRunner).get(0).contentDocument.location.reload();
                     };
 
+                $('body').css({overflow: 'hidden'});
+
                 $('<button/>').prop({
                     'id': 'doc-runner-control'
                 }).css({
@@ -333,7 +335,7 @@ MeinAutoJs.core.System = new function () {
 
             $('head').append($link);
 
-            $('body').prepend('<section class="debug">' +
+            $('body').css({overflow: 'hidden'}).prepend('<section class="debug">' +
                 '<div id="qunit"></div>' +
                 '<div id="qunit-fixture"></div>' +
             '</section>');
