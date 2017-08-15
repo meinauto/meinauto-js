@@ -146,7 +146,7 @@ this.setup = function (managerInstance) {
 For better test case accessibility the manager and markup from implementation can be accessed by inner module class scope.
 
 This means that in test cases the isolated module class instance own manager property 
-are overridden by a isolated test case manager instance and the markup can be overridden per test method.
+are overridden by an isolated test case manager instance and the markup can be overridden per test method.
 
 The manager and markup properties are described at the module class interface "MeinAutoJs.core.Manager.Module.class" 
 can be found in the generated documentation.
