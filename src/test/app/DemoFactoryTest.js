@@ -110,16 +110,16 @@ MeinAutoJs.define('MeinAutoJs.test.app.DemoFactoryTest', new function () {
                 $button.on('click', function () {
                     try {
                         module.renderCircles();
-
-                        assert.ok(
-                            2 === module.$demoFactoryApp.find('.circle').length,
-                            'get rendered circles'
-                        );
-
-                        assertAsync();
                     } catch (error) {
                         MeinAutoJs.console.error(error);
                     }
+
+                    assert.ok(
+                        2 === module.$demoFactoryApp.find('.circle').length,
+                        'get rendered circles'
+                    );
+
+                    assertAsync();
                 });
 
                 // awaiting user click interaction
