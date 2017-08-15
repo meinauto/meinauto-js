@@ -113,7 +113,7 @@ this.teardown = function () {
         var $defer = this;
         setTimeout(function () {
             $defer.resolve();
-        }, 1024); // example for a deferred test case setup
+        }, 1024); // example for a deferred test case teardown
     });
 };
 ```
