@@ -28,11 +28,34 @@ MeinAutoJs.define('MeinAutoJs.test.template.ModuleTest', new function () {
     /**
      * @description test {@link MeinAutoJs.template.Module.layout} is setted
      * @memberOf MeinAutoJs.test.template.ModuleTest
-     * @param {MeinAutoJs.test.Unit.assert} assert
-     * @param {MeinAutoJs.template.Module} moduleClass
+     * @param {MeinAutoJs.test.Unit.assert} assert the assertion interface
+     * @param {MeinAutoJs.template.Module} moduleClass as an isolated instance
      */
     this.testHasLayout = function (assert, moduleClass) {
         assert.ok(moduleClass.layout, 'has layout');
+    };
+
+    /**
+     * @description test {@link MeinAutoJs.template.Module} with manager
+     * @memberOf MeinAutoJs.test.template.ModuleTest
+     * @param {MeinAutoJs.test.Unit.assert} assert the assertion interface
+     * @param {MeinAutoJs.template.Module} moduleClass as an isolated instance
+     */
+    this.testModuleClassWithManager = function (assert, moduleClass) {
+        var assertAsync = assert.async();
+
+        manager.add(moduleClass.type)
+            .done(function (module) {
+                assert.ok(moduleClass.type === module.type, 'module class loaded');
+
+                assertAsync();
+            })
+            .fail(function (error) {
+                assert.notOk(true, 'failed to load module class with error: ' + JSON.stringify(error));
+
+                assertAsync();
+            })
+        ;
     };
 
     /**

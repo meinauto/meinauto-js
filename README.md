@@ -20,7 +20,7 @@ module class bound autoloaded stylesheet.
 Module classes are build in a namespace struture that can be used for 
 everything what the power of JavaScript can do.
 
-Initializing of module classes can be done by a HTML attribute or by 
+Initialization of module classes can be done via a HTML attribute or by 
 another JavaScript that calls the module manager.
 
 A module test runner based on [QUnit][qunit] and isolated test methods are available.

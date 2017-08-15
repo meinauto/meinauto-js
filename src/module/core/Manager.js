@@ -398,21 +398,25 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                     moduleClassTest = getModuleDOM(testCase);
 
                 var $testSetup = $.Deferred(),
-                    $testCases = $testSetup.then(function (deferTestCase) {
-                    if (typeof deferTestCase.setup !== 'undefined' &&
-                        typeof deferTestCase.setup === 'function'
+                    $testCases = $testSetup.then(function () {
+                    if (typeof moduleClassTest.setup !== 'undefined' &&
+                        typeof moduleClassTest.setup === 'function'
                     ) {
-                        deferTestCase.setup(getManagerMock());
-                    }
+                        var $deferredSetup = moduleClassTest.setup(getManagerMock());
 
-                    return deferTestCase;
+                        if (typeof $deferredSetup === 'object' &&
+                            $deferredSetup.hasOwnProperty('promise')
+                        ) {
+                            return $deferredSetup;
+                        }
+                    }
                 });
 
-                var $testTeardown = $testCases.then(function (deferTestCase) {
-                    if (0 < Object.keys(deferTestCase).length) {
+                var $testTeardown = $testCases.then(function () {
+                    if (0 < Object.keys(moduleClassTest).length) {
                         var hasTestMethods = 0;
-                        $.each(deferTestCase, function (testMethod) {
-                            var test = deferTestCase[testMethod];
+                        $.each(moduleClassTest, function (testMethod) {
+                            var test = moduleClassTest[testMethod];
                             if (typeof test === 'function' && /^test.*/.test(String(testMethod))) {
                                 MeinAutoJs.test.Unit.test(testCase + '. ' + testMethod, function (assert) {
                                     try {
@@ -429,19 +433,23 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                             MeinAutoJs.console.warn('Test "' + testCase + '" has no test methods!');
                         }
                     }
-
-                    return deferTestCase;
                 });
 
-                $testTeardown.done(function (deferTestCase) {
-                    if (typeof deferTestCase.teardown !== 'undefined' &&
-                        typeof deferTestCase.teardown === 'function'
+                $testTeardown.done(function () {
+                    if (typeof moduleClassTest.teardown !== 'undefined' &&
+                        typeof moduleClassTest.teardown === 'function'
                     ) {
-                        deferTestCase.teardown();
+                        var $deferredTeardown = moduleClassTest.teardown();
+
+                        if (typeof $deferredTeardown === 'object' &&
+                            $deferredTeardown.hasOwnProperty('promise')
+                        ) {
+                            return $deferredTeardown;
+                        }
                     }
                 });
 
-                $testSetup.resolve(moduleClassTest);
+                $testSetup.resolve();
             })
             .fail(function (error) {
                 MeinAutoJs.console.error(
