@@ -105,8 +105,9 @@ MeinAutoJs.define('MeinAutoJs.test.app.DemoFactoryTest', new function () {
             module.$demoFactoryApp = $mockApp;
 
             manager.ready('MeinAutoJs.app.DemoFactory.model.Circle', function () {
-                // awaiting user click interaction
-                setTimeout(function () {
+                var $button = module.$demoFactoryApp.find('button');
+
+                $button.on('click', function () {
                     try {
                         module.renderCircles();
 
@@ -119,6 +120,11 @@ MeinAutoJs.define('MeinAutoJs.test.app.DemoFactoryTest', new function () {
                     } catch (error) {
                         MeinAutoJs.console.error(error);
                     }
+                });
+
+                // awaiting user click interaction
+                setTimeout(function () {
+                    $button.trigger('click');
                 }, 1000);
             });
         }).fail(function () {

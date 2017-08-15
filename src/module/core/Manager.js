@@ -531,6 +531,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
     /**
      * @description register an asynchronous request
      * @memberOf MeinAutoJs.core.Manager
+     * @private
      * @param {Object} request a jQuery ajax request object definition
      * @return {Deferred}
      * @see http://api.jquery.com/jQuery.ajax/
@@ -546,7 +547,8 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
             $async
                 .done($defer.resolve)
                 .fail($defer.reject)
-                .then(pipe, pipe);
+                .then(pipe, pipe)
+            ;
         };
 
         $requests.queue(registerCall);
