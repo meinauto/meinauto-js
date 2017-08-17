@@ -250,6 +250,7 @@ MeinAutoJs.core.System = new function () {
             /**
              * @typedef {Object} MAJS the default shortcut interface name
              * @type {{
+             *  console: Object,
              *  define: function,
              *  add: function,
              *  ready: function,
@@ -259,6 +260,7 @@ MeinAutoJs.core.System = new function () {
              * }}
              */
             var shortcutInterface = {
+                console: MeinAutoJs.console,
                 define: define,
                 add: manager.add,
                 ready: manager.ready,
