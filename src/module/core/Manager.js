@@ -227,9 +227,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
             _.modules.push(createModule(importedClass));
 
-            if (typeof importedClass.extend !== 'undefined' &&
-                typeof importedClass.extend === 'string'
-            ) {
+            if (typeof importedClass.extend === 'string') {
                 return _.add(importedClass.extend); // only pre register module for inheritance
             } else {
                 var inheritModule = getModuleByExtend(type);
@@ -275,9 +273,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 importedClass.construct = function () {};
             }
 
-            if (typeof importedClass.construct.parentClass !== 'undefined' &&
-                typeof importedClass.construct.parentClass === 'function'
-            ) {
+            if (typeof importedClass.construct.parentClass === 'function') {
                 try {
                     importedClass.construct.parentClass(module);
                 } catch (error) {
@@ -399,9 +395,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
                 var $testSetup = $.Deferred(),
                     $testCases = $testSetup.then(function () {
-                    if (typeof moduleClassTest.setup !== 'undefined' &&
-                        typeof moduleClassTest.setup === 'function'
-                    ) {
+                    if (typeof moduleClassTest.setup === 'function') {
                         var $deferredSetup = moduleClassTest.setup(getManagerMock());
 
                         if (typeof $deferredSetup === 'object' &&
@@ -436,9 +430,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 });
 
                 $testTeardown.done(function () {
-                    if (typeof moduleClassTest.teardown !== 'undefined' &&
-                        typeof moduleClassTest.teardown === 'function'
-                    ) {
+                    if (typeof moduleClassTest.teardown === 'function') {
                         var $deferredTeardown = moduleClassTest.teardown();
 
                         if (typeof $deferredTeardown === 'object' &&

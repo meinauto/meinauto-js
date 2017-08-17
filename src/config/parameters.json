@@ -1,4 +1,5 @@
 {
+  "shortcut": "MAJS",
   "environment": "dev",
   "appPath": "js/app",
   "modulePath": "js/module",

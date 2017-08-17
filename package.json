@@ -109,7 +109,8 @@
     "wsh": false,
     "yui": false,
     "globals": {
-      "MeinAutoJs": true
+      "MeinAutoJs": true,
+      "MAJS": true
     }
   }
 }
