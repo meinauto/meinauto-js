@@ -186,25 +186,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
 
         var layoutUri = null;
 
-        var request = {
-            url: moduleUrl,
-            // if highlighted as unused property beforeSend bug:
-            // https://youtrack.jetbrains.com/issue/WEB-19393
-            beforeSend: function(request) {
-                request.setRequestHeader(
-                    'Cache-Control',
-                    'no-cache, no-store, must-revalidate'
-                );
-                request.setRequestHeader(
-                    'Pragma',
-                    'no-cache'
-                );
-                request.setRequestHeader(
-                    'Expires',
-                    '0'
-                );
-            }
-        };
+        var request = createRequest(moduleUrl);
 
         return registerRequest(request).then(function () {
             /**
@@ -328,7 +310,6 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @returns {void}
      * @throws {Error} if module class could not be cloned for test isolation
      * @tutorial MODULE-TEST-RUNNER
-     * @todo refactor too long method test {@link MeinAutoJs.core.Manager~test}
      */
     var test = function (module, isAppLoad, withSystemTests) {
         if (true === testing) {return;} // if tests are testing the manager themself
@@ -521,6 +502,35 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
     };
 
     /**
+     * @description create an asynchronous request
+     * @memberOf MeinAutoJs.core.Manager
+     * @private
+     * @param {string} moduleUrl the path to the module class js file
+     * @returns {Object} a jquery request object
+     */
+    var createRequest = function (moduleUrl) {
+        return {
+            url: moduleUrl,
+            // if highlighted as unused property beforeSend bug:
+            // https://youtrack.jetbrains.com/issue/WEB-19393
+            beforeSend: function(request) {
+                request.setRequestHeader(
+                    'Cache-Control',
+                    'no-cache, no-store, must-revalidate'
+                );
+                request.setRequestHeader(
+                    'Pragma',
+                    'no-cache'
+                );
+                request.setRequestHeader(
+                    'Expires',
+                    '0'
+                );
+            }
+        };
+    };
+
+    /**
      * @description register an asynchronous request
      * @memberOf MeinAutoJs.core.Manager
      * @private
@@ -550,13 +560,13 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
                 return $async.abort(statusText);
             }
 
-            var $queue = $requests.queue(),
-                index = $.inArray(registerCall, $queue),
+            var queue = $requests.queue(),
+                index = queue.indexOf(registerCall),
                 context = request.context || request
             ;
 
             if (-1 < index) {
-                $queue.splice(index, 1);
+                queue.splice(index, 1);
             }
 
             $defer.rejectWith(
