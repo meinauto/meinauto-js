@@ -27,6 +27,15 @@ MeinAutoJs.core.System = new function () {
     var _ = this;
 
     /**
+     * @description the system configuration
+     *  {@link MeinAutoJs.core.System~configuration}
+     * @memberOf MeinAutoJs.core.System
+     * @private
+     * @type {Object}
+     */
+    var configuration;
+
+    /**
      * @description the system environment
      * @memberOf MeinAutoJs.core.System
      * @private
@@ -36,13 +45,13 @@ MeinAutoJs.core.System = new function () {
     var environment = 'dev';
 
     /**
-     * @description the system configuration
-     *  {@link MeinAutoJs.core.System~configuration}
+     * @description the shortcut interface name
      * @memberOf MeinAutoJs.core.System
      * @private
-     * @type {Object}
+     * @type {string}
+     * @default
      */
-    var configuration;
+    var shortcut = 'MAJS';
 
     /**
      * @description path to module class root directory
@@ -143,6 +152,7 @@ MeinAutoJs.core.System = new function () {
 
                 /**
                  * @type {{
+                 *  shortcut: string,
                  *  environment: string,
                  *  modulePath: string,
                  *  docFramework: string,
@@ -151,6 +161,7 @@ MeinAutoJs.core.System = new function () {
                  * }}
                  */
                 configuration = data;
+                shortcut = configuration.shortcut;
                 environment = configuration.environment;
                 moduleUri = configuration.modulePath;
                 docFrameworkUri = configuration.docFramework;
@@ -206,7 +217,12 @@ MeinAutoJs.core.System = new function () {
         $.get(moduleUrl)
             .done(function () {
                 $(MeinAutoJs.core.Manager).on('ready:manager', function () {
-                    MeinAutoJs.core.Manager.construct(moduleUri);
+                    try {
+                        MeinAutoJs.core.Manager.construct(moduleUri);
+                        registerShortcut();
+                    } catch (error) {
+                        MeinAutoJs.console.error(error);
+                    }
                 }).trigger('ready:manager', module).off('ready:manager');
             })
             .fail(function (error) {
@@ -215,6 +231,56 @@ MeinAutoJs.core.System = new function () {
                     ' - Could not load module "' + namespace + '"!'
                 );
             });
+    };
+
+    /**
+     * @description register shortcut interface
+     * @memberOf MeinAutoJs.core.System
+     * @private
+     * @throws {Error} if shortcut interface name is
+     *  of wrong type or namespace is already taken
+     */
+    var registerShortcut = function () {
+        if (typeof shortcut === 'string' &&
+            0 < shortcut.length &&
+            MeinAutoJs.core.hasOwnProperty('Manager')
+        ) {
+            var manager = MeinAutoJs.core.Manager;
+
+            /**
+             * @typedef {Object} MAJS the default shortcut interface name
+             * @type {{
+             *  console: Object,
+             *  define: function,
+             *  add: function,
+             *  ready: function,
+             *  has: function,
+             *  get: function,
+             *  remove: function
+             * }}
+             */
+            var shortcutInterface = {
+                console: MeinAutoJs.console,
+                define: define,
+                add: manager.add,
+                ready: manager.ready,
+                has: manager.has,
+                get: manager.get,
+                remove: manager.remove
+            };
+
+            if (typeof window[shortcut] === 'undefined') {
+                window[shortcut] = shortcutInterface;
+            } else {
+                throw new Error(
+                    'Could not register shortcut' +
+                    ' interface name "' + shortcut + '"!' +
+                    ' Please choose a not defined namespace.'
+                );
+            }
+        } else {
+            throw new Error('Name of shortcut must be of type <string>.');
+        }
     };
 
     /**
@@ -423,9 +489,7 @@ MeinAutoJs.core.System = new function () {
             throw new Error('The module class type must be of type <string>.');
         }
 
-        if (typeof moduleClass !== 'undefined' &&
-            typeof moduleClass === 'object'
-        ) {
+        if (typeof moduleClass === 'object') {
             createModuleDOM(type, moduleClass);
         } else {
             throw new Error('The module class must be of type <Object>.');
