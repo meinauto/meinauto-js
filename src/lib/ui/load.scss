@@ -1,11 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans');
 
 @import "bootstrap";
-
-@include scrollbars(.5em, $brand-warning);
-
-body {
-  display: none;
-  font-family: 'PT Sans', sans-serif;
-  font-size: 1rem;
-}
+@import "layout";

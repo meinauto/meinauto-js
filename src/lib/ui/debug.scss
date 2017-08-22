@@ -4,6 +4,7 @@ $main-size: 1rem;
 $main-highlight: $brand-warning;
 
 .debug {
+  padding: 0;
   background-color: white;
   position: fixed;
   z-index: 1000;
