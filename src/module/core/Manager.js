@@ -168,7 +168,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         }
 
         var isAppLoad = false;
-        if (-1 < type.indexOf('MeinAutoJs.app.')) {
+        if (true === /^\w+\.app\./.test(type)) {
             isAppLoad = true;
         }
 
@@ -178,6 +178,10 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         if (true === isAppLoad) {
             classUri = configuration.appPath;
             namespace = namespace.replace(/app\//, '');
+
+            if (-1 === type.indexOf('MeinAutoJs.')) {
+                namespace = namespace.replace(/^\w+\//, '');
+            }
         }
 
         var moduleUrl = classUri + '/' +
@@ -319,14 +323,18 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
         ;
 
         var namespace = MeinAutoJs.core.System.getNamespace(type),
-            testCase = type.replace(/MeinAutoJs\./, 'MeinAutoJs.test.') + 'Test';
+            testCase = type.replace(/^(\w+)\./, '$1.test.') + 'Test';
+
+        if (-1 === type.indexOf('MeinAutoJs.')) {
+            namespace = namespace.replace(/^\w+\//, '');
+        }
 
         var testUrl = moduleUri.replace(/module/, 'test/module') +
             '/' + namespace + 'Test.js?' +
             String((new Date()).getTime());
 
         if (true === isAppLoad) {
-            testUrl = testUrl.replace(/module/, '');
+            testUrl = testUrl.replace(/\/module/, '');
         } else if (false === withSystemTests) {
             return; // test runner applies only to apps
         }

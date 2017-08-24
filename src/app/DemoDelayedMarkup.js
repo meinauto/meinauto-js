@@ -31,6 +31,8 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDelayedMarkup', new function () {
         _.$markup = $('[data-application="DemoDelayedMarkup"]');
 
         createElements();
+
+        MAJS.add('A.app.ExternalNamespace');
     };
 
     /**
