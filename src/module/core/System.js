@@ -327,7 +327,7 @@ MeinAutoJs.core.System = new function () {
                 }).css({
                     position: 'fixed',
                     zIndex: 1001,
-                    top: '.5rem',
+                    top: '.7rem',
                     right: '6rem',
                     display: 'inline',
                     width: '6rem',
@@ -386,6 +386,12 @@ MeinAutoJs.core.System = new function () {
         } else if (true === Boolean(sessionStorage.getItem('runTests')) ||
             -1 < location.search.indexOf('tests')
         ) {
+            $(document).ajaxStart(function() {
+                $(document.body).css({cursor: 'wait'});
+            }).ajaxStop(function() {
+                $(document.body).css({cursor: 'default'});
+            });
+
             $.ajax(testFrameworkThemeUri, {method: 'head'})
                 .fail(function (error) {
                     MeinAutoJs.console.error(
@@ -442,6 +448,28 @@ MeinAutoJs.core.System = new function () {
 
             $(document).on('click', '#test-runner-control', function () {
                 location.search = 'tests-stop';
+            });
+
+            var hidePassedTests = function () {
+                var $passed = $('li.pass');
+                if (true === $('input[name="hidepassed"]').prop('checked')) {
+                    $passed.hide();
+                } else {
+                    $passed.show();
+                }
+            },
+            hideTimer = 0;
+
+            $(document.body).on('click', 'input[name="hidepassed"]', function () {
+                hidePassedTests();
+            });
+
+            $(document).ajaxStop(function() {
+                clearTimeout(hideTimer);
+                hideTimer = 0;
+                hideTimer = setTimeout(function () {
+                    hidePassedTests();
+                }, 1000);
             });
 
             sessionStorage.setItem('runTests', true);
