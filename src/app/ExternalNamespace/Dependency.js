@@ -7,7 +7,7 @@
  * @typedef {function} A.app.ExternalNamespace.Dependency
  * @constructs
  */
-MeinAutoJs.define('A.app.ExternalNamespace.Dependency', new function () {
+MAJS.define('A.app.ExternalNamespace.Dependency', new function () {
     /**
      * @description bind public properties or methods
      * @memberOf A.app.ExternalNamespace.Dependency

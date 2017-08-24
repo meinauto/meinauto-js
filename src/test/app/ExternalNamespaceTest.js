@@ -3,7 +3,7 @@
 /**
  * @class test external namespace module class example
  */
-MeinAutoJs.define('A.test.app.ExternalNamespaceTest', new function () {
+MAJS.define('A.test.app.ExternalNamespaceTest', new function () {
     /**
      * @description test has assigned module class type by manager
      * @memberOf A.test.app.ExternalNamespaceTest
