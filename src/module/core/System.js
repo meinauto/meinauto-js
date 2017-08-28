@@ -139,6 +139,7 @@ MeinAutoJs.core.System = new function () {
 
         if (typeof window.MeinAutoJsConfigurationPath !== 'undefined') {
             /**
+             * @description give a global path to configuration json file
              * @typedef {string} MeinAutoJsConfigurationPath
              */
             configPath = window.MeinAutoJsConfigurationPath;

@@ -151,6 +151,9 @@ are overridden by an isolated test case manager instance and the markup can be o
 The manager and markup properties are described at the module class interface "MeinAutoJs.core.Manager.Module.class" 
 can be found in the generated documentation.
 
+    example:
+    ./src/app/BetterTestableModuleClassTest.js
+
 ```javascript
 "use strict";
 
@@ -160,7 +163,7 @@ can be found in the generated documentation.
  * @typedef {function} MeinAutoJs.app.BetterTestableModuleClass
  * @constructs
  */
-MeinAutoJs.define('MeinAutoJs.abstract.Controller', new function () {
+MeinAutoJs.define('MeinAutoJs.app.BetterTestableModuleClass', new function () {
     /**
      * @description bind public properties or methods
      * @memberOf MeinAutoJs.app.BetterTestableModuleClass
@@ -199,6 +202,9 @@ MeinAutoJs.define('MeinAutoJs.abstract.Controller', new function () {
 At test cases use the isolated manager instance with the isolated module class instance;
 
 All modules that added to the isolated manager instance are also isolated inside this manager.
+
+    example:
+    ./src/test/app/BetterTestableModuleClassTest.js
 
 ```javascript
 "use strict";
@@ -280,5 +286,5 @@ MeinAutoJs.define('MeinAutoJs.test.app.BetterTestableModuleClassTest', new funct
 });
 ```
 
-[test-template]: https://github.com/xeroxzone/meinauto-js/blob/master/src/test/module/template/ModuleTest.js.template
+[test-template]: https://github.com/meinauto/meinauto-js/blob/master/src/test/module/template/ModuleTest.js.template
 [qunit]: https://qunitjs.com

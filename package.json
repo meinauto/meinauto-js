@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xeroxzone/meinauto-js.git"
+    "url": "git+https://github.com/meinauto/meinauto-js.git"
   },
   "dependencies": {
     "jquery": "~3.2.1"
@@ -35,9 +35,9 @@
   "author": "Ralph Zickert",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xeroxzone/meinauto-js/issues"
+    "url": "https://github.com/meinauto/meinauto-js/issues"
   },
-  "homepage": "https://github.com/xeroxzone/meinauto-js#readme",
+  "homepage": "https://github.com/meinauto/meinauto-js#readme",
   "jshintConfig": {
     "maxerr": 50,
     "bitwise": true,
@@ -97,7 +97,7 @@
     "jquery": true,
     "mocha": false,
     "mootools": false,
-    "node": false,
+    "node": true,
     "nonstandard": false,
     "phantom": false,
     "prototypejs": false,

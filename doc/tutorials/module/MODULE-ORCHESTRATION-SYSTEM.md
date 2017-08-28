@@ -248,13 +248,13 @@ _.construct = function () {
  */
 var doSomething = function(parameters) {
   /** @alias {MeinAutoJs.app.MockApp.controller.Doing} */
-  var controller = MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp.controller.Doing');
+  var controller = MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp.controller.Doing').class;
   
   /** @alias {MeinAutoJs.app.MockApp.model.Data} */
-  var model = MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp.model.Data');
+  var model = MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp.model.Data').class;
   
   /** @alias {MeinAutoJs.app.MockApp.view.Page} */
-  var view = MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp.view.Page');
+  var view = MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp.view.Page').class;
 };
 ```
 
@@ -369,6 +369,6 @@ MeinAutoJs.core.Manager.get('MeinAutoJs.app.MockApp.controller.Doing').class;
 }
 ```
 
-[MTR]: https://github.com/xeroxzone/meinauto-js/blob/master/doc/tutorials/test/MODULE-TEST-RUNNER.md
-[module-template]: https://github.com/xeroxzone/meinauto-js/blob/master/src/module/template/Module.js.template
+[MTR]: https://github.com/meinauto/meinauto-js/blob/master/doc/tutorials/test/MODULE-TEST-RUNNER.md
+[module-template]: https://github.com/meinauto/meinauto-js/blob/master/src/module/template/Module.js.template
 [qunit]: https://qunitjs.com

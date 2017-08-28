@@ -27,4 +27,4 @@ from all documentated code changes as long as the mouse cursor
 is not over the browser window.
 
 
-[readme]: https://github.com/xeroxzone/meinauto-js/blob/master/README.md
+[readme]: https://github.com/meinauto/meinauto-js/blob/master/README.md

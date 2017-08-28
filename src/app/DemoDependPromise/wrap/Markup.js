@@ -5,7 +5,7 @@
 
 /**
  * @class
- * @classdesc an application demo event dependency
+ * @classdesc an application demo promise dependency
  * @implements {MeinAutoJs.core.Manager.Module.class}
  * @typedef {function} MeinAutoJs.app.DemoDependPromise.wrap.Markup
  * @constructs

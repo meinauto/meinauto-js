@@ -69,9 +69,9 @@ or
 
 ...live long and prosper
 
-[MOS]: https://github.com/xeroxzone/meinauto-js/blob/master/doc/tutorials/module/MODULE-ORCHESTRATION-SYSTEM.md
-[MTR]: https://github.com/xeroxzone/meinauto-js/blob/master/doc/tutorials/test/MODULE-TEST-RUNNER.md
-[MDR]: https://github.com/xeroxzone/meinauto-js/blob/master/doc/tutorials/doc/MODULE-DOC-RUNNER.md
+[MOS]: https://github.com/meinauto/meinauto-js/blob/master/doc/tutorials/module/MODULE-ORCHESTRATION-SYSTEM.md
+[MTR]: https://github.com/meinauto/meinauto-js/blob/master/doc/tutorials/test/MODULE-TEST-RUNNER.md
+[MDR]: https://github.com/meinauto/meinauto-js/blob/master/doc/tutorials/doc/MODULE-DOC-RUNNER.md
 [npmjs]: https://www.npmjs.com/
 [gulp]: http://gulpjs.com/
 [qunit]: https://qunitjs.com

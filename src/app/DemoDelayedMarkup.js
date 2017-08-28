@@ -12,7 +12,7 @@ MeinAutoJs.define('MeinAutoJs.app.DemoDelayedMarkup', new function () {
      * @description bind public properties or methods
      * @memberOf MeinAutoJs.app.DemoDelayedMarkup
      * @private
-     * @alias {MeinAutoJs.app.DemoMarkup}
+     * @alias {MeinAutoJs.app.DemoDelayedMarkup}
      */
     var _ = this;
 
