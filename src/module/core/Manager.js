@@ -851,7 +851,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @memberOf MeinAutoJs.core.Manager
      * @param {(string|Array.<string>)} type as module class name
      * @returns {boolean}
-     * @example MeinAutoJs.core.Manager.remove('MeinAutoJs.namespace.part.ClassName');
+     * @example MeinAutoJs.core.Manager.remove('MeinAutoJs.namespacePart.ClassName');
      * @example MeinAutoJs.core.Manager.remove([
      *      'MeinAutoJs.namespace.part.ClassNameA',
      *      'MeinAutoJs.namespace.part.ClassNameB',
@@ -886,8 +886,8 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @param {(string|Array.<string>|Array.Array.<string, Object>)} type as module class name
      * @param {Object=} parameters an object of construction parameters
      * @returns {Deferred}
-     * @example MeinAutoJs.core.Manager.add('MeinAutoJs.namespace.part.ClassName');
-     * @example MeinAutoJs.core.Manager.add('MeinAutoJs.namespace.part.ClassName', {})
+     * @example MeinAutoJs.core.Manager.add('MeinAutoJs.namespacePart.ClassName');
+     * @example MeinAutoJs.core.Manager.add('MeinAutoJs.namespacePart.ClassName', {})
      *  .done(function (module) {})
      *  .fail(function () {});
      * @example MeinAutoJs.core.Manager.add([
@@ -949,7 +949,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @memberOf MeinAutoJs.core.Manager
      * @param {string} type as module class name
      * @returns {?MeinAutoJs.core.Manager.Module}
-     * @example MeinAutoJs.core.Manager.get('MeinAutoJs.namespace.part.ClassName');
+     * @example MeinAutoJs.core.Manager.get('MeinAutoJs.namespacePart.ClassName');
      * @tutorial MODULE-ORCHESTRATION-SYSTEM
      */
     _.get = function (type) {
@@ -961,7 +961,7 @@ MeinAutoJs.define('MeinAutoJs.core.Manager', new function () {
      * @memberOf MeinAutoJs.core.Manager
      * @param {string} type as module class name
      * @returns {boolean}
-     * @example MeinAutoJs.core.Manager.has('MeinAutoJs.namespace.part.ClassName');
+     * @example MeinAutoJs.core.Manager.has('MeinAutoJs.namespacePart.ClassName');
      * @tutorial MODULE-ORCHESTRATION-SYSTEM
      */
     _.has = function (type) {
