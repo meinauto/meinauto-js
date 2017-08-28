@@ -1,6 +1,6 @@
 {
   "name": "meinauto-js",
-  "version": "0.1.35",
+  "version": "0.2.0",
   "description": "Class autoload and dependency manager",
   "main": "./src/lib/init/Run.js",
   "scripts": {
